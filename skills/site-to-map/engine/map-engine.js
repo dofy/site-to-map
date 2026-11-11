@@ -49,7 +49,6 @@ const CITIES = [];
   }
 }
 const usedSlots = new Set(CITIES.map(c => c.slot));
-const CT = Object.fromEntries(CITIES.map(c => [c.id, c]));
 const SP = 2.15;
 for (const c of CITIES) {
   c.ph = hash(c.ox + 40, c.oy + 40) * 6.28; c.ang = (hash(c.oy + 9, c.ox + 9) - .5) * .7;
@@ -1061,7 +1060,7 @@ function makeProp(it, seed) {
   const g = new THREE.Group();
   const add = (geo, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); g.add(m); return m; };
   const r = k => hash(seed, k);
-  let top = .8;
+  let top;
   switch (it.kind) {
     case 'oak': add(new THREE.CylinderGeometry(.05, .08, .5, 6), M.kraftDeep, 0, .25, 0); add(new THREE.IcosahedronGeometry(.42, 0), M.olive, 0, .78, 0).rotation.y = r(1) * 6; add(new THREE.IcosahedronGeometry(.3, 0), M.grass, .22, .62, .14); top = 1.2; break;
     case 'pine': add(new THREE.CylinderGeometry(.04, .06, .3, 5), M.kraftDeep, 0, .15, 0); for (let i = 0; i < 3; i++) add(new THREE.ConeGeometry(.42 - i * .1, .55, 6), i % 2 ? M.olive : M.pine, 0, .45 + i * .3, 0); top = 1.4; break;
@@ -1346,7 +1345,7 @@ function renderPanel() {
   }
   eyebrow.textContent = `${DOMAIN} · ${c.role}`;
   const d = state.sel && districts[state.sel], it = d && d.it;
-  panel.innerHTML = `<h2>${c.en}<small>${LANG === 'zh' ? c.name + ' · ' : ''}${c.role} · ${t.plots(c.items.length)}</small></h2><p>${esc(c.blurb)}</p>
+  panel.innerHTML = `<h2>${c.en}<small>${LANG === 'zh' ? c.name + ' · ' : ''}${c.role} · ${(typeof t.plots === 'function' ? t.plots(c.items.length) : String(t.plots).replace('{n}', c.items.length))}</small></h2><p>${esc(c.blurb)}</p>
     ${it ? `<div class="card"><div class="row"><h3>${esc(it.name)}</h3><span class="eyebrow">${t.plot} ${it.code}</span></div><p>${esc(it.desc)}</p><div class="url">${esc(it.url.replace(/^https:\/\//, ''))}</div><a class="go" href="${it.url}" target="_blank" rel="noopener">${t.open}${EXT_ICON}</a></div>` : ''}
     <ul class="list">${c.items.map((x, i) => `<li><button type="button" data-sel="${c.id}-${i}" aria-current="${state.sel === c.id + '-' + i}"><span class="swatch" style="--c: var(${TOK[x.roof] || '--kraft'})" aria-hidden="true"></span><span class="nm">${esc(x.name)}<em>${esc(x.desc)}</em></span><span class="grid-ref">${x.code}</span></button></li>`).join('')}</ul>`;
 }

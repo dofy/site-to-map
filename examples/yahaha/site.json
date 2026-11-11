@@ -32,7 +32,8 @@
       "title": "Yahaha 中洲",
       "sub": "五座城，一片大陆",
       "fold": "正在折一片中洲",
-      "titleSuffix": "中洲地图"
+      "titleSuffix": "中洲地图",
+      "plots": "{n} 区"
     },
     "en": {
       "me": "Middle-earth",
@@ -40,7 +41,8 @@
       "title": "Yahaha Middle-earth",
       "sub": "Five cities, one continent",
       "fold": "Folding a Middle-earth",
-      "titleSuffix": "Middle-earth map"
+      "titleSuffix": "Middle-earth map",
+      "plots": "{n} plots"
     }
   },
   "places": [

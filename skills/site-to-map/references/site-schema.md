@@ -18,7 +18,7 @@ All user-facing text fields accept either a string or `{ "zh": "…", "en": "…
   },
   "text": {                            // overrides for interface strings, per language
     "zh": { "me": "世界名", "five": "五座城", "title": "大标题", "sub": "副标题", "intro": "信息卡介绍",
-            "fold": "加载时的标题", "titleSuffix": "浏览器标签后缀" },
+            "fold": "加载时的标题", "titleSuffix": "浏览器标签后缀", "plots": "{n} 区" },
     "en": { "…": "same keys" }
   },
   "places": [                          // map lettering at fixed anchors
