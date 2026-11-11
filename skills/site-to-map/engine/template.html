@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta name="theme-color" content="#f1eadb">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Manrope:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="map.css">
+<noscript><style>.loader { display: none; }</style></noscript>
+</head>
+<body>
+<div class="map intro" id="map">
+      <div class="loader" id="loader" role="status" aria-live="polite">
+        <div class="ld-paper" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="ld-title" id="ld-title">正在折一片中洲</div>
+        <div class="ld-step" id="ld-step">准备纸张…</div>
+        <div class="ld-bar"><i id="ld-bar"></i></div>
+      </div>
+      <div class="labels" id="labels"></div>
+      <header class="ui brand"><h1 class="site-h1"><a class="site" id="site" href="/">yahaha.net</a></h1><a class="about" id="about" href="https://github.com/dofy/dofy" target="_blank" rel="noopener"><span class="t">About me</span><svg class="ext" viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M5.5 3.5h7v7M12.5 3.5 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></header>
+      <nav class="ui crumb" id="crumb" aria-label="位置"></nav>
+      <div class="ui tools" role="toolbar" aria-label="视角">
+        <button type="button" id="b-home">全图</button>
+        <button type="button" id="b-tour" aria-pressed="false">导览</button>
+        <button type="button" id="b-spin" aria-pressed="false">环绕</button>
+        <button type="button" id="b-top" aria-pressed="false">俯视</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button type="button" id="b-lang" lang="en">EN</button>
+        <button type="button" id="b-keys" aria-haspopup="dialog" aria-controls="keys">?</button>
+      </div>
+      <footer class="ui foot"><span class="clock" id="clock"></span><span class="copy"></span><a class="ver" id="version"></a></footer>
+      <div class="ui compass" aria-hidden="true">
+        <svg viewBox="-17 -17 34 34"><circle r="15" fill="none" stroke="currentColor"/><circle r="11.5" fill="none" stroke="currentColor" stroke-dasharray="1 2.2" opacity=".6"/><g id="needle"><path d="M0 -13 L3.4 0 L0 2 L-3.4 0Z" fill="var(--coral)" stroke="currentColor"/><path d="M0 13 L3.4 0 L-3.4 0Z" fill="none" stroke="currentColor"/></g></svg>
+      </div>
+      <div class="ui keys" id="keys" role="dialog" aria-modal="false" aria-labelledby="keys-title" hidden><h2 id="keys-title">Keyboard shortcuts</h2><dl id="keys-list"></dl><p id="keys-close"></p></div>
+      <aside class="ui info" id="info" aria-label="说明">
+        <div class="info-head"><span class="eyebrow" id="info-eyebrow">yahaha.net</span><button type="button" class="fold" id="fold" aria-expanded="true" aria-controls="panel">收起</button></div>
+        <div class="panel" id="panel" aria-live="polite"></div>
+        <div class="hint" id="hint"></div>
+      </aside>
+    </div>
+<noscript>{{NOSCRIPT}}</noscript>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import { mountMap } from './map-engine.js';
+mountMap({{SITE_JSON}});
+</script>
+</body>
+</html>

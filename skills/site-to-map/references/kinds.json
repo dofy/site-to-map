@@ -1,0 +1,299 @@
+[
+ {
+  "kind": "quad",
+  "type": "building",
+  "looks": "Four stepped towers of different heights",
+  "fits": "numbers, math, games, charts, dashboards"
+ },
+ {
+  "kind": "spire",
+  "type": "building",
+  "looks": "Tall round tower with a cone roof and a spinning star",
+  "fits": "fortune, astrology, tarot, featured or flagship item"
+ },
+ {
+  "kind": "dome",
+  "type": "building",
+  "looks": "Domed hall ringed by columns",
+  "fits": "search, catalogues, emoji, observatory-like tools, tech parks"
+ },
+ {
+  "kind": "kiosk",
+  "type": "building",
+  "looks": "Small square pavilion with a pyramid roof and a flag",
+  "fits": "small utilities, generators, simple one-page tools"
+ },
+ {
+  "kind": "radio",
+  "type": "building",
+  "looks": "Low hall with a lattice mast and pulsing rings",
+  "fits": "signals, Morse, networking, voice, AI assistants, ping tools"
+ },
+ {
+  "kind": "grid",
+  "type": "building",
+  "looks": "Stacked tower with many windows and side wings",
+  "fits": "text, ASCII, big platforms, recruiting, enterprise"
+ },
+ {
+  "kind": "face",
+  "type": "building",
+  "looks": "Round tower with two eyes and a smile",
+  "fits": "avatars, faces, characters, profiles"
+ },
+ {
+  "kind": "vault",
+  "type": "building",
+  "looks": "Strongbox building with a round brass door",
+  "fits": "locks, security, finance, money, assets"
+ },
+ {
+  "kind": "twin",
+  "type": "building",
+  "looks": "Two towers linked by a sky bridge, a packet runs across",
+  "fits": "sync, transfer, networks, IP tools, two-way things"
+ },
+ {
+  "kind": "silo",
+  "type": "building",
+  "looks": "Tall storage silo with a dome",
+  "fits": "cleaners, storage, disk, backups"
+ },
+ {
+  "kind": "library",
+  "type": "building",
+  "looks": "Gabled hall with a cross wing",
+  "fits": "reading, words, dictionaries, documentation, publishing"
+ },
+ {
+  "kind": "crane",
+  "type": "building",
+  "looks": "Dock crane swinging over a shed",
+  "fits": "translation, logistics, moving things between places"
+ },
+ {
+  "kind": "tanks",
+  "type": "building",
+  "looks": "Two round tanks joined by a pipe",
+  "fits": "package managers, brewing, data pipelines"
+ },
+ {
+  "kind": "shed",
+  "type": "building",
+  "looks": "Long gabled workshop with a lean-to",
+  "fits": "configs, dotfiles, small repos"
+ },
+ {
+  "kind": "chimney",
+  "type": "building",
+  "looks": "Workshop with tall chimneys and smoke",
+  "fits": "build tools, compilers, factories"
+ },
+ {
+  "kind": "pagoda",
+  "type": "building",
+  "looks": "Tiered tower; t sets 2–4 tiers",
+  "fits": "scripture, classics, culture, translations of one text",
+  "params": {
+   "t": "tiers, 2–4"
+  }
+ },
+ {
+  "kind": "booth",
+  "type": "building",
+  "looks": "Round booth with a cone roof and a side hut",
+  "fits": "small social profiles, markets"
+ },
+ {
+  "kind": "theater",
+  "type": "building",
+  "looks": "Half-round theatre with comedy and tragedy masks",
+  "fits": "emoticons, entertainment, games, shows"
+ },
+ {
+  "kind": "inn",
+  "type": "building",
+  "looks": "Two-storey inn with a hanging sign and stable",
+  "fits": "community, forums, timelines, meeting places"
+ },
+ {
+  "kind": "teahouse",
+  "type": "building",
+  "looks": "Two-tier teahouse with a finial and books outside",
+  "fits": "reviews, books, films, chat, coffee talk"
+ },
+ {
+  "kind": "cattower",
+  "type": "building",
+  "looks": "Octagonal tower with cat ears and tentacles",
+  "fits": "GitHub, code hosting"
+ },
+ {
+  "kind": "dovecote",
+  "type": "building",
+  "looks": "Dovecote on a tall pole with birds circling",
+  "fits": "Twitter / X, Telegram bots, messaging, newsletters"
+ },
+ {
+  "kind": "camera",
+  "type": "building",
+  "looks": "Camera-shaped house with a big lens and rainbow stripes",
+  "fits": "Instagram, photography, screenshots, screensavers"
+ },
+ {
+  "kind": "pavilion",
+  "type": "building",
+  "looks": "Six-column open pavilion with a flared roof",
+  "fits": "relaxation, philosophy, calculators for life, classics"
+ },
+ {
+  "kind": "elfhall",
+  "type": "building",
+  "looks": "Steep-roofed hall with a slender tower and an arch",
+  "fits": "translations, essays, long reads, consulting"
+ },
+ {
+  "kind": "stupa",
+  "type": "building",
+  "looks": "Domed stupa with a golden spire and prayer flags",
+  "fits": "originals, sacred or source texts, archives"
+ },
+ {
+  "kind": "tent",
+  "type": "building",
+  "looks": "Striped circus tent with bunting",
+  "fits": "invitations, events, parties, games"
+ },
+ {
+  "kind": "school",
+  "type": "building",
+  "looks": "Schoolhouse with a bell tower",
+  "fits": "courses, tutorials, academies, learning apps"
+ },
+ {
+  "kind": "smithy",
+  "type": "building",
+  "looks": "Forge with a big stone chimney and glowing hearth",
+  "fits": "configuration you tinker with, motorcycles, garages, hardware"
+ },
+ {
+  "kind": "scriptorium",
+  "type": "building",
+  "looks": "Clock tower with a side wing",
+  "fits": "blogs, tutorials, writing, documentation"
+ },
+ {
+  "kind": "warehouse",
+  "type": "building",
+  "looks": "Saw-tooth roof warehouse",
+  "fits": "databases, datasets, archives, inventories"
+ },
+ {
+  "kind": "watermill",
+  "type": "building",
+  "looks": "Mill with a turning water wheel",
+  "fits": "dictionaries, data processing, things that turn input into output"
+ },
+ {
+  "kind": "kiln",
+  "type": "building",
+  "looks": "Bottle kiln with smoke",
+  "fits": "extensions, plugins, small crafts"
+ },
+ {
+  "kind": "mansion",
+  "type": "building",
+  "looks": "Mansard-roof house with dormers and a top hat on the chimney",
+  "fits": "workflows, butlers, assistants, LinkedIn, professional profiles, homepages"
+ },
+ {
+  "kind": "hobbit",
+  "type": "building",
+  "looks": "Grass mound with a round door and chimney",
+  "fits": "one-person companies, cosy home projects, personal sites"
+ },
+ {
+  "kind": "mine",
+  "type": "building",
+  "looks": "Rock mound with a timber portal and a mine cart",
+  "fits": "courses with practice, digging into data, deep tools"
+ },
+ {
+  "kind": "still",
+  "type": "building",
+  "looks": "Copper still with a coil",
+  "fits": "brewing, finance distilling, source of a brew tool"
+ },
+ {
+  "kind": "oak",
+  "type": "prop",
+  "looks": "Broad leafy tree",
+  "fits": "extra links, nature, general"
+ },
+ {
+  "kind": "pine",
+  "type": "prop",
+  "looks": "Three-tier pine",
+  "fits": "extra links, outdoors"
+ },
+ {
+  "kind": "birch",
+  "type": "prop",
+  "looks": "Golden poplar",
+  "fits": "extra links, autumn, highlights"
+ },
+ {
+  "kind": "rock",
+  "type": "prop",
+  "looks": "Single flat boulder",
+  "fits": "minor or old links, archives"
+ },
+ {
+  "kind": "boulders",
+  "type": "prop",
+  "looks": "Cluster of three stones",
+  "fits": "groups of small links, legacy"
+ },
+ {
+  "kind": "signpost",
+  "type": "prop",
+  "looks": "Wooden signpost with two boards",
+  "fits": "directories, navigation sites, contact, email"
+ },
+ {
+  "kind": "flowerbed",
+  "type": "prop",
+  "looks": "Round flower bed",
+  "fits": "small personal pages, hobbies"
+ },
+ {
+  "kind": "statue",
+  "type": "prop",
+  "looks": "Plinth with a small figure",
+  "fits": "Wikipedia pages, honours, about"
+ },
+ {
+  "kind": "well",
+  "type": "prop",
+  "looks": "Stone well with a little roof",
+  "fits": "wells of knowledge, search, Q&A"
+ },
+ {
+  "kind": "lamp",
+  "type": "prop",
+  "looks": "Street lamp that glows at night",
+  "fits": "guides, help pages"
+ },
+ {
+  "kind": "bench",
+  "type": "prop",
+  "looks": "Park bench",
+  "fits": "casual links, chat"
+ },
+ {
+  "kind": "stall",
+  "type": "prop",
+  "looks": "Market stall with an awning",
+  "fits": "shops, services, offers"
+ }
+]

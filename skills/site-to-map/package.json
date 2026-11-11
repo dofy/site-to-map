@@ -1,0 +1,14 @@
+{
+  "name": "site-to-map-skill",
+  "private": true,
+  "type": "module",
+  "description": "Scripts for the site-to-map skill: extract, build and check a folded-paper 3D map.",
+  "scripts": {
+    "extract": "node scripts/extract.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.56.0"
+  }
+}
