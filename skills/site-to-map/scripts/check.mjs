@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Serve a built map, screenshot the overview and every town, and report problems.
-// usage: node check.mjs <dist-dir> [--hour 10] [--links]
+// usage: node check.mjs <dist-dir> [--hour 10] [--query 'seed=abc&world=island'] [--links]
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, extname, resolve } from 'node:path';
@@ -8,6 +8,7 @@ import { join, extname, resolve } from 'node:path';
 const args = process.argv.slice(2), dir = resolve(args[0] || 'dist');
 const hour = args.includes('--hour') ? args[args.indexOf('--hour') + 1] : '10';
 const checkLinks = args.includes('--links');
+const extra = args.includes('--query') ? '&' + args[args.indexOf('--query') + 1] : '';
 const shots = join(dir, '_check'); mkdirSync(shots, { recursive: true });
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml' };
 const server = createServer((req, res) => {
@@ -25,10 +26,11 @@ page.on('pageerror', e => problems.push('page error: ' + e.message));
 page.on('console', m => { if (m.type() === 'error' && !/favicon|404/.test(m.text())) problems.push('console: ' + m.text()); });
 page.on('requestfailed', r => problems.push('request failed: ' + r.url()));
 const t0 = Date.now();
-await page.goto(`${base}?t=${hour}`);
+await page.goto(`${base}?t=${hour}${extra}`);
 await page.waitForFunction(() => document.getElementById('loader')?.classList.contains('done'), null, { timeout: 90000 }).catch(() => problems.push('loader never finished'));
 const loadMs = Date.now() - t0;
 await page.waitForFunction(() => !document.getElementById('map').classList.contains('intro'), null, { timeout: 30000 }).catch(() => problems.push('entrance animation never finished'));
+await page.waitForTimeout(2200); // labels fade in after the entrance
 await page.mouse.move(2, 2);
 await page.screenshot({ path: join(shots, 'overview.png') });
 const towns = await page.evaluate(() => [...document.querySelectorAll('#panel button[data-city]')].map(b => b.dataset.city));

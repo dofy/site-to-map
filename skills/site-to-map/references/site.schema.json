@@ -195,6 +195,32 @@
      }
     }
    }
+  },
+  "world": {
+   "type": "object",
+   "properties": {
+    "layout": {
+     "enum": [
+      "auto",
+      "classic"
+     ]
+    },
+    "seed": {
+     "type": [
+      "string",
+      "integer"
+     ]
+    },
+    "type": {
+     "enum": [
+      "coast",
+      "twoCoasts",
+      "island",
+      "gulf",
+      "lakeland"
+     ]
+    }
+   }
   }
  }
 }

@@ -4,6 +4,11 @@ All user-facing text fields accept either a string or `{ "zh": "…", "en": "…
 
 ```jsonc
 {
+  "world": {                           // optional; omit for a generated world seeded from the site
+    "layout": "auto",                  // auto (generated) | classic (the fixed yahaha.net continent)
+    "seed": "any string or number",    // default: brand + town ids, so each site gets its own land
+    "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick
+  },
   "site": {
     "brand": "example.com",            // shown top left when the hostname is not in domains
     "domains": ["example.com"],         // hostnames this map is served on
@@ -66,5 +71,18 @@ All user-facing text fields accept either a string or `{ "zh": "…", "en": "…
 `type: "prop"` kinds, and any building past the ninth, go in the ring outside town.
 `pagoda` takes `"t": 2–4` tiers.
 
-**Slots** keep their scenery: `highland` sits on a raised plateau with a red gate and a
-waterfall; `coast` has piers, a lighthouse and boats.
+**Slots are roles, not fixed places.** The world generator places each town by its role:
+`center` near the middle, `coast` on the shore with piers, a lighthouse and boats (by a
+lake in `lakeland`, without piers), `highland` on a plateau under the main mountain range
+with a red gate and a waterfall, `south` and `east` anywhere else on open land.
+
+**World types.** `coast`: one straight-ish coastline, mountains on the far side.
+`twoCoasts`: land on a corner between two seas. `island`: sea all around, a ridge on one
+side. `gulf`: a coast with a deep bay cut in. `lakeland`: landlocked, three lakes, rivers
+flow off the map. Every type also randomises mountain ranges (one or two), one or two
+rivers between towns, a road network (spanning tree plus extras and lanes off the map),
+lakes, fields, farms, woods and where boats sail. Place-name anchors follow the
+generated features; an anchor with nothing to point at (no lake, no second river) is
+skipped.
+
+Preview other worlds without editing the file: `?seed=abc`, `?world=island`, or both.

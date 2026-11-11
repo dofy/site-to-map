@@ -29,6 +29,7 @@ const html = readFileSync(join(engine, 'template.html'), 'utf8')
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'index.html'), html);
 copyFileSync(join(engine, 'map-engine.js'), join(outDir, 'map-engine.js'));
+copyFileSync(join(engine, 'world-gen.js'), join(outDir, 'world-gen.js'));
 copyFileSync(join(engine, 'map.css'), join(outDir, 'map.css'));
 console.log(`built ${join(outDir, 'index.html')}: ${site.cities.length} towns, ${site.cities.reduce((n, c) => n + c.items.length, 0)} links`);
 

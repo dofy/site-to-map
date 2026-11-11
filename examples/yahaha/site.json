@@ -1,5 +1,8 @@
 {
   "$schema": "../../skills/site-to-map/references/site.schema.json",
+  "world": {
+    "layout": "classic"
+  },
   "site": {
     "brand": "yahaha.net",
     "domains": [

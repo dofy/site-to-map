@@ -5,8 +5,9 @@ description: Turn a personal homepage, link-in-bio page, navigation or bookmark 
 
 # site-to-map
 
-Converts a link-heavy site into the map used on yahaha.net: a paper-craft continent with
-five town slots, ink-line rendering, local-time daylight, bilingual text, tour mode and
+Converts a link-heavy site into the map used on yahaha.net: a generated paper-craft world
+(coasts, islands, gulfs or lakes, mountain ranges, rivers and roads from a seed) with up to
+five towns, ink-line rendering, local-time daylight, bilingual text, tour mode and
 keyboard shortcuts. You write one `site.json`; the engine in `engine/` does the rest.
 
 Read `references/site-schema.md` before writing `site.json`, and pick building shapes from
@@ -46,15 +47,22 @@ Read `references/site-schema.md` before writing `site.json`, and pick building s
    thing *is* (a bot → `dovecote`, an IP tool → `twin`, a blog → `scriptorium`). Avoid
    repeating a kind inside one town. Props use the `prop` kinds. Descriptions are one short
    line taken from the source, not invented claims.
-5. **Style each town.** `style.walls` and `style.roofs` are palette tokens (see schema);
+5. **Shape the world.** The land is generated from `world.seed` (default: brand + town
+   ids), so every site gets different coasts, mountains, rivers, lakes and roads. Pick a
+   `world.type` that suits the site (`coast`, `twoCoasts`, `island`, `gulf`, `lakeland`) or
+   leave it to the seed. Try two or three seeds with
+   `node scripts/check.mjs out/ --query "seed=foo&world=island"` and keep the one where the
+   towns read best; write it into `site.json`. `layout: "classic"` reproduces the fixed
+   yahaha.net continent and is only for that site.
+6. **Style each town.** `style.walls` and `style.roofs` are palette tokens (see schema);
    give each town its own roof family so towns read apart, and set `features`
    (`walls`, `hedge`, `lamps`, `centerpiece`).
-6. **Build and look.** `node scripts/build.mjs site.json out/` writes a standalone
+7. **Build and look.** `node scripts/build.mjs site.json out/` writes a standalone
    `out/index.html` (three.js and fonts from CDNs). Then `node scripts/check.mjs out/`
    screenshots the overview and every town into `out/_check/` and lists page errors and
    labels hidden by overlap. Look at the screenshots. Shorten names or move items to
    props when a town is crowded, rebuild, and check once more.
-7. **Deliver.** Hand over `site.json`, the built folder and the screenshots. Tell the user
+8. **Deliver.** Hand over `site.json`, the built folder and the screenshots. Tell the user
    what you merged, dropped or turned into props, and which names you invented.
 
 ## Integrating into an existing site
@@ -80,7 +88,7 @@ is the reference integration.
 
 - Five towns, nine buildings each; any number of props, but more than about twelve per
   town gets crowded.
-- The continent, rivers and roads are fixed scenery; only names, towns and their contents
-  change. Unused slots fall back to countryside, and their roads disappear.
+- The world is generated, not painted: you choose a seed and a type, not exact coastlines.
+  Up to five towns; fewer towns simply leave more countryside.
 - Building shapes come from the catalogue. A link that deserves a one-off landmark needs a
   new kind added to `engine/map-engine.js` (`makeBuilding`) and `references/kinds.json`.

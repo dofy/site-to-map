@@ -11,9 +11,11 @@ converted with one `site.json`.
 
 ## What you get
 
-- A paper-craft continent drawn with three.js: terraced land, rivers with bridges, forests,
-  fields, boats, travellers and ink-line edges.
-- Up to five towns on fixed slots (walled centre, harbour, workshop quarter, market town,
+- A paper-craft world drawn with three.js and **generated from a seed**: five world types
+  (coast, two coasts, island, gulf, lakeland), one or two mountain ranges, rivers, lakes,
+  roads with bridges, forests, fields, boats, travellers and ink-line edges. Each site gets
+  its own land; `?seed=` and `?world=` preview others.
+- Up to five towns placed by role (walled centre, harbour, workshop quarter, market town,
   highland), nine buildings each and any number of props around them.
 - 37 building shapes and 12 props, picked per link by meaning (a bot is a dovecote, an IP
   tool is two towers with a sky bridge, a blog is a clock tower).
@@ -50,15 +52,24 @@ Serve `out/` over HTTP (ES modules don't load from `file://`).
 
 | | |
 |---|---|
-| [`examples/yahaha`](examples/yahaha/site.json) — the reference site, Tolkien fan naming chosen by its owner | ![](docs/yahaha-overview.png) |
+| [`examples/yahaha`](examples/yahaha/site.json) — the reference site on the fixed `classic` continent, Tolkien fan naming chosen by its owner | ![](docs/yahaha-overview.png) |
 | [`examples/wujiaxian`](examples/wujiaxian/site.json) — [wujiaxian.com](https://wujiaxian.com/) with original names; four older projects became props | ![](docs/wujiaxian-shipyard.png) |
+
+### One site, four worlds
+
+The same 22-card tarot site with four seeds and world types (`island`, `lakeland`, `twoCoasts`, `coast`):
+
+| | |
+|---|---|
+| ![](docs/tarot-island.png) | ![](docs/tarot-lakeland.png) |
+| ![](docs/tarot-twoCoasts.png) | ![](docs/tarot-coast.png) |
 
 ## Layout
 
 ```
 skills/site-to-map/
 ├── SKILL.md                 workflow and rules for the agent
-├── engine/                  map-engine.js (three.js), map.css, template.html
+├── engine/                  map-engine.js (three.js), world-gen.js, map.css, template.html
 ├── references/              site-schema.md, site.schema.json, kinds.json (shape catalogue)
 └── scripts/                 extract.mjs, build.mjs, check.mjs
 examples/                    site.json for yahaha.net and wujiaxian.com
