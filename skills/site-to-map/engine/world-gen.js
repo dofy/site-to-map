@@ -122,12 +122,11 @@ function autoWorld(cfg, towns, { vnoise, fbm, ridge }) {
   const islandPh = rr(0, TAU), islandPh2 = rr(0, TAU);
   const islandR = a => R0 * (1 + .1 * Math.sin(3 * a + islandPh) + .06 * Math.sin(5 * a + islandPh2));
   const wob = (x, z) => (vnoise(x * .12 + NX, z * .12 + NZ) * .6 + vnoise(x * .27 + NX + 9, z * .27 + NZ - 4) * .4 - .5) * 2.6;
-  const seaDist = th => dSea; // straight coasts; the wobble supplies the shape
   const waters = []; // bays and lakes: { x, z, a, b, ang, k }
   const ell = (w, x, z) => { const dx = x - w.x, dz = z - w.z, c = Math.cos(w.ang), s = Math.sin(w.ang), u = dx * c + dz * s, v = -dx * s + dz * c; return (Math.hypot(u / w.a, v / w.b) - 1) * Math.min(w.a, w.b) * w.k; };
   const coastSd = (x, z) => {
     let d = 1e9;
-    for (const th of seaDirs) d = Math.min(d, seaDist(th) - (x * Math.cos(th) + z * Math.sin(th)));
+    for (const th of seaDirs) d = Math.min(d, dSea - (x * Math.cos(th) + z * Math.sin(th))); // straight coasts; the wobble supplies the shape
     if (type === 'island') { const r = Math.hypot(x, z); d = Math.min(d, islandR(Math.atan2(z, x)) - r); }
     if (type === 'lakeland') d = Math.min(d, 46 - Math.hypot(x, z));
     return d;
