@@ -123,6 +123,6 @@ is the reference integration.
   number of props, but more than about twelve per town gets crowded. `layout: "classic"`
   has only five spots.
 - The world is generated, not painted: you choose a seed and a type, not exact coastlines.
-  Up to five towns; fewer towns simply leave more countryside.
+  Fewer towns simply leave more countryside.
 - Building shapes come from the catalogue. A link that deserves a one-off landmark needs a
   new kind added to `engine/map-engine.js` (`makeBuilding`) and `references/kinds.json`.
