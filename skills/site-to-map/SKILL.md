@@ -18,8 +18,9 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
 
 1. **Get the source.** Ask for a URL, an exported bookmarks file, or a pasted list if the
    user has not given one. For a URL run
-   `node scripts/extract.mjs <url> extract.json` (first `npm install` in this skill folder; it
-   renders the page with Playwright so client-side sites work). Read the result: every
+   `node scripts/extract.mjs <url> extract.json` from this skill's folder. If `node_modules`
+   is missing there, run `npm install` in that folder first (it installs Playwright, which
+   renders the page so client-side sites work, and is needed by `check.mjs` too). Read the result: every
    section has `heading`, `parent` (the h2 it sits under), a little `text` and its `links`.
    Open the page yourself if the extract looks thin.
 2. **Plan the towns.** Group links into **three to nine towns**, usually one per top-level

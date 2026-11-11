@@ -1,0 +1,9 @@
+{
+  "name": "site-to-map",
+  "description": "Turn a personal homepage, link-in-bio page or navigation site into a folded-paper 3D map where each category is a town and each link is a landmark building, tree, rock or signpost. The world (coasts, islands, gulfs or lakes, mountains, rivers, roads) is generated from a seed; daylight follows the visitor's local time.",
+  "version": "0.1.0",
+  "author": { "name": "Seven", "url": "https://dofy.net" },
+  "homepage": "https://github.com/dofy/site-to-map",
+  "license": "MIT",
+  "keywords": ["3d-map", "threejs", "webgl", "papercraft", "low-poly", "personal-website", "homepage", "link-in-bio", "navigation"]
+}

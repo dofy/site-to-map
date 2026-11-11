@@ -29,27 +29,52 @@ converted with one `site.json`.
 
 ## Install
 
-```bash
-git clone https://github.com/dofy/site-to-map
-cp -R site-to-map/skills/site-to-map ~/.claude/skills/        # Claude Code
-cd ~/.claude/skills/site-to-map && npm install                # Playwright for extract/check
+Tell your agent:
+
+> Install the site-to-map skill from https://github.com/dofy/site-to-map
+
+Or install it yourself:
+
+```text
+/plugin install site-to-map --marketplace dofy/site-to-map    # Claude Code 2.1.275+
+npx skills add dofy/site-to-map                               # Codex, Cursor and other agents
 ```
 
-For other agents, put `skills/site-to-map` wherever they load `SKILL.md` skills from.
+The skill installs its own script dependency (Playwright, for reading pages and taking
+screenshots) the first time it runs.
 
 ## Use
 
-Ask your agent: *"Turn https://example.com into a site-to-map page."* The skill extracts the
-page, plans the towns, writes `site.json`, builds and screenshots it. By hand:
+Give the agent a site and say what you want:
+
+> Turn https://example.com into a site-to-map page.
+
+> Make my bookmarks (bookmarks.html) into a map with four towns, an island world and a Chinese/English switch.
+
+The agent reads the site, plans the towns, names them, picks a building for every link,
+generates the land, builds a standalone page and checks it with screenshots. It tells you
+what it merged or turned into props, and you can ask for changes the same way:
+
+> Put GitHub and the blog in one town. Try another seed. Turn on keyboard shortcuts.
+
+Serve the output folder over HTTP to open it (ES modules don't load from `file://`).
+Options worth knowing, all optional: number or grouping of towns, `world.type` and
+`world.seed` (including `"{domain}"` for one land per domain), `ui.languageSwitch` and
+`ui.shortcuts` (off by default), and the rest of `ui` (see
+[`references/site-schema.md`](skills/site-to-map/references/site-schema.md)).
+
+<details>
+<summary>Running the scripts by hand</summary>
 
 ```bash
+cd <skill folder> && npm install                            # once
 node scripts/extract.mjs https://example.com extract.json   # sections and links
 # write site.json (see references/site-schema.md)
 node scripts/build.mjs site.json out                        # standalone out/index.html
 node scripts/check.mjs out                                  # screenshots + problems in out/_check
 ```
 
-Serve `out/` over HTTP (ES modules don't load from `file://`).
+</details>
 
 ## One site, four worlds
 
@@ -73,6 +98,7 @@ skills/site-to-map/
 ├── engine/                  map-engine.js (three.js), world-gen.js, map.css, template.html
 ├── references/              site-schema.md, site.schema.json, kinds.json (shape catalogue)
 └── scripts/                 extract.mjs, build.mjs, check.mjs
+.claude-plugin/               Claude Code plugin and marketplace manifests
 docs/                        README screenshots
 ```
 

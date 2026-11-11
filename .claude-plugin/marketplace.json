@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "site-to-map",
+  "description": "Turn a personal homepage or navigation site into a folded-paper 3D map.",
+  "owner": { "name": "Seven", "url": "https://dofy.net" },
+  "plugins": [
+    {
+      "name": "site-to-map",
+      "source": "./",
+      "skills": ["./skills/site-to-map"],
+      "description": "Converts a homepage, link-in-bio page or navigation site into a generated folded-paper 3D world: categories become towns, links become landmark buildings, trees, rocks or signposts. Writes a site.json and builds a standalone three.js page.",
+      "category": "design"
+    }
+  ]
+}
