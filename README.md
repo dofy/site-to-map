@@ -1,5 +1,7 @@
 # site-to-map
 
+English | [简体中文](README.zh-CN.md)
+
 An agent skill that turns a personal homepage, link-in-bio page or navigation site into a
 **folded-paper 3D map**: every category becomes a town, every link a landmark building,
 and links that don't need a building become trees, rocks or signposts you can still click.
