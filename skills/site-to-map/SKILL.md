@@ -25,6 +25,12 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
 2. **Plan the towns.** Group links into **three to nine towns**, usually one per top-level
    category. Merge tiny categories; five is the sweet spot, and above six the world grows
    (up to ×1.8 at nine) and the overview gets busier.
+   - **The user's structure wins.** If the user names a number of towns or a grouping
+     ("four towns", "merge A and B", "one town per tag"), follow it exactly within the 3–9
+     range, even where you would have grouped differently; only say so if it forces
+     something odd, such as a town of one link. Otherwise derive the towns from the site's
+     own categories. For a flat list without categories, group by what the links are, and
+     tell the user which groups you made.
    - Drop in-page anchors, share buttons and duplicate links. A link that appears in two
      categories goes in the one where it means most; a short mention elsewhere can stay
      as a prop.
