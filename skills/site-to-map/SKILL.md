@@ -11,8 +11,8 @@ five towns, ink-line rendering, local-time daylight, bilingual text, tour mode a
 keyboard shortcuts. You write one `site.json`; the engine in `engine/` does the rest.
 
 Read `references/site-schema.md` before writing `site.json`, and pick building shapes from
-`references/kinds.json`. `examples/` in the repository holds two complete configs
-(yahaha.net and wujiaxian.com) to copy from.
+`references/kinds.json`. The schema file contains a complete annotated example, and
+yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full one to copy from.
 
 ## Workflow
 

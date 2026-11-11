@@ -7,7 +7,7 @@ and links that don't need a building become trees, rocks or signposts you can st
 It is the engine behind [yahaha.net](https://yahaha.net), extracted so any site can be
 converted with one `site.json`.
 
-![wujiaxian.com as a map](docs/wujiaxian-overview.png)
+![yahaha.net as a map](docs/yahaha-net.png)
 
 ## What you get
 
@@ -43,28 +43,26 @@ page, plans the towns, writes `site.json`, builds and screenshots it. By hand:
 
 ```bash
 node scripts/extract.mjs https://example.com extract.json   # sections and links
-# write site.json (see references/site-schema.md and examples/)
+# write site.json (see references/site-schema.md)
 node scripts/build.mjs site.json out                        # standalone out/index.html
 node scripts/check.mjs out                                  # screenshots + problems in out/_check
 ```
 
 Serve `out/` over HTTP (ES modules don't load from `file://`).
 
-## Examples
+## One site, four worlds
+
+[yahaha.net](https://yahaha.net) is served on four domains with `"seed": "{domain}"`, so one
+`site.json` grows a different world on each: a western coast, an island, a gulf with a
+lake, and a landlocked lake country. Same towns, same buildings, different land.
 
 | | |
 |---|---|
-| [`examples/yahaha`](examples/yahaha/site.json) — the reference site on the fixed `classic` continent, Tolkien fan naming chosen by its owner | ![](docs/yahaha-overview.png) |
-| [`examples/wujiaxian`](examples/wujiaxian/site.json) — [wujiaxian.com](https://wujiaxian.com/) with original names; four older projects became props | ![](docs/wujiaxian-shipyard.png) |
+| [yahaha.net](https://yahaha.net) ![](docs/yahaha-net.png) | [dofy.net](https://dofy.net) ![](docs/dofy-net.png) |
+| [PHPz.xyz](https://phpz.xyz) ![](docs/phpz-xyz.png) | [PHPz.org](https://phpz.org) ![](docs/phpz-org.png) |
 
-### One site, four worlds
-
-The same 22-card tarot site with four seeds and world types (`island`, `lakeland`, `twoCoasts`, `coast`):
-
-| | |
-|---|---|
-| ![](docs/tarot-island.png) | ![](docs/tarot-lakeland.png) |
-| ![](docs/tarot-twoCoasts.png) | ![](docs/tarot-coast.png) |
+Its full config is [`src/data/map.json`](https://github.com/dofy/yahaha/blob/main/src/data/map.json)
+in dofy/yahaha.
 
 ## Layout
 
@@ -74,7 +72,7 @@ skills/site-to-map/
 ├── engine/                  map-engine.js (three.js), world-gen.js, map.css, template.html
 ├── references/              site-schema.md, site.schema.json, kinds.json (shape catalogue)
 └── scripts/                 extract.mjs, build.mjs, check.mjs
-examples/                    site.json for yahaha.net and wujiaxian.com
+docs/                        README screenshots
 ```
 
 ## License
