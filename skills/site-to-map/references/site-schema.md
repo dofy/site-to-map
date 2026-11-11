@@ -8,7 +8,8 @@ the browser language picks from what each field has, so plain strings are enough
 {
   "world": {                           // optional; omit for a generated world seeded from the site
     "layout": "auto",                  // auto (generated) | classic (the fixed yahaha.net continent)
-    "seed": "any string or number",    // default: brand + town ids, so each site gets its own land
+    "seed": "any string or number",    // default: brand + town ids, so each site gets its own land;
+                                       // "{domain}" = the domain being visited (one land per domain)
     "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick,
     "townSize": "fixed"                // fixed (default): towns laid out at full size, so adding or removing
                                        // buildings never moves the land | fit: real sizes, tighter, but the
@@ -109,5 +110,10 @@ seed changes (an unset seed is derived from `site.brand` and the town ids), when
 added, removed or given another `slot`, with `townSize: "fit"` when a town crosses a size
 step, and possibly when the engine's generator is upgraded. Write the chosen `seed` into
 the file to keep it.
+
+**One land per domain.** A site served on several domains can use `"seed": "{domain}"`
+(or `"{domain}-v2"` to reroll them all at once). Each domain in `site.domains` then gets its
+own fixed world; any other host, such as localhost or a preview deploy, falls back to
+`site.brand`, so previews match the brand's world.
 
 Preview other worlds without editing the file: `?seed=abc`, `?world=island`, or both.

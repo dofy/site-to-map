@@ -55,7 +55,8 @@ Read `references/site-schema.md` before writing `site.json`, and pick building s
    leave it to the seed. Try two or three seeds with
    `node scripts/check.mjs out/ --query "seed=foo&world=island"` and keep the one where the
    towns read best; **write that seed into `site.json`** so renaming the site never
-   reshuffles the land. Keep `townSize` at its default `fixed` unless the user wants towns
+   reshuffles the land. For a site on several domains, `"seed": "{domain}"` gives each domain its own
+   land. Keep `townSize` at its default `fixed` unless the user wants towns
    packed tighter and accepts that adding buildings may move things (`fit`). `layout: "classic"` reproduces the fixed
    yahaha.net continent and is only for that site.
 6. **Style each town.** `style.walls` and `style.roofs` are palette tokens (see schema);

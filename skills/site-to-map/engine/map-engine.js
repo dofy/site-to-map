@@ -44,8 +44,12 @@ const CITIES = [];
 // ---------------- world: classic continent or a generated one ----------------
 const WCFG = { ...(SITE.world || {}) };
 { const q = new URLSearchParams(location.search); if (q.get('seed')) WCFG.seed = strSeed(q.get('seed')); if (q.get('world')) { WCFG.type = q.get('world'); if (WCFG.layout === 'classic') WCFG.layout = 'auto'; } if (q.get('seed') && WCFG.layout === 'classic') WCFG.layout = 'auto'; }
+// "{domain}" in the seed becomes the domain this page is served on (matched against
+// site.domains, www. stripped); hosts not in the list (localhost, preview deploys) use site.brand
+const SEED_DOMAIN = (() => { const h = location.hostname.replace(/^www\./, '').toLowerCase(), list = SITE.site?.domains || [];
+  return (list.find(d => d.toLowerCase() === h) || SITE.site?.brand || h || 'map').toLowerCase(); })();
 if (WCFG.seed == null) WCFG.seed = strSeed((SITE.site?.brand || '') + '|' + CITIES.map(c => c.id).join(','));
-else if (typeof WCFG.seed === 'string') WCFG.seed = strSeed(WCFG.seed);
+else if (typeof WCFG.seed === 'string') WCFG.seed = strSeed(WCFG.seed.replaceAll('{domain}', SEED_DOMAIN));
 // townSize "fixed" (default): lay towns out as if each held nine buildings, so adding or
 // removing buildings never moves the land; "fit": use each town's real size (tighter, but the
 // layout shifts when a town crosses 2/4/6/9 buildings). classic ignores it.
