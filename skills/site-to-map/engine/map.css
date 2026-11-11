@@ -37,7 +37,7 @@
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { background: var(--sky); color: var(--ui-ink); font-family: var(--font-sans); font-size: 15px; line-height: 1.55; overflow: hidden; }
+body { transition: background-color .8s; background: var(--sky); color: var(--ui-ink); font-family: var(--font-sans); font-size: 15px; line-height: 1.55; overflow: hidden; }
 
 .map { position: fixed; inset: 0; overflow: hidden; background: var(--sky); user-select: none; -webkit-user-select: none; }
 .map canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
@@ -106,7 +106,7 @@ body { background: var(--sky); color: var(--ui-ink); font-family: var(--font-san
   .tools { top: auto; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); right: calc(10px + env(safe-area-inset-right, 0px)); }
 }
 .loader { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; justify-items: center; gap: 10px;
-  background: var(--ui-card); transition: opacity .6s .2s, visibility 0s .8s; }
+  background: var(--ui-card); transition: opacity .6s .2s, visibility 0s .8s, background-color .8s; }
 .loader.done { opacity: 0; visibility: hidden; }
 .ld-paper { position: relative; width: 120px; height: 70px; perspective: 400px; margin-bottom: 8px; }
 .ld-paper i { position: absolute; bottom: 0; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent;

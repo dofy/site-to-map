@@ -112,7 +112,8 @@ world without editing the file.
 ## Integrating into an existing site
 
 The standalone build is enough for most people. To embed in a framework (Astro, Next,
-Vite): copy `engine/map-engine.js` and `engine/map.css` into the project, install
+Vite): copy `engine/map-engine.js`, `world-gen.js`, `daylight.js` and `map.css` into the project, inline
+`daylight.js` as a plain script in `<head>` (so the first paint has the right time-of-day colours), install
 `three@0.170.0`, render the markup from `engine/template.html` (everything inside `<body>`),
 and call `mountMap(site)` from a module script. Self-host the fonts there
 (Manrope, JetBrains Mono, Cormorant Garamond italic) instead of Google Fonts. yahaha.net
