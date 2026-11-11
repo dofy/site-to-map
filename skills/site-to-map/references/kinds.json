@@ -3,91 +3,106 @@
   "kind": "quad",
   "type": "building",
   "looks": "Four stepped towers of different heights",
-  "fits": "numbers, math, games, charts, dashboards"
+  "fits": "numbers, math, games, charts, dashboards",
+  "silhouette": "tower"
  },
  {
   "kind": "spire",
   "type": "building",
   "looks": "Tall round tower with a cone roof and a spinning star",
-  "fits": "fortune, astrology, tarot, featured or flagship item"
+  "fits": "fortune, astrology, tarot, featured or flagship item",
+  "silhouette": "tower"
  },
  {
   "kind": "dome",
   "type": "building",
   "looks": "Domed hall ringed by columns",
-  "fits": "search, catalogues, emoji, observatory-like tools, tech parks"
+  "fits": "search, catalogues, emoji, observatory-like tools, tech parks",
+  "silhouette": "round"
  },
  {
   "kind": "kiosk",
   "type": "building",
   "looks": "Small square pavilion with a pyramid roof and a flag",
-  "fits": "small utilities, generators, simple one-page tools"
+  "fits": "small utilities, generators, simple one-page tools",
+  "silhouette": "house"
  },
  {
   "kind": "radio",
   "type": "building",
   "looks": "Low hall with a lattice mast and pulsing rings",
-  "fits": "signals, Morse, networking, voice, AI assistants, ping tools"
+  "fits": "signals, Morse, networking, voice, AI assistants, ping tools",
+  "silhouette": "mast"
  },
  {
   "kind": "grid",
   "type": "building",
   "looks": "Stacked tower with many windows and side wings",
-  "fits": "text, ASCII, big platforms, recruiting, enterprise"
+  "fits": "text, ASCII, big platforms, recruiting, enterprise",
+  "silhouette": "tower"
  },
  {
   "kind": "face",
   "type": "building",
   "looks": "Round tower with two eyes and a smile",
-  "fits": "avatars, faces, characters, profiles"
+  "fits": "avatars, faces, characters, profiles",
+  "silhouette": "round"
  },
  {
   "kind": "vault",
   "type": "building",
   "looks": "Strongbox building with a round brass door",
-  "fits": "locks, security, finance, money, assets"
+  "fits": "locks, security, finance, money, assets",
+  "silhouette": "object"
  },
  {
   "kind": "twin",
   "type": "building",
   "looks": "Two towers linked by a sky bridge, a packet runs across",
-  "fits": "sync, transfer, networks, IP tools, two-way things"
+  "fits": "sync, transfer, networks, IP tools, two-way things",
+  "silhouette": "tower"
  },
  {
   "kind": "silo",
   "type": "building",
   "looks": "Tall storage silo with a dome",
-  "fits": "cleaners, storage, disk, backups"
+  "fits": "cleaners, storage, disk, backups",
+  "silhouette": "round"
  },
  {
   "kind": "library",
   "type": "building",
   "looks": "Gabled hall with a cross wing",
-  "fits": "reading, words, dictionaries, documentation, publishing"
+  "fits": "reading, words, dictionaries, documentation, publishing",
+  "silhouette": "house"
  },
  {
   "kind": "crane",
   "type": "building",
   "looks": "Dock crane swinging over a shed",
-  "fits": "translation, logistics, moving things between places"
+  "fits": "translation, logistics, moving things between places",
+  "silhouette": "open"
  },
  {
   "kind": "tanks",
   "type": "building",
   "looks": "Two round tanks joined by a pipe",
-  "fits": "package managers, brewing, data pipelines"
+  "fits": "package managers, brewing, data pipelines",
+  "silhouette": "object"
  },
  {
   "kind": "shed",
   "type": "building",
   "looks": "Long gabled workshop with a lean-to",
-  "fits": "configs, dotfiles, small repos"
+  "fits": "configs, dotfiles, small repos",
+  "silhouette": "house"
  },
  {
   "kind": "chimney",
   "type": "building",
   "looks": "Workshop with tall chimneys and smoke",
-  "fits": "build tools, compilers, factories"
+  "fits": "build tools, compilers, factories",
+  "silhouette": "house"
  },
  {
   "kind": "pagoda",
@@ -96,133 +111,155 @@
   "fits": "scripture, classics, culture, translations of one text",
   "params": {
    "t": "tiers, 2–4"
-  }
+  },
+  "silhouette": "tiered"
  },
  {
   "kind": "booth",
   "type": "building",
   "looks": "Round booth with a cone roof and a side hut",
-  "fits": "small social profiles, markets"
+  "fits": "small social profiles, markets",
+  "silhouette": "round"
  },
  {
   "kind": "theater",
   "type": "building",
   "looks": "Half-round theatre with comedy and tragedy masks",
-  "fits": "emoticons, entertainment, games, shows"
+  "fits": "emoticons, entertainment, games, shows",
+  "silhouette": "low"
  },
  {
   "kind": "inn",
   "type": "building",
   "looks": "Two-storey inn with a hanging sign and stable",
-  "fits": "community, forums, timelines, meeting places"
+  "fits": "community, forums, timelines, meeting places",
+  "silhouette": "house"
  },
  {
   "kind": "teahouse",
   "type": "building",
   "looks": "Two-tier teahouse with a finial and books outside",
-  "fits": "reviews, books, films, chat, coffee talk"
+  "fits": "reviews, books, films, chat, coffee talk",
+  "silhouette": "tiered"
  },
  {
   "kind": "cattower",
   "type": "building",
   "looks": "Octagonal tower with cat ears and tentacles",
-  "fits": "GitHub, code hosting"
+  "fits": "GitHub, code hosting",
+  "silhouette": "tower"
  },
  {
   "kind": "dovecote",
   "type": "building",
   "looks": "Dovecote on a tall pole with birds circling",
-  "fits": "Twitter / X, Telegram bots, messaging, newsletters"
+  "fits": "Twitter / X, Telegram bots, messaging, newsletters",
+  "silhouette": "mast"
  },
  {
   "kind": "camera",
   "type": "building",
   "looks": "Camera-shaped house with a big lens and rainbow stripes",
-  "fits": "Instagram, photography, screenshots, screensavers"
+  "fits": "Instagram, photography, screenshots, screensavers",
+  "silhouette": "object"
  },
  {
   "kind": "pavilion",
   "type": "building",
   "looks": "Six-column open pavilion with a flared roof",
-  "fits": "relaxation, philosophy, calculators for life, classics"
+  "fits": "relaxation, philosophy, calculators for life, classics",
+  "silhouette": "open"
  },
  {
   "kind": "elfhall",
   "type": "building",
   "looks": "Steep-roofed hall with a slender tower and an arch",
-  "fits": "translations, essays, long reads, consulting"
+  "fits": "translations, essays, long reads, consulting",
+  "silhouette": "house"
  },
  {
   "kind": "stupa",
   "type": "building",
   "looks": "Domed stupa with a golden spire and prayer flags",
-  "fits": "originals, sacred or source texts, archives"
+  "fits": "originals, sacred or source texts, archives",
+  "silhouette": "round"
  },
  {
   "kind": "tent",
   "type": "building",
   "looks": "Striped circus tent with bunting",
-  "fits": "invitations, events, parties, games"
+  "fits": "invitations, events, parties, games",
+  "silhouette": "low"
  },
  {
   "kind": "school",
   "type": "building",
   "looks": "Schoolhouse with a bell tower",
-  "fits": "courses, tutorials, academies, learning apps"
+  "fits": "courses, tutorials, academies, learning apps",
+  "silhouette": "house"
  },
  {
   "kind": "smithy",
   "type": "building",
   "looks": "Forge with a big stone chimney and glowing hearth",
-  "fits": "configuration you tinker with, motorcycles, garages, hardware"
+  "fits": "configuration you tinker with, motorcycles, garages, hardware",
+  "silhouette": "house"
  },
  {
   "kind": "scriptorium",
   "type": "building",
   "looks": "Clock tower with a side wing",
-  "fits": "blogs, tutorials, writing, documentation"
+  "fits": "blogs, tutorials, writing, documentation",
+  "silhouette": "tower"
  },
  {
   "kind": "warehouse",
   "type": "building",
   "looks": "Saw-tooth roof warehouse",
-  "fits": "databases, datasets, archives, inventories"
+  "fits": "databases, datasets, archives, inventories",
+  "silhouette": "house"
  },
  {
   "kind": "watermill",
   "type": "building",
   "looks": "Mill with a turning water wheel",
-  "fits": "dictionaries, data processing, things that turn input into output"
+  "fits": "dictionaries, data processing, things that turn input into output",
+  "silhouette": "house"
  },
  {
   "kind": "kiln",
   "type": "building",
   "looks": "Bottle kiln with smoke",
-  "fits": "extensions, plugins, small crafts"
+  "fits": "extensions, plugins, small crafts",
+  "silhouette": "round"
  },
  {
   "kind": "mansion",
   "type": "building",
   "looks": "Mansard-roof house with dormers and a top hat on the chimney",
-  "fits": "workflows, butlers, assistants, LinkedIn, professional profiles, homepages"
+  "fits": "workflows, butlers, assistants, LinkedIn, professional profiles, homepages",
+  "silhouette": "house"
  },
  {
   "kind": "hobbit",
   "type": "building",
   "looks": "Grass mound with a round door and chimney",
-  "fits": "one-person companies, cosy home projects, personal sites"
+  "fits": "one-person companies, cosy home projects, personal sites",
+  "silhouette": "low"
  },
  {
   "kind": "mine",
   "type": "building",
   "looks": "Rock mound with a timber portal and a mine cart",
-  "fits": "courses with practice, digging into data, deep tools"
+  "fits": "courses with practice, digging into data, deep tools",
+  "silhouette": "low"
  },
  {
   "kind": "still",
   "type": "building",
   "looks": "Copper still with a coil",
-  "fits": "brewing, finance distilling, source of a brew tool"
+  "fits": "brewing, finance distilling, source of a brew tool",
+  "silhouette": "object"
  },
  {
   "kind": "oak",

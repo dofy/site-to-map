@@ -8,7 +8,9 @@ description: Create or edit a folded-paper 3D navigation map from a personal hom
 Converts a link-heavy site into the map used on yahaha.net: a generated paper-craft world
 (coasts, islands, gulfs or lakes, mountain ranges, rivers and roads from a seed) with up to
 nine towns, ink-line rendering, local-time daylight, multilingual text, tour mode and
-keyboard shortcuts. You write one `site.json`; the engine in `engine/` does the rest.
+keyboard shortcuts. Forests mix tree shapes, peaks vary between snow, rock and vegetation,
+and birds, boats and small schools of fish add life where the world permits. You write one
+`site.json`; the engine in `engine/` does the rest.
 
 Read `references/site-schema.md` before writing `site.json`, and pick building shapes from
 `references/kinds.json`. The schema file contains a complete annotated example, and
@@ -72,10 +74,17 @@ integration. Check the affected views and screenshots when the change is visual.
    - Number keys 1–9 reach towns in list order. Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
      English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
      language, info card).
-4. **Pick shapes.** For each link choose a `kind` from `references/kinds.json` by what the
-   thing *is* (a bot → `dovecote`, an IP tool → `twin`, a blog → `scriptorium`). Avoid
-   repeating a kind inside one town. Props use the `prop` kinds. Descriptions are one short
-   line taken from the source, not invented claims.
+4. **Pick shapes.** Read `references/kinds.json` and choose a distinct building `kind` for
+   each link in a town by what it *is* (a bot → `dovecote`, an IP tool → `radio`, a blog →
+   `scriptorium`). Compare both the `silhouette` field and overview screenshots: different
+   kinds can all read as the same gabled house or tower. Mix open, round, low, object and
+   taller silhouettes where they fit the links; do not chase variety by misrepresenting an
+   item. Address builder warnings and check each town at overview and close-up, in daytime
+   and at night. Repeat a kind only for a deliberate reason, or when explicitly requested;
+   preserve kinds already chosen by the site owner. Vary prop kinds too. If a kind is omitted,
+   the engine balances silhouettes deterministically but cannot infer the item's meaning;
+   explicit kinds are never rewritten.
+   Descriptions are one short line taken from the source, not invented claims.
 5. **Shape the world.** The land is generated from `world.seed` (default: brand + town
    ids), so every site gets different coasts, mountains, rivers, lakes and roads. Pick a
    `world.type` that suits the site (`coast`, `twoCoasts`, `island`, `gulf`, `lakeland`) or

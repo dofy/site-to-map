@@ -89,7 +89,10 @@ skill converts one language only; see *Languages* at the end for adding more by 
 **Annex kinds**: `hut`, `tower`, `banner`, `stall`, `barrels`, `crates`, `tree`, `lantern`,
 `well`, `stairs`, `bench`, `anvil`, `cart`.
 
-**Item kinds**: see `kinds.json`. `type: "building"` kinds fill the town grid (first nine);
+**Item kinds**: see `kinds.json`. Choose varied kinds that fit each item rather than repeating
+one silhouette across a town: see each building kind’s `silhouette` field. When `kind` is
+omitted, a stable silhouette-balanced default is assigned without inferring meaning; explicit
+kinds are preserved. `type: "building"` kinds fill the town grid (first nine);
 `type: "prop"` kinds, and any building past the ninth, go in the ring outside town.
 `pagoda` takes `"t": 2–4` tiers.
 

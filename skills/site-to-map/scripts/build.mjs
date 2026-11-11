@@ -13,6 +13,23 @@ if (!sitePath) { console.error('usage: node build.mjs <site.json> <out-dir>'); p
 const site = JSON.parse(readFileSync(sitePath, 'utf8'));
 const errors = validate(site);
 if (errors.length) { console.error('site.json problems:\n- ' + errors.join('\n- ')); process.exit(1); }
+const kindInfo = JSON.parse(readFileSync(join(here, '../references/kinds.json'), 'utf8'));
+const buildingKinds = new Set(kindInfo.filter(k => k.type === 'building').map(k => k.kind));
+for (const city of site.cities) {
+  const explicit = city.items.filter(item => buildingKinds.has(item.kind));
+  const counts = new Map(); for (const item of explicit) counts.set(item.kind, (counts.get(item.kind) || 0) + 1);
+  for (const [kind, count] of counts) if (count >= 3 && count > explicit.length / 2) {
+    console.warn(`town "${city.id}": ${count} landmarks use "${kind}"; consider varied kinds (explicit choices are preserved)`);
+  }
+  const families = new Map();
+  for (const item of explicit) {
+    const family = kindInfo.find(k => k.kind === item.kind)?.silhouette;
+    if (family) families.set(family, (families.get(family) || 0) + 1);
+  }
+  for (const [family, count] of families) if (count >= 3 && count >= explicit.length * .4) {
+    console.warn(`town "${city.id}": ${count} landmarks share the "${family}" silhouette; review their overview appearance (explicit choices are preserved)`);
+  }
+}
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
 const loc = (v, lang) => v == null ? '' : typeof v === 'string' ? v : (v[lang] ?? v.en ?? Object.values(v)[0] ?? '');
