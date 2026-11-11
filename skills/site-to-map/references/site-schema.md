@@ -44,8 +44,8 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "description": "One sentence for <meta name=description>."
   },
   "text": {                            // overrides for interface strings, per language
-    "en": { "me": "World name", "five": "Five towns", "title": "Big title", "sub": "Subtitle", "intro": "Info card text",
-            "fold": "Loading title", "titleSuffix": "Tab title suffix", "plots": "{n} plots" }
+    "en": { "worldName": "World name", "townCount": "{n} towns", "title": "Big title", "sub": "{n} towns, one land",
+            "intro": "Info card text", "fold": "Loading title", "titleSuffix": "Tab title suffix", "plots": "{n} plots" }
   },
   "places": [                          // map lettering at fixed anchors
     { "at": "north", "name": "Long Ridge" }
@@ -139,12 +139,15 @@ add by hand (or with another tool):
   with two languages it toggles, with more it opens a menu.
 - Interface strings are built in for `zh`, `zh-Hant`, `ja` and `en`. Any other language starts
   from English;
-  override them in `text.<lang>`. Keys: `me` (world name), `five` (town count line), `title`,
-  `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
-  `hintC`, `plots` (`"{n} …"`), `plot`, `open`, `fold`, `prep`, `titleSuffix`,
+  override them in `text.<lang>`. Keys: `worldName` (root of the location bar), `townCount`
+  (count beside it), `title`, `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
+  `hintC`, `plots`, `plot`, `open`, `fold`, `prep`, `titleSuffix`,
   `steps` (7 loading steps), `phases` (8 times of day: late night, sunrise, morning,
   forenoon, noon, afternoon, dusk, evening), `langName`, `keysT`, `keysClose`, `keysHint`,
-  `nowebgl`.
+  `nowebgl`. In `townCount`, `sub` and `plots`, `{n}` becomes the number of towns (or of
+  places in a town); leave the count to `{n}` rather than writing a number. All keys are
+  optional; the built-in text is generic ("Map · 4 towns"), so set `worldName` and `title`
+  when the site has a name for its world.
 - Town and place names show their `en` form large with the current language underneath when
   it differs, as on yahaha.net.
 
