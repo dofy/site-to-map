@@ -52,8 +52,17 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
   background: var(--ui-card); border: 1px solid var(--ui-ink); border-radius: 999px; padding: 3px; }
 .brand a { color: var(--ui-ink); text-decoration: none; border-radius: 999px; padding: 4px 12px; }
 .brand .site { font-family: var(--font-map); font-style: italic; font-weight: 600; font-size: 18px; line-height: 1.1; }
-.brand .about { font-family: var(--font-mono); font-size: 11.5px; color: var(--ui-soft); border-left: 1px solid var(--ui-line); border-radius: 0 999px 999px 0; }
 .brand a:hover { background: var(--ui-line); }
+.brand .links { display: flex; align-items: center; }
+.brand .links:empty { display: none; }
+.brand .links a { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 11.5px; color: var(--ui-soft);
+  border-left: 1px solid var(--ui-line); border-radius: 0; padding: 4px 10px; }
+.brand .links a:last-child { border-radius: 0 999px 999px 0; }
+.brand .links .ic { width: 14px; height: 14px; flex: none; }
+.brand .links img.ic { object-fit: contain; }
+.brand .links .ext { width: 11px; height: 11px; opacity: .6; transition: transform .2s, opacity .2s; }
+.brand .links a:hover .ext { opacity: 1; transform: translate(1px, -1px); }
+@media (max-width: 760px) { .brand .links a:has(.ic) .t { display: none; } .brand .links a { padding: 4px 9px; } }
 .tools .sep { width: 1px; height: 16px; background: var(--ui-line); margin: 0 2px; }
 .foot { left: calc(70px + env(safe-area-inset-left, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   font-family: var(--font-mono); font-size: 11px; color: var(--ui-soft); background: color-mix(in srgb, var(--ui-card) 85%, transparent);
@@ -178,9 +187,6 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
 
 .foot .ver { color: var(--ui-faint); text-decoration: none; }
 .foot .ver:hover { color: var(--ui-ink); text-decoration: underline; }
-.brand .about { display: inline-flex; align-items: center; gap: 5px; }
-.brand .about .ext { opacity: .6; transition: transform .2s, opacity .2s; }
-.brand .about:hover .ext { opacity: 1; transform: translate(1px, -1px); }
 .go .ext { transition: transform .2s; }
 .go:hover .ext { transform: translate(1px, -1px); }
 .site-h1 { margin: 0; font: inherit; display: contents; }

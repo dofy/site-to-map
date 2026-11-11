@@ -42,6 +42,10 @@ function validate(s) {
   if (!Array.isArray(s.cities) || !s.cities.length) return ['cities must be a non-empty array'];
   if (s.cities.length > 9) out.push(`${s.cities.length} towns; the map holds at most 9 (merge categories)`);
   if (s.cities.length > 5 && s.world?.layout === 'classic') out.push('layout "classic" has five town spots; use a generated world for more towns');
+  if (s.site?.links !== undefined) {
+    if (!Array.isArray(s.site.links)) out.push('site.links must be an array of { name, url, icon }');
+    else s.site.links.forEach((l, i) => { if (!l?.name || !l?.url) out.push(`site.links[${i}]: name and url are required`); });
+  }
   const slots = new Set(), keys = new Set();
   for (const c of s.cities) {
     const where = `town "${c.id}"`;

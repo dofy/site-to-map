@@ -108,7 +108,8 @@ angle, the overview zoom and tilt, and switches orbit, top view and tour off.
 | `blur` | on | depth-of-field and tilt-shift blur |
 | `infoOpen` | on | info card open at start on wide screens |
 
-Other things that are optional simply by leaving them out: `site.about` (About link),
+Other things that are optional simply by leaving them out: `site.links` (a few site-level links beside the brand, such as GitHub or contact, each
+with a name, URL and icon; add them only when the source site shows such links prominently),
 `site.copyright` (footer line), `site.version` / `site.releaseUrl` (version link), `places`
 (map lettering), town `features` (walls, hedge, lamps, centrepiece, suburbs) and `world`
 (land generation, see step 5). `?t=18` previews an hour and `?seed=` / `?world=` another

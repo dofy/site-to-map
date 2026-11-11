@@ -33,7 +33,11 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "home": "https://example.com/",     // where the brand links (default https://<domain>)
     "lang": "en",                       // the content language code (zh, en, ja, fr, …); auto = browser
     "storageKey": "example-map",        // localStorage prefix for the language choice
-    "about": { "url": "https://…", "label": "About me" },  // optional
+    "links": [                          // optional site-level links beside the brand, any number
+      { "name": "GitHub", "url": "https://github.com/you", "icon": "github" },
+      { "name": { "en": "Blog", "ja": "ブログ" }, "url": "https://blog.example.com", "icon": "book" }
+    ],                                  // icon: github, x, mail, rss, home, user, book, link,
+                                        // an inline "<svg …>…</svg>", or an image URL; none = ↗ arrow
     "copyright": { "since": 2007, "owner": "Name" },   // since optional
     "version": "1.2.0",                 // optional, shown in the footer
     "releaseUrl": "https://github.com/u/r/releases/tag/v{version}",  // optional
@@ -137,9 +141,14 @@ add by hand (or with another tool):
   from English;
   override them in `text.<lang>`. Keys: `me` (world name), `five` (town count line), `title`,
   `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
-  `hintC`, `plots` (`"{n} …"`), `plot`, `open`, `about`, `fold`, `prep`, `titleSuffix`,
+  `hintC`, `plots` (`"{n} …"`), `plot`, `open`, `fold`, `prep`, `titleSuffix`,
   `steps` (7 loading steps), `phases` (8 times of day: late night, sunrise, morning,
   forenoon, noon, afternoon, dusk, evening), `langName`, `keysT`, `keysClose`, `keysHint`,
   `nowebgl`.
 - Town and place names show their `en` form large with the current language underneath when
   it differs, as on yahaha.net.
+
+**Links beside the brand.** `site.links` takes any number of `{ name, url, icon }`. On wide
+screens each shows its icon and name; below 760px only the icon (or the name, if it has no
+icon), with the name kept as tooltip and accessible label. Keep it short, two or three
+links; more belong in a town.

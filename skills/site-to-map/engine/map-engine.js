@@ -173,7 +173,27 @@ document.documentElement.lang = LANG === 'zh' ? 'zh-CN' : LANG;
   hide('#b-lang', !UI.languageSwitch); hide('#b-keys', !UI.shortcuts); hide('.tools .sep', !UI.languageSwitch && !UI.shortcuts);
   hide('#b-tour', !UI.tour); hide('#b-spin, #b-top', !UI.views); hide('#clock', !UI.clock); hide('.compass', !UI.compass); }
 document.getElementById('site').textContent = DOMAIN; document.getElementById('site').href = SITEINFO.home || 'https://' + DOMAIN.toLowerCase();
-{ const a = document.getElementById('about'); if (SITEINFO.about && SITEINFO.about.url) a.href = SITEINFO.about.url; else a.remove(); }
+// site-level links beside the brand: site.links = [{ name, url, icon }]; site.about is the old single form
+const SITE_LINKS = Array.isArray(SITEINFO.links) ? SITEINFO.links.filter(l => l && l.url) : SITEINFO.about?.url ? [{ name: SITEINFO.about.label || T.en.about, url: SITEINFO.about.url, icon: SITEINFO.about.icon }] : [];
+const LINK_ICONS = {
+  github: '<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="currentColor"/>',
+  x: '<path d="M2.5 2h3.3l2.9 4 3.4-4h1.5L9.4 6.8 13.8 14h-3.3L7.4 9.8 3.9 14H2.4l4.3-5L2.5 2z" fill="currentColor"/>',
+  mail: '<path d="M2 4h12v8H2zM2.4 4.4 8 8.8l5.6-4.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  rss: '<path d="M3 3a10 10 0 0 1 10 10M3 7a6 6 0 0 1 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="3.6" cy="12.4" r="1.3" fill="currentColor"/>',
+  home: '<path d="M2.5 7.5 8 2.5l5.5 5V13h-3.5V9.5h-4V13H2.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  user: '<circle cx="8" cy="5.5" r="2.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 14c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  book: '<path d="M2.5 3h4c1 0 1.5.6 1.5 1.5V13c0-.8-.6-1.3-1.5-1.3h-4zM13.5 3h-4C8.5 3 8 3.6 8 4.5V13c0-.8.6-1.3 1.5-1.3h4z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
+  link: '<path d="M6.6 9.4 9.4 6.6M7 4.5l1-1a2.8 2.8 0 0 1 4 4l-1 1M9 11.5l-1 1a2.8 2.8 0 0 1-4-4l1-1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+};
+const EXT_SVG = '<svg class="ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5h7v7M12.5 3.5 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// icon: a built-in name above, an inline <svg …>, or an image URL
+const linkIcon = icon => !icon ? '' : LINK_ICONS[icon] ? `<svg class="ic" viewBox="0 0 16 16" aria-hidden="true">${LINK_ICONS[icon]}</svg>`
+  : /^\s*<svg[\s>]/i.test(icon) ? icon.replace(/<svg/i, '<svg class="ic" aria-hidden="true"') : `<img class="ic" src="${String(icon).replace(/"/g, '&quot;')}" alt="">`;
+function renderLinks() {
+  const nav = document.getElementById('site-links'); if (!nav) return;
+  nav.innerHTML = SITE_LINKS.map(l => { const name = loc(l.name, LANG) || l.url, ext = !/^mailto:/i.test(l.url);
+    return `<a href="${String(l.url).replace(/"/g, '&quot;')}"${ext ? ' target="_blank" rel="noopener"' : ''} aria-label="${name.replace(/"/g, '&quot;')}" title="${name.replace(/"/g, '&quot;')}">${linkIcon(l.icon)}<span class="t">${name.replace(/</g, '&lt;')}</span>${l.icon ? '' : EXT_SVG}</a>`; }).join('');
+}
 { const cp = document.querySelector('.foot .copy'), co = SITEINFO.copyright || {}; if (cp && co.owner) cp.innerHTML = `&copy; ${co.since ? co.since + '&ndash;' : ''}<span id="year"></span> ${co.owner}`; else if (cp && !co.owner) cp.remove(); }
 if (!document.getElementById('map').dataset.version && SITEINFO.version) document.getElementById('map').dataset.version = SITEINFO.version;
 { const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear(); }
@@ -1386,7 +1406,7 @@ function applyLang() {
     else if (LANGS.length === 2) { const next = LANGS[(LANGS.indexOf(LANG) + 1) % 2]; (lb.querySelector('.t') || lb).textContent = next === 'en' ? 'EN' : langLabel(next); lb.lang = next; lb.removeAttribute('aria-haspopup'); }
     else { (lb.querySelector('.t') || lb).textContent = (T[LANG]?.langShort || LANG.toUpperCase()) + ' ▾'; lb.lang = LANG; lb.setAttribute('aria-haspopup', 'menu'); lb.setAttribute('aria-label', langLabel(LANG));
       langMenu.innerHTML = LANGS.map(l => `<button type="button" role="menuitemradio" aria-checked="${l === LANG}" lang="${l}" data-lang="${l}">${langLabel(l)}</button>`).join(''); } }
-  { const a = document.querySelector('#about .t'); if (a) a.textContent = loc(SITEINFO.about && SITEINFO.about.label, LANG) || t.about; }
+  renderLinks();
   fold.textContent = info.classList.contains('folded') ? t.show : t.hide;
   info.setAttribute('aria-label', t.info); crumb.setAttribute('aria-label', t.where); document.querySelector('.tools').setAttribute('aria-label', t.view);
   for (const d of Object.values(cityData)) d.el.innerHTML = cityTagHTML(d.c);

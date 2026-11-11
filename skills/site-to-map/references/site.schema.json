@@ -42,17 +42,6 @@
     "storageKey": {
      "type": "string"
     },
-    "about": {
-     "type": "object",
-     "properties": {
-      "url": {
-       "type": "string"
-      },
-      "label": {
-       "$ref": "#/$defs/text"
-      }
-     }
-    },
     "copyright": {
      "type": "object",
      "properties": {
@@ -80,6 +69,28 @@
      "type": "array",
      "items": {
       "type": "string"
+     }
+    },
+    "links": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "name",
+       "url"
+      ],
+      "properties": {
+       "name": {
+        "$ref": "#/$defs/text"
+       },
+       "url": {
+        "type": "string"
+       },
+       "icon": {
+        "type": "string",
+        "description": "built-in name (github, x, mail, rss, home, user, book, link), an inline <svg>, or an image URL"
+       }
+      }
      }
     }
    }
