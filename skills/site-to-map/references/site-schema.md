@@ -128,11 +128,13 @@ add by hand (or with another tool):
   `"name": { "en": "Harbour", "ja": "港", "fr": "Port" }`. Missing languages fall back to `en`,
   then to the first value.
 - The page language is `site.lang`, else the visitor's browser language if the content has
-  it, else the first language found. `site.languages` (e.g. `["en", "ja"]`) fixes the list and
+  it (zh-TW, zh-HK and zh-Hant pick `zh-Hant`; zh-CN and zh-Hans pick `zh`), else `en`, else
+  the first language found. `site.languages` (e.g. `["en", "ja"]`) fixes the list and
   its order; otherwise it is every code used in town and link text.
-- `ui.languageSwitch: true` shows a button (and `L` key) that cycles through those languages
-  and remembers the choice.
-- Interface strings are built in for `zh` and `en`. Any other language starts from English;
+- `ui.languageSwitch: true` shows a language button (and `L` key) and remembers the choice:
+  with two languages it toggles, with more it opens a menu.
+- Interface strings are built in for `zh`, `zh-Hant`, `ja` and `en`. Any other language starts
+  from English;
   override them in `text.<lang>`. Keys: `me` (world name), `five` (town count line), `title`,
   `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
   `hintC`, `plots` (`"{n} …"`), `plot`, `open`, `about`, `fold`, `prep`, `titleSuffix`,
