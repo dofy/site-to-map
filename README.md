@@ -31,7 +31,9 @@ converted with one `site.json`.
 
 Tell your agent:
 
-> Install the site-to-map skill from https://github.com/dofy/site-to-map
+```text
+Install the site-to-map skill from https://github.com/dofy/site-to-map
+```
 
 Or install it yourself:
 
@@ -47,15 +49,21 @@ screenshots) the first time it runs.
 
 Give the agent a site and say what you want:
 
-> Turn https://example.com into a site-to-map page.
+```text
+Turn https://example.com into a site-to-map page.
+```
 
-> Make my bookmarks (bookmarks.html) into a map with four towns, an island world and a Chinese/English switch.
+```text
+Make my bookmarks (bookmarks.html) into a map with four towns, an island world and a Chinese/English switch.
+```
 
 The agent reads the site, plans the towns, names them, picks a building for every link,
 generates the land, builds a standalone page and checks it with screenshots. It tells you
 what it merged or turned into props, and you can ask for changes the same way:
 
-> Put GitHub and the blog in one town. Try another seed. Turn on keyboard shortcuts.
+```text
+Put GitHub and the blog in one town. Try another seed. Turn on keyboard shortcuts.
+```
 
 Serve the output folder over HTTP to open it (ES modules don't load from `file://`).
 Options worth knowing, all optional: number or grouping of towns, `world.type` and
