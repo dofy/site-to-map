@@ -49,9 +49,13 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
    town names, the world name, and the nine place-name anchors (mountains, two rivers,
    forest, fields, sea, bay, western range, lake). Use a borrowed setting (Tolkien, a
    game, a film) only when the user asks for it, and say that it is fan naming. Give
-   user-facing strings in the site's own language and set `site.lang`. Only when the user
-   asks for a language switch, set `ui.languageSwitch: true` and give every string as
-   `{ "zh": …, "en": … }`. Keep proper nouns as the owner writes them.
+   user-facing strings in the site's own language as plain strings, and set `site.lang`
+   to its code. **Do not translate** and do not add other languages, even if the source
+   site is multilingual: convert the main language only, and tell the user that other
+   languages can be added by hand (see `references/site-schema.md`, *Languages*). The
+   interface has built-in Chinese and English; for any other language, also write its
+   interface strings in `text.<lang>` (keys listed in the schema). Keep proper nouns as the
+   owner writes them.
    - Number keys 1–9 reach towns in list order. Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
      English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
      language, info card).
@@ -87,7 +91,7 @@ user only about the first two; keep the rest at their defaults unless they menti
 
 | option | default | what it does |
 |---|---|---|
-| `languageSwitch` | off | zh/en toggle button and `L` key. Off: one language, chosen by `site.lang` or the browser |
+| `languageSwitch` | off | language button and `L` key, cycling through languages the user added by hand. The skill never writes translations, so leave it off |
 | `shortcuts` | off | 1–5 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
 | `tour` | on | Tour button that flies through every town |
 | `views` | on | Orbit and Top view buttons |

@@ -15,7 +15,8 @@
 - 37 种建筑和 12 种道具，按链接的含义挑选（机器人是鸽舍，IP 工具是两栋楼加一座连桥，博客是钟楼）。
 - 光照、天色和路灯跟随访客的本地时间，一天分 8 个时段，界面配色也随之变化。
 - 导览、环绕和俯视视角，按住 Shift 或空格拖拽平移，禁用 JavaScript 时显示链接列表。
-- 可选（默认关闭）：中英文切换和快捷键。导览、视角按钮、时钟、罗盘、固定时刻、开场动画、动态效果和景深模糊都可以在 `site.json` → `ui` 里开关。
+- 按网站自己的语言生成，界面文字内置中文和英文。引擎也能在你手动添加的多种语言之间切换，但 skill 本身不做翻译。
+- 可选（默认关闭）：快捷键。导览、视角按钮、时钟、罗盘、固定时刻、开场动画、动态效果和景深模糊都可以在 `site.json` → `ui` 里开关。
 
 ## 安装
 
@@ -43,7 +44,7 @@ skill 第一次运行时会自动安装脚本依赖（Playwright，用来读取�
 ```
 
 ```text
-把我的书签（bookmarks.html）做成地图，分成四座城，用岛屿地形，加上中英文切换。
+把我的书签（bookmarks.html）做成地图，分成四座城，用岛屿地形。
 ```
 
 agent 会读取网站、规划城镇、起名、为每个链接挑选建筑、生成地形、构建独立页面，并截图检查。它会告诉你哪些内容被合并了，哪些变成了道具。想调整，继续用同样的方式说：
@@ -52,7 +53,7 @@ agent 会读取网站、规划城镇、起名、为每个链接挑选建筑、�
 把 GitHub 和博客合成一座城。换一个种子。打开快捷键。
 ```
 
-生成的文件夹要通过 HTTP 服务打开（ES 模块不能从 `file://` 加载）。值得知道的可选项：城的数量或分组，`world.type` 和 `world.seed`（包括按域名生成地形的 `"{domain}"`），`ui.languageSwitch` 和 `ui.shortcuts`（默认关闭），以及 `ui` 的其他选项（见 [`references/site-schema.md`](skills/site-to-map/references/site-schema.md)）。
+生成的文件夹要通过 HTTP 服务打开（ES 模块不能从 `file://` 加载）。值得知道的可选项：城的数量或分组，`world.type` 和 `world.seed`（包括按域名生成地形的 `"{domain}"`），`ui.shortcuts`（默认关闭）以及 `ui` 的其他选项。手动添加多语言的方法见 [`references/site-schema.md`](skills/site-to-map/references/site-schema.md) 的 *Languages* 一节。
 
 <details>
 <summary>手动运行脚本</summary>

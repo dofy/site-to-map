@@ -25,9 +25,11 @@ converted with one `site.json`.
 - Light, sky and street lamps follow the visitor's local time across eight phases; the
   interface colours follow too.
 - Guided tour, orbit and top views, Shift/Space drag to pan, a no-JavaScript link list.
-- Optional (off by default): a Chinese/English switch and keyboard shortcuts. Tour, view
-  buttons, clock, compass, fixed daylight, entrance animation, motion and blur can be
-  switched in `site.json` → `ui`.
+- Written in the site's own language, with built-in Chinese and English interface text.
+  The engine can also switch between languages you add by hand; the skill itself does not
+  translate.
+- Optional (off by default): keyboard shortcuts. Tour, view buttons, clock, compass, fixed
+  daylight, entrance animation, motion and blur can be switched in `site.json` → `ui`.
 
 ## Install
 
@@ -56,7 +58,7 @@ Turn https://example.com into a site-to-map page.
 ```
 
 ```text
-Make my bookmarks (bookmarks.html) into a map with four towns, an island world and a Chinese/English switch.
+Make my bookmarks (bookmarks.html) into a map with four towns and an island world.
 ```
 
 The agent reads the site, plans the towns, names them, picks a building for every link,
@@ -69,9 +71,9 @@ Put GitHub and the blog in one town. Try another seed. Turn on keyboard shortcut
 
 Serve the output folder over HTTP to open it (ES modules don't load from `file://`).
 Options worth knowing, all optional: number or grouping of towns, `world.type` and
-`world.seed` (including `"{domain}"` for one land per domain), `ui.languageSwitch` and
-`ui.shortcuts` (off by default), and the rest of `ui` (see
-[`references/site-schema.md`](skills/site-to-map/references/site-schema.md)).
+`world.seed` (including `"{domain}"` for one land per domain), `ui.shortcuts` (off by
+default) and the rest of `ui`. Adding languages by hand is described under *Languages* in
+[`references/site-schema.md`](skills/site-to-map/references/site-schema.md).
 
 <details>
 <summary>Running the scripts by hand</summary>

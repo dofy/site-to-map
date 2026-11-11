@@ -13,14 +13,6 @@
     },
     {
      "type": "object",
-     "properties": {
-      "zh": {
-       "type": "string"
-      },
-      "en": {
-       "type": "string"
-      }
-     },
      "additionalProperties": {
       "type": "string"
      }
@@ -45,11 +37,7 @@
      "type": "string"
     },
     "lang": {
-     "enum": [
-      "auto",
-      "zh",
-      "en"
-     ]
+     "type": "string"
     },
     "storageKey": {
      "type": "string"
@@ -87,6 +75,12 @@
     },
     "description": {
      "type": "string"
+    },
+    "languages": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },

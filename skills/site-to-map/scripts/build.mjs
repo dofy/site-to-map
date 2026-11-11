@@ -15,12 +15,12 @@ const errors = validate(site);
 if (errors.length) { console.error('site.json problems:\n- ' + errors.join('\n- ')); process.exit(1); }
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
-const loc = (v, lang) => v == null ? '' : typeof v === 'string' ? v : (v[lang] ?? v.en ?? v.zh ?? '');
-const lang = site.site?.lang === 'zh' ? 'zh' : site.site?.lang === 'en' ? 'en' : (site.site?.defaultLang || 'en');
+const loc = (v, lang) => v == null ? '' : typeof v === 'string' ? v : (v[lang] ?? v.en ?? Object.values(v)[0] ?? '');
+const lang = site.site?.lang && site.site.lang !== 'auto' ? site.site.lang : (site.site?.languages?.[0] || 'en');
 const title = loc(site.text?.[lang]?.title, lang) || site.site?.brand || 'Map';
 const noscript = `<nav class="no-js" aria-label="All links">${site.cities.map(c => `<section><h2>${esc(loc(c.name, lang))}</h2><ul>${c.items.map(it => `<li><a href="${esc(it.url)}">${esc(loc(it.name, lang))}</a></li>`).join('')}</ul></section>`).join('')}</nav>`;
 const html = readFileSync(join(engine, 'template.html'), 'utf8')
-  .replaceAll('{{LANG}}', lang === 'zh' ? 'zh-CN' : 'en')
+  .replaceAll('{{LANG}}', lang === 'zh' ? 'zh-CN' : lang)
   .replaceAll('{{TITLE}}', esc(title))
   .replaceAll('{{DESCRIPTION}}', esc(site.site?.description || title))
   .replace('{{NOSCRIPT}}', noscript)

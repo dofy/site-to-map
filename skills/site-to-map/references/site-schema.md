@@ -1,8 +1,7 @@
 # site.json
 
-All user-facing text fields accept either a string or `{ "zh": "…", "en": "…" }`. With
-`ui.languageSwitch` off (the default) the page shows one language: `site.lang` if set, otherwise
-the browser language picks from what each field has, so plain strings are enough.
+User-facing text fields are plain strings in the site's language (set `site.lang`). The
+skill converts one language only; see *Languages* at the end for adding more by hand.
 
 ```jsonc
 {
@@ -16,7 +15,7 @@ the browser language picks from what each field has, so plain strings are enough
                                        // layout shifts when a town crosses 2/4/6/9 buildings
   },
   "ui": {                              // optional interface features; defaults shown
-    "languageSwitch": false,            // zh/en toggle button (and L key); off = one language only
+    "languageSwitch": false,            // language button (and L key) for hand-added languages
     "shortcuts": false,                 // keyboard shortcuts, ? help panel and hint; Esc always works
     "tour": true,                       // Tour button: fly through every town in list order
     "views": true,                      // Orbit and Top view buttons
@@ -32,21 +31,20 @@ the browser language picks from what each field has, so plain strings are enough
     "brand": "example.com",            // shown top left when the hostname is not in domains
     "domains": ["example.com"],         // hostnames this map is served on
     "home": "https://example.com/",     // where the brand links (default https://<domain>)
-    "lang": "auto",                     // auto (browser language) | zh | en; with one language, set it
+    "lang": "en",                       // the content language code (zh, en, ja, fr, …); auto = browser
     "storageKey": "example-map",        // localStorage prefix for the language choice
-    "about": { "url": "https://…", "label": { "zh": "关于我", "en": "About me" } },  // optional
+    "about": { "url": "https://…", "label": "About me" },  // optional
     "copyright": { "since": 2007, "owner": "Name" },   // since optional
     "version": "1.2.0",                 // optional, shown in the footer
     "releaseUrl": "https://github.com/u/r/releases/tag/v{version}",  // optional
     "description": "One sentence for <meta name=description>."
   },
   "text": {                            // overrides for interface strings, per language
-    "zh": { "me": "世界名", "five": "五座城", "title": "大标题", "sub": "副标题", "intro": "信息卡介绍",
-            "fold": "加载时的标题", "titleSuffix": "浏览器标签后缀", "plots": "{n} 区" },
-    "en": { "…": "same keys" }
+    "en": { "me": "World name", "five": "Five towns", "title": "Big title", "sub": "Subtitle", "intro": "Info card text",
+            "fold": "Loading title", "titleSuffix": "Tab title suffix", "plots": "{n} plots" }
   },
   "places": [                          // map lettering at fixed anchors
-    { "at": "north", "name": { "en": "Long Ridge", "zh": "长岭" } }
+    { "at": "north", "name": "Long Ridge" }
     // anchors: north, riverA, riverB, forest, fields, sea, bay, west, lake
   ],
   "cities": [                          // 3–9 towns, list order = tour order
@@ -55,9 +53,9 @@ the browser language picks from what each field has, so plain strings are enough
       "slot": "center",                // center | coast | south | east | highland | town (optional, auto-filled;
                                        // the first five once each, town repeats for towns 6–9)
       "key": "m",                      // one-letter shortcut, not H O T V L I
-      "name": { "en": "Town name", "zh": "城名" },
-      "role": { "zh": "工具", "en": "Tools" },   // the category, shown under the name
-      "blurb": { "zh": "一两句介绍", "en": "One or two sentences" },
+      "name": "Town name",
+      "role": "Tools",                 // the category, shown under the name
+      "blurb": "One or two sentences",
       "style": {
         "walls": ["paper", "wallSky", "road"],   // cycled across buildings
         "roofs": ["roofSlate", "terra", "mustard"],
@@ -72,7 +70,7 @@ the browser language picks from what each field has, so plain strings are enough
         "suburbs": 7                   // loose houses around town
       },
       "items": [
-        { "name": "Link name", "url": "https://…", "kind": "radio", "desc": { "zh": "…", "en": "…" } },
+        { "name": "Link name", "url": "https://…", "kind": "radio", "desc": "One short line" },
         { "name": "Old project", "url": "https://…", "kind": "rock", "desc": "…" }   // prop kinds become props
       ]
     }
@@ -120,3 +118,26 @@ own fixed world; any other host, such as localhost or a preview deploy, falls ba
 `site.brand`, so previews match the brand's world.
 
 Preview other worlds without editing the file: `?seed=abc`, `?world=island`, or both.
+
+## Languages
+
+The skill writes one language. The engine can show more, but the translations are yours to
+add by hand (or with another tool):
+
+- Any text field can be `{ "<lang>": "…", … }` with any language codes, e.g.
+  `"name": { "en": "Harbour", "ja": "港", "fr": "Port" }`. Missing languages fall back to `en`,
+  then to the first value.
+- The page language is `site.lang`, else the visitor's browser language if the content has
+  it, else the first language found. `site.languages` (e.g. `["en", "ja"]`) fixes the list and
+  its order; otherwise it is every code used in town and link text.
+- `ui.languageSwitch: true` shows a button (and `L` key) that cycles through those languages
+  and remembers the choice.
+- Interface strings are built in for `zh` and `en`. Any other language starts from English;
+  override them in `text.<lang>`. Keys: `me` (world name), `five` (town count line), `title`,
+  `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
+  `hintC`, `plots` (`"{n} …"`), `plot`, `open`, `about`, `fold`, `prep`, `titleSuffix`,
+  `steps` (7 loading steps), `phases` (8 times of day: late night, sunrise, morning,
+  forenoon, noon, afternoon, dusk, evening), `langName`, `keysT`, `keysClose`, `keysHint`,
+  `nowebgl`.
+- Town and place names show their `en` form large with the current language underneath when
+  it differs, as on yahaha.net.
