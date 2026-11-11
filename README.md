@@ -20,8 +20,10 @@ converted with one `site.json`.
 - Three to nine towns placed by role (walled centre, harbour, workshop quarter, market
   town, highland, then any number of plain towns), nine buildings each and any number of
   props around them. More than five towns grows the world to fit.
-- 37 building shapes and 12 props, picked per link by meaning (a bot is a dovecote, an IP
-  tool is two towers with a sky bridge, a blog is a clock tower).
+- 37 building shapes and 12 props. Choose shapes by link meaning; when a kind is omitted,
+  the engine balances building silhouettes automatically without changing explicit choices.
+- Varied forests and mountain peaks, with birds and aquatic life where the terrain permits.
+  Generated rivers route around towns, and roads ease into their streets.
 - Light, sky and street lamps follow the visitor's local time across eight phases; the
   interface colours follow too.
 - Opens from the sea looking inland, with no peak hiding a town; the camera arcs between
@@ -33,7 +35,9 @@ converted with one `site.json`.
   Traditional Chinese, Japanese and English; any other language takes its interface strings
   from `site.json`. The engine can also switch between languages you add by hand; the skill
   itself does not translate.
-- Optional (off by default): keyboard shortcuts. Tour, view buttons, clock, compass, fixed
+- Optional (off by default): keyboard shortcuts, including number keys for towns and `?` for
+  help. Towns are numbered by link count, largest first; ↑/↓ switch towns and ←/→ switch
+  buildings within a town. Tour, view buttons, clock, compass, fixed
   daylight, entrance animation, motion and blur can be switched in `site.json` → `ui`.
 
 ## Install

@@ -71,7 +71,7 @@ integration. Check the affected views and screenshots when the change is visual.
    for any other language, also write its interface strings in `text.<lang>` (keys listed
    in the schema). Keep proper nouns as the
    owner writes them.
-   - Number keys 1–9 reach towns in list order. Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
+   - Number keys 1–9 reach towns by link count, largest first (ties keep their configured order). Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
      English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
      language, info card).
 4. **Pick shapes.** Read `references/kinds.json` and choose a distinct building `kind` for
@@ -115,7 +115,7 @@ defaults unless the user's request or the existing map calls for another setting
 | option | default | what it does |
 |---|---|---|
 | `languageSwitch` | off | language button and `L` key, cycling through available languages; enable when multiple languages are present and wanted |
-| `shortcuts` | off | 1–9 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
+| `shortcuts` | off | 1–9 and town letters, ↑/↓ to switch towns, ←/→ to switch buildings in a town, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
 | `tour` | on | Tour button that flies through every town |
 | `views` | on | Orbit and Top view buttons |
 | `clock` | on | time-of-day chip in the footer |
