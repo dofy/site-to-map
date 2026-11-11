@@ -219,6 +219,12 @@
       "gulf",
       "lakeland"
      ]
+    },
+    "townSize": {
+     "enum": [
+      "fixed",
+      "fit"
+     ]
     }
    }
   },

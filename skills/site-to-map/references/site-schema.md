@@ -9,7 +9,10 @@ the browser language picks from what each field has, so plain strings are enough
   "world": {                           // optional; omit for a generated world seeded from the site
     "layout": "auto",                  // auto (generated) | classic (the fixed yahaha.net continent)
     "seed": "any string or number",    // default: brand + town ids, so each site gets its own land
-    "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick
+    "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick,
+    "townSize": "fixed"                // fixed (default): towns laid out at full size, so adding or removing
+                                       // buildings never moves the land | fit: real sizes, tighter, but the
+                                       // layout shifts when a town crosses 2/4/6/9 buildings
   },
   "ui": {                              // optional interface features; defaults shown
     "languageSwitch": false,            // zh/en toggle button (and L key); off = one language only
@@ -99,5 +102,12 @@ rivers between towns, a road network (spanning tree plus extras and lanes off th
 lakes, fields, farms, woods and where boats sail. Place-name anchors follow the
 generated features; an anchor with nothing to point at (no lake, no second river) is
 skipped.
+
+**The land is fixed once generated.** The same `site.json` gives the same world for every
+visitor on every load; only daylight and the ambient animation change. It changes when the
+seed changes (an unset seed is derived from `site.brand` and the town ids), when a town is
+added, removed or given another `slot`, with `townSize: "fit"` when a town crosses a size
+step, and possibly when the engine's generator is upgraded. Write the chosen `seed` into
+the file to keep it.
 
 Preview other worlds without editing the file: `?seed=abc`, `?world=island`, or both.
