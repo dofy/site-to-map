@@ -95,6 +95,11 @@ user only about the first two; keep the rest at their defaults unless they menti
 | `shortcuts` | off | 1–5 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
 | `tour` | on | Tour button that flies through every town |
 | `views` | on | Orbit and Top view buttons |
+
+The opening camera angle is chosen by the world generator: from the sea looking inland
+when there is an open coast, otherwise from opposite the main mountain range, nudged so no
+peak stands between the camera and a town. The Map button (and `0`/`H`) returns to that
+angle, the overview zoom and tilt, and switches orbit, top view and tour off.
 | `clock` | on | time-of-day chip in the footer |
 | `compass` | on | compass in the corner |
 | `daylight` | `"auto"` | local-time sky and lamps; a number (e.g. `10.5`) freezes the hour |
