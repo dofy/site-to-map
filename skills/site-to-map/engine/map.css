@@ -229,3 +229,7 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
   background: var(--ui-card); border: 1px solid var(--ui-ink); border-radius: 10px; box-shadow: 0 12px 30px var(--ui-shadow); z-index: 5; }
 .lang-menu button { text-align: left; border-radius: 6px; padding: 6px 10px; font-family: var(--font-sans); font-size: 13px; }
 .lang-menu button[aria-checked="true"] { background: var(--ui-hot); font-weight: 600; }
+
+.tools button { display: inline-flex; align-items: center; gap: 5px; }
+.tools .ic { width: 15px; height: 15px; flex: none; }
+@media (max-width: 760px) { .tools button .t { display: none; } .tools button:not(#b-keys) { padding: 5px 8px; } #b-lang .t { display: inline; } }

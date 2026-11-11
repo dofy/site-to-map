@@ -1379,12 +1379,12 @@ function applyLang() {
   mapEl.classList.toggle('lang-en', false);
   for (const o of placeLabels) { const r = o.userData.raw, big = loc(r, 'en'), small = loc(r, LANG); o.element.innerHTML = `${big}<small>${small !== big ? small : ''}</small>`; }
   document.title = `${DOMAIN} · ${L().titleSuffix}`;
-  for (const [id, k] of [['b-home', 'map'], ['b-tour', 'tour'], ['b-spin', 'spin'], ['b-top', 'top']]) document.getElementById(id).textContent = t[k];
+  for (const [id, k] of [['b-home', 'map'], ['b-tour', 'tour'], ['b-spin', 'spin'], ['b-top', 'top']]) { const b = document.getElementById(id), lbl = b.querySelector('.t'); if (lbl) lbl.textContent = t[k]; else b.textContent = t[k]; b.setAttribute('aria-label', t[k]); if (id !== 'b-home') b.title = t[k]; }
   document.getElementById('b-home').title = t.homeTip;
   { const lb = document.getElementById('b-lang');
     if (LANGS.length < 2) lb.hidden = true;
-    else if (LANGS.length === 2) { const next = LANGS[(LANGS.indexOf(LANG) + 1) % 2]; lb.textContent = next === 'en' ? 'EN' : langLabel(next); lb.lang = next; lb.removeAttribute('aria-haspopup'); }
-    else { lb.textContent = (T[LANG]?.langShort || LANG.toUpperCase()) + ' ▾'; lb.lang = LANG; lb.setAttribute('aria-haspopup', 'menu'); lb.setAttribute('aria-label', langLabel(LANG));
+    else if (LANGS.length === 2) { const next = LANGS[(LANGS.indexOf(LANG) + 1) % 2]; (lb.querySelector('.t') || lb).textContent = next === 'en' ? 'EN' : langLabel(next); lb.lang = next; lb.removeAttribute('aria-haspopup'); }
+    else { (lb.querySelector('.t') || lb).textContent = (T[LANG]?.langShort || LANG.toUpperCase()) + ' ▾'; lb.lang = LANG; lb.setAttribute('aria-haspopup', 'menu'); lb.setAttribute('aria-label', langLabel(LANG));
       langMenu.innerHTML = LANGS.map(l => `<button type="button" role="menuitemradio" aria-checked="${l === LANG}" lang="${l}" data-lang="${l}">${langLabel(l)}</button>`).join(''); } }
   { const a = document.querySelector('#about .t'); if (a) a.textContent = loc(SITEINFO.about && SITEINFO.about.label, LANG) || t.about; }
   fold.textContent = info.classList.contains('folded') ? t.show : t.hide;
