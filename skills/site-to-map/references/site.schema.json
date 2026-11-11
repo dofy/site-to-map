@@ -221,6 +221,54 @@
      ]
     }
    }
+  },
+  "ui": {
+   "type": "object",
+   "properties": {
+    "languageSwitch": {
+     "type": "boolean"
+    },
+    "shortcuts": {
+     "type": "boolean"
+    },
+    "tour": {
+     "type": "boolean"
+    },
+    "views": {
+     "type": "boolean"
+    },
+    "clock": {
+     "type": "boolean"
+    },
+    "compass": {
+     "type": "boolean"
+    },
+    "daylight": {
+     "oneOf": [
+      {
+       "const": "auto"
+      },
+      {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 24
+      }
+     ]
+    },
+    "intro": {
+     "type": "boolean"
+    },
+    "motion": {
+     "type": "boolean"
+    },
+    "blur": {
+     "type": "boolean"
+    },
+    "infoOpen": {
+     "type": "boolean"
+    }
+   },
+   "additionalProperties": false
   }
  }
 }

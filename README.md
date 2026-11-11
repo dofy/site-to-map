@@ -21,8 +21,10 @@ converted with one `site.json`.
   tool is two towers with a sky bridge, a blog is a clock tower).
 - Light, sky and street lamps follow the visitor's local time across eight phases; the
   interface colours follow too.
-- Chinese and English, guided tour, orbit and top views, keyboard shortcuts, Shift/Space
-  drag to pan, a no-JavaScript link list.
+- Guided tour, orbit and top views, Shift/Space drag to pan, a no-JavaScript link list.
+- Optional (off by default): a Chinese/English switch and keyboard shortcuts. Tour, view
+  buttons, clock, compass, fixed daylight, entrance animation, motion and blur can be
+  switched in `site.json` → `ui`.
 
 ## Install
 

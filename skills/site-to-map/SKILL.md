@@ -39,10 +39,12 @@ Read `references/site-schema.md` before writing `site.json`, and pick building s
    town names, the world name, and the nine place-name anchors (mountains, two rivers,
    forest, fields, sea, bay, western range, lake). Use a borrowed setting (Tolkien, a
    game, a film) only when the user asks for it, and say that it is fan naming. Give
-   every user-facing string in both `zh` and `en` unless the site is clearly one language;
-   keep proper nouns as the owner writes them.
-   - Town `key`: one letter, ideally the initial of the English name, unique, and not
-     `H O T V L I` (taken by overview, orbit, tour, top view, language, info card).
+   user-facing strings in the site's own language and set `site.lang`. Only when the user
+   asks for a language switch, set `ui.languageSwitch: true` and give every string as
+   `{ "zh": …, "en": … }`. Keep proper nouns as the owner writes them.
+   - Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
+     English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
+     language, info card).
 4. **Pick shapes.** For each link choose a `kind` from `references/kinds.json` by what the
    thing *is* (a bot → `dovecote`, an IP tool → `twin`, a blog → `scriptorium`). Avoid
    repeating a kind inside one town. Props use the `prop` kinds. Descriptions are one short
@@ -64,6 +66,31 @@ Read `references/site-schema.md` before writing `site.json`, and pick building s
    props when a town is crowded, rebuild, and check once more.
 8. **Deliver.** Hand over `site.json`, the built folder and the screenshots. Tell the user
    what you merged, dropped or turned into props, and which names you invented.
+
+## Options
+
+Everything below is optional and set in `site.json` → `ui` (defaults in brackets). Ask the
+user only about the first two; keep the rest at their defaults unless they mention them.
+
+| option | default | what it does |
+|---|---|---|
+| `languageSwitch` | off | zh/en toggle button and `L` key. Off: one language, chosen by `site.lang` or the browser |
+| `shortcuts` | off | 1–5 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
+| `tour` | on | Tour button that flies through every town |
+| `views` | on | Orbit and Top view buttons |
+| `clock` | on | time-of-day chip in the footer |
+| `compass` | on | compass in the corner |
+| `daylight` | `"auto"` | local-time sky and lamps; a number (e.g. `10.5`) freezes the hour |
+| `intro` | on | pop-up-book entrance animation |
+| `motion` | on | boats, walkers, smoke, flags and clouds moving |
+| `blur` | on | depth-of-field and tilt-shift blur |
+| `infoOpen` | on | info card open at start on wide screens |
+
+Other things that are optional simply by leaving them out: `site.about` (About link),
+`site.copyright` (footer line), `site.version` / `site.releaseUrl` (version link), `places`
+(map lettering), town `features` (walls, hedge, lamps, centrepiece, suburbs) and `world`
+(land generation, see step 5). `?t=18` previews an hour and `?seed=` / `?world=` another
+world without editing the file.
 
 ## Integrating into an existing site
 

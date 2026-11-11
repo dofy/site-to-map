@@ -86,8 +86,11 @@ const DOMAINS = SITEINFO.domains || [location.hostname || 'localhost'];
 const host = location.hostname.replace(/^www\./, '').toLowerCase();
 const DOMAIN = DOMAINS.find(d => d.toLowerCase() === host) || SITEINFO.brand || DOMAINS[DOMAINS.length - 1];
 const STORE_KEY = (SITEINFO.storageKey || 'site-map') + '-lang';
+// optional interface features (site.json "ui"); see references/site-schema.md
+const UI = { languageSwitch: false, shortcuts: false, tour: true, views: true, clock: true, compass: true,
+  daylight: 'auto', intro: true, motion: true, blur: true, infoOpen: true, ...(SITE.ui || {}) };
 const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage may be disabled */ } } };
-let LANG = store.get(STORE_KEY) || (SITEINFO.lang && SITEINFO.lang !== 'auto' ? SITEINFO.lang : null) || ((navigator.language || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en');
+let LANG = (UI.languageSwitch ? store.get(STORE_KEY) : null) || (SITEINFO.lang && SITEINFO.lang !== 'auto' ? SITEINFO.lang : null) || ((navigator.language || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en');
 const T = {
   zh: { me: '全图', five: n => `${n} 座城`, map: '全图', tour: '导览', spin: '环绕', top: '俯视', hide: '收起', show: '展开', info: '说明', where: '位置', view: '视角',
     hintW: '拖拽旋转 · Shift/空格+拖拽平移 · 滚轮缩放', hintC: '点建筑看详情 · Esc 返回', title: '地图', sub: n => `${n} 座城，一片大陆`,
@@ -111,13 +114,16 @@ const T = {
 // site text overrides (SITE.text.zh / SITE.text.en)
 for (const lg of ['zh', 'en']) Object.assign(T[lg], (SITE.text || {})[lg] || {});
 const KEY_LIST = CITIES.filter(c => c.key).map(c => c.key.toUpperCase()).join(' ');
-for (const lg of ['zh', 'en']) T[lg].keys = T[lg].keys.filter(k => k[0] !== 'KEYS' || KEY_LIST).map(k => k[0] === 'KEYS' ? [KEY_LIST, k[1]] : k);
+for (const lg of ['zh', 'en']) T[lg].keys = T[lg].keys.filter(k => k[0] !== 'KEYS' || KEY_LIST).filter(k => !(k[0] === 'L' && !UI.languageSwitch) && !(k[0] === 'T' && !UI.tour) && !(['O', 'V'].includes(k[0]) && !UI.views)).map(k => k[0] === 'KEYS' ? [KEY_LIST, k[1]] : k);
 function setLangData() { for (const c of CITIES) { c.role = loc(c.roleRaw, LANG); c.blurb = loc(c.blurbRaw, LANG); for (const it of c.items) { it.desc = loc(it.descRaw, LANG); it.name = loc(it.nameRaw, LANG); } } }
 for (const c of CITIES) for (const it of c.items) { it.descRaw = it.desc; it.nameRaw = it.name; }
 setLangData();
 const L = () => T[LANG];
 const EXT_ICON = '<svg class="ext" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M5.5 3.5h7v7M12.5 3.5 4 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 document.documentElement.lang = LANG === 'zh' ? 'zh-CN' : 'en';
+{ const hide = (sel, off) => { if (off) document.querySelectorAll(sel).forEach(el => { el.hidden = true; }); };
+  hide('#b-lang', !UI.languageSwitch); hide('#b-keys', !UI.shortcuts); hide('.tools .sep', !UI.languageSwitch && !UI.shortcuts);
+  hide('#b-tour', !UI.tour); hide('#b-spin, #b-top', !UI.views); hide('#clock', !UI.clock); hide('.compass', !UI.compass); }
 document.getElementById('site').textContent = DOMAIN; document.getElementById('site').href = SITEINFO.home || 'https://' + DOMAIN.toLowerCase();
 { const a = document.getElementById('about'); if (SITEINFO.about && SITEINFO.about.url) a.href = SITEINFO.about.url; else a.remove(); }
 { const cp = document.querySelector('.foot .copy'), co = SITEINFO.copyright || {}; if (cp && co.owner) cp.innerHTML = `&copy; ${co.since ? co.since + '&ndash;' : ''}<span id="year"></span> ${co.owner}`; else if (cp && !co.owner) cp.remove(); }
@@ -213,13 +219,13 @@ const post = new THREE.ShaderMaterial({
       e *= 1. - smoothstep(fogFar * .3, fogFar * .8, z0);
       float coc = max(smoothstep(focus * 1.0, focus * 1.5, z0), smoothstep(.3, .5, abs(vUv.y - .5)) * .8);
       vec3 c = texture2D(tColor, vUv).rgb;
-      if (coc > .01) {
+      if (coc > .01 && blurMax > 0.) {
         vec3 acc = c;
         for (int i = 0; i < 16; i++) { float a = float(i) * 2.39996, r = sqrt((float(i) + .5) / 16.);
           acc += texture2D(tColor, vUv + vec2(cos(a), sin(a)) * r * coc * blurMax / res).rgb; }
         c = acc / 17.;
       }
-      e *= 1. - coc * .9;
+      e *= 1. - coc * .9 * step(.001, blurMax);
       gl_FragColor = linearToOutputTexel(vec4(mix(c, ink, e * edgeK), 1.));
     }`,
   depthTest: false, depthWrite: false,
@@ -1306,7 +1312,7 @@ function refresh() {
 function renderPanel() {
   const c = state.city && cityData[state.city].c, t = L();
   crumb.innerHTML = c ? `<button type="button" data-go="world">${t.me}</button><span class="sep">/</span><span class="here">${c.en}</span>` : `<span class="here">${t.me} · ${typeof t.five === 'function' ? t.five(CITIES.length) : t.five}</span>`;
-  hint.innerHTML = `${c ? t.hintC : t.hintW} · ${t.keysHint.replace('?', '<kbd>?</kbd>')}`;
+  hint.innerHTML = `${c ? t.hintC : t.hintW}${UI.shortcuts ? ' · ' + t.keysHint.replace('?', '<kbd>?</kbd>') : ''}`;
   if (!c) {
     eyebrow.textContent = `${DOMAIN} · ${t.map}`;
     panel.innerHTML = `<h2>${t.title}<small>${typeof t.sub === 'function' ? t.sub(CITIES.length) : t.sub}</small></h2><p>${t.intro}</p>
@@ -1421,6 +1427,7 @@ document.addEventListener('keydown', e => {
   if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest?.('input, textarea, select, [contenteditable]')) return;
   const k = e.key;
   if (k === 'Escape') { if (!keysEl.hidden) return toggleKeys(false); stopTour(); if (state.sel) go(state.city, null); else go(null); return; }
+  if (!UI.shortcuts) return; // Esc stays; everything below is the optional shortcut set
   if (k === '?' || (k === '/' && e.shiftKey)) { e.preventDefault(); return toggleKeys(); }
   const btnFocused = e.target.closest?.('button, a');
   if (k === 'Enter' && btnFocused) return;
@@ -1429,7 +1436,7 @@ document.addEventListener('keydown', e => {
     ArrowRight: () => { stopTour(); step2(1); }, ArrowLeft: () => { stopTour(); step2(-1); },
     Enter: () => { const d = state.sel && districts[state.sel]; if (d) window.open(d.it.url, '_blank', 'noopener'); },
     '+': () => zoom(.78), '=': () => zoom(.78), '-': () => zoom(1.28), '_': () => zoom(1.28),
-    t: () => tourBtn.click(), o: () => spinBtn.click(), v: () => topBtn.click(), l: () => document.getElementById('b-lang').click(), i: () => fold.click(),
+    t: () => { if (UI.tour) tourBtn.click(); }, o: () => { if (UI.views) spinBtn.click(); }, v: () => { if (UI.views) topBtn.click(); }, l: () => { if (UI.languageSwitch) document.getElementById('b-lang').click(); }, i: () => fold.click(),
   };
   const initial = CITIES.find(c => c.key && c.key === k.toLowerCase?.())?.id;
   if (initial) { e.preventDefault(); stopTour(); go(initial); return; }
@@ -1466,7 +1473,7 @@ const UI_DUSK = ['#fbe9dc', '#3a2219', '#63412f', '#866250', '#ebcab4', '#ffc9b4
 const UIP = [UI_NIGHT, UI_NIGHT, UI_DAWN, UI_DAY, UI_DAY, UI_DAY, UI_DAY, UI_DUSK, UI_EVE, UI_NIGHT];
 const UI_VARS = ['--ui-card', '--ui-ink', '--ui-soft', '--ui-faint', '--ui-line', '--ui-hot', '--ui-water'];
 const PHASE_AT = [0, 4.5, 7.5, 9.5, 11.5, 13.5, 17, 19, 24]; // 深夜 日出 早晨 上午 正午 下午 傍晚 夜晚
-const fixedHour = (() => { const q = new URLSearchParams(location.search).get('t'); const v = q === null ? NaN : parseFloat(q); return Number.isFinite(v) ? ((v % 24) + 24) % 24 : null; })();
+const fixedHour = (() => { const q = new URLSearchParams(location.search).get('t'); const v = q === null ? NaN : parseFloat(q); return Number.isFinite(v) ? ((v % 24) + 24) % 24 : typeof UI.daylight === 'number' ? ((UI.daylight % 24) + 24) % 24 : null; })();
 const nowHour = () => { if (fixedHour !== null) return fixedHour; const d = new Date(); return d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600; };
 const stars = (() => { const pts = []; for (let i = 0; i < 700; i++) { const a = hash(i, 1) * Math.PI * 2, e = .08 + hash(i, 2) * 1.2, r = 190; pts.push(V(Math.cos(a) * Math.cos(e) * r, Math.sin(e) * r, Math.sin(a) * Math.cos(e) * r)); }
   const m = new THREE.PointsMaterial({ color: 0xfff6dd, size: 1.4, sizeAttenuation: false, transparent: true, opacity: 0, depthWrite: false, fog: false });
@@ -1525,9 +1532,9 @@ function resize() {
   colorRT = new THREE.WebGLRenderTarget(W, H2, { samples: 4, type: THREE.HalfFloatType });
   normalRT = new THREE.WebGLRenderTarget(W, H2, { depthTexture: new THREE.DepthTexture(W, H2) });
   post.uniforms.tColor.value = colorRT.texture; post.uniforms.tNormal.value = normalRT.texture; post.uniforms.tDepth.value = normalRT.depthTexture;
-  post.uniforms.res.value.set(W, H2); post.uniforms.thick.value = Math.max(1, pr * .65); post.uniforms.blurMax.value = 7 * pr;
+  post.uniforms.res.value.set(W, H2); post.uniforms.thick.value = Math.max(1, pr * .65); post.uniforms.blurMax.value = UI.blur ? 7 * pr : 0;
 }
-if (matchMedia('(max-width: 560px)').matches) { info.classList.add('folded'); fold.setAttribute('aria-expanded', 'false'); fold.textContent = L().show; }
+if (matchMedia('(max-width: 560px)').matches || !UI.infoOpen) { info.classList.add('folded'); fold.setAttribute('aria-expanded', 'false'); fold.textContent = L().show; }
 new ResizeObserver(resize).observe(mapEl);
 resize();
 
@@ -1548,7 +1555,7 @@ const clock = new THREE.Clock(); let t = 0;
 const normalBg = new THREE.Color(.5, .5, 1);
 function frame() {
   const dt = Math.min(clock.getDelta(), .05);
-  if (!reduce) { t += dt; for (const a of anims) a(t, dt); }
+  if (!reduce && UI.motion) { t += dt; for (const a of anims) a(t, dt); }
   if (tween) {
     const p = Math.min(1, (performance.now() - tween.start) / tween.dur), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     camera.position.lerpVectors(tween.p0, tween.v.pos, e); controls.target.lerpVectors(tween.t0, tween.v.target, e);
@@ -1577,13 +1584,13 @@ state.city = cityData[start] ? start : null;
 refresh(); applyLang();
 if (renderer) {
   const v = viewFor(state.city);
-  camera.position.copy(v.target.clone().add(new THREE.Vector3().setFromSphericalCoords(reduce ? v.pos.distanceTo(v.target) : 140, reduce ? .9 : .35, .35 - (reduce ? 0 : .9))));
+  camera.position.copy(v.target.clone().add(new THREE.Vector3().setFromSphericalCoords(reduce || !UI.intro ? v.pos.distanceTo(v.target) : 140, reduce || !UI.intro ? .9 : .35, .35 - (reduce || !UI.intro ? 0 : .9))));
   controls.target.copy(v.target); controls.update();
   flyTo(viewFor(state.city), 2600);
   // interface enters in layers once the town is built; panel content only animates this once
   function reveal() { mapEl.classList.remove('intro'); mapEl.classList.add('revealing'); setTimeout(() => mapEl.classList.remove('revealing'), 2800); }
   // pop-up-book intro: land unfolds, then buildings rise city by city
-  if (!reduce) {
+  if (!reduce && UI.intro) {
     world.scale.y = .01; buildOrder.forEach(b => b.g.scale.set(1, .001, 1));
     const t0 = performance.now();
     const back = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };

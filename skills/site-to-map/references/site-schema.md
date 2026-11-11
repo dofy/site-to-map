@@ -1,6 +1,8 @@
 # site.json
 
-All user-facing text fields accept either a string or `{ "zh": "…", "en": "…" }`.
+All user-facing text fields accept either a string or `{ "zh": "…", "en": "…" }`. With
+`ui.languageSwitch` off (the default) the page shows one language: `site.lang` if set, otherwise
+the browser language picks from what each field has, so plain strings are enough.
 
 ```jsonc
 {
@@ -9,11 +11,24 @@ All user-facing text fields accept either a string or `{ "zh": "…", "en": "…
     "seed": "any string or number",    // default: brand + town ids, so each site gets its own land
     "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick
   },
+  "ui": {                              // optional interface features; defaults shown
+    "languageSwitch": false,            // zh/en toggle button (and L key); off = one language only
+    "shortcuts": false,                 // keyboard shortcuts, ? help panel and hint; Esc always works
+    "tour": true,                       // Tour button: fly through every town in list order
+    "views": true,                      // Orbit and Top view buttons
+    "clock": true,                      // time-of-day chip in the footer
+    "compass": true,                    // compass in the corner
+    "daylight": "auto",                 // auto = visitor's local time; or a fixed hour 0–24, e.g. 10.5
+    "intro": true,                      // pop-up-book entrance (land unfolds, buildings rise)
+    "motion": true,                     // ambient life: boats, walkers, smoke, flags, clouds
+    "blur": true,                       // depth-of-field and tilt-shift blur
+    "infoOpen": true                    // info card starts open on wide screens (always folded on phones)
+  },
   "site": {
     "brand": "example.com",            // shown top left when the hostname is not in domains
     "domains": ["example.com"],         // hostnames this map is served on
     "home": "https://example.com/",     // where the brand links (default https://<domain>)
-    "lang": "auto",                     // auto (browser language) | zh | en
+    "lang": "auto",                     // auto (browser language) | zh | en; with one language, set it
     "storageKey": "example-map",        // localStorage prefix for the language choice
     "about": { "url": "https://…", "label": { "zh": "关于我", "en": "About me" } },  // optional
     "copyright": { "since": 2007, "owner": "Name" },   // since optional

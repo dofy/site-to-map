@@ -1,114 +1,726 @@
 {
   "$schema": "../../skills/site-to-map/references/site.schema.json",
+  "ui": {
+    "languageSwitch": true,
+    "shortcuts": true
+  },
   "source": "https://wujiaxian.com/",
   "site": {
     "brand": "wujiaxian.com",
-    "domains": ["wujiaxian.com"],
+    "domains": [
+      "wujiaxian.com"
+    ],
     "home": "https://wujiaxian.com/",
     "lang": "auto",
     "storageKey": "wjx-map",
-    "about": { "url": "https://wujiaxian.com/#Introduce", "label": { "zh": "关于阿禅", "en": "About Jason" } },
-    "copyright": { "owner": "Jason Ng" },
+    "about": {
+      "url": "https://wujiaxian.com/#Introduce",
+      "label": {
+        "zh": "关于阿禅",
+        "en": "About Jason"
+      }
+    },
+    "copyright": {
+      "owner": "Jason Ng"
+    },
     "description": "阿禅（Jason Ng、伍嘉贤）的网络档案，折成一张纸模型地图：公司、产品、小品、服务和联系方式，各是一座城。"
   },
   "text": {
-    "zh": { "me": "阿禅之地", "five": "五座城", "title": "阿禅之地", "sub": "一个做产品的人，五座城", "fold": "正在折阿禅之地", "titleSuffix": "阿禅之地",
-      "intro": "每座城是阿禅的一段经历或一类作品，城里每座建筑是一个链接。城外的树、石头和路牌也能点。点城名飞进去，或者按“导览”。" },
-    "en": { "me": "Land of Jason", "five": "Five towns", "title": "Land of Jason", "sub": "A product person, five towns", "fold": "Folding the Land of Jason", "titleSuffix": "map",
-      "intro": "Each town is a chapter of Jason's work and each building in it is a link. The trees, rocks and signposts outside town are links too. Click a town name to fly in, or press Tour." }
+    "zh": {
+      "me": "阿禅之地",
+      "five": "五座城",
+      "title": "阿禅之地",
+      "sub": "一个做产品的人，五座城",
+      "fold": "正在折阿禅之地",
+      "titleSuffix": "阿禅之地",
+      "intro": "每座城是阿禅的一段经历或一类作品，城里每座建筑是一个链接。城外的树、石头和路牌也能点。点城名飞进去，或者按“导览”。"
+    },
+    "en": {
+      "me": "Land of Jason",
+      "five": "Five towns",
+      "title": "Land of Jason",
+      "sub": "A product person, five towns",
+      "fold": "Folding the Land of Jason",
+      "titleSuffix": "map",
+      "intro": "Each town is a chapter of Jason's work and each building in it is a link. The trees, rocks and signposts outside town are links too. Click a town name to fly in, or press Tour."
+    }
   },
   "places": [
-    { "at": "north", "name": { "en": "Long Ridge", "zh": "长岭" } },
-    { "at": "riverA", "name": { "en": "Pearl River", "zh": "珠江" } },
-    { "at": "riverB", "name": { "en": "Tan River", "zh": "潭江" } },
-    { "at": "forest", "name": { "en": "Old Banyan Wood", "zh": "老榕林" } },
-    { "at": "fields", "name": { "en": "Taishan Fields", "zh": "台山田" } },
-    { "at": "sea", "name": { "en": "South Sea", "zh": "南海" } },
-    { "at": "bay", "name": { "en": "Horse Ferry Bay", "zh": "骑马过海湾" } },
-    { "at": "west", "name": { "en": "Cloud Range", "zh": "云岭" } },
-    { "at": "lake", "name": { "en": "Still Lake", "zh": "静湖" } }
+    {
+      "at": "north",
+      "name": {
+        "en": "Long Ridge",
+        "zh": "长岭"
+      }
+    },
+    {
+      "at": "riverA",
+      "name": {
+        "en": "Pearl River",
+        "zh": "珠江"
+      }
+    },
+    {
+      "at": "riverB",
+      "name": {
+        "en": "Tan River",
+        "zh": "潭江"
+      }
+    },
+    {
+      "at": "forest",
+      "name": {
+        "en": "Old Banyan Wood",
+        "zh": "老榕林"
+      }
+    },
+    {
+      "at": "fields",
+      "name": {
+        "en": "Taishan Fields",
+        "zh": "台山田"
+      }
+    },
+    {
+      "at": "sea",
+      "name": {
+        "en": "South Sea",
+        "zh": "南海"
+      }
+    },
+    {
+      "at": "bay",
+      "name": {
+        "en": "Horse Ferry Bay",
+        "zh": "骑马过海湾"
+      }
+    },
+    {
+      "at": "west",
+      "name": {
+        "en": "Cloud Range",
+        "zh": "云岭"
+      }
+    },
+    {
+      "at": "lake",
+      "name": {
+        "en": "Still Lake",
+        "zh": "静湖"
+      }
+    }
   ],
   "cities": [
     {
-      "id": "jobs", "slot": "center", "key": "g",
-      "name": { "en": "Guildhall", "zh": "行会城" }, "role": { "zh": "公司", "en": "Companies" },
-      "blurb": { "zh": "阿禅工作过和创办过的八家公司，围在一圈城墙里。", "en": "The eight companies Jason worked at or founded, inside one town wall." },
-      "style": { "walls": ["paper", "wallSky", "road", "wallRose", "stone"], "roofs": ["roofSlate", "terra", "slate", "mustard", "pine"], "annex": ["tower", "banner", "lantern", "well", "tree"] },
-      "features": { "walls": true, "lamps": true },
+      "id": "jobs",
+      "slot": "center",
+      "key": "g",
+      "name": {
+        "en": "Guildhall",
+        "zh": "行会城"
+      },
+      "role": {
+        "zh": "公司",
+        "en": "Companies"
+      },
+      "blurb": {
+        "zh": "阿禅工作过和创办过的八家公司，围在一圈城墙里。",
+        "en": "The eight companies Jason worked at or founded, inside one town wall."
+      },
+      "style": {
+        "walls": [
+          "paper",
+          "wallSky",
+          "road",
+          "wallRose",
+          "stone"
+        ],
+        "roofs": [
+          "roofSlate",
+          "terra",
+          "slate",
+          "mustard",
+          "pine"
+        ],
+        "annex": [
+          "tower",
+          "banner",
+          "lantern",
+          "well",
+          "tree"
+        ]
+      },
+      "features": {
+        "walls": true,
+        "lamps": true
+      },
       "items": [
-        { "name": "One Man Company", "url": "https://wujiaxian.com/", "kind": "hobbit", "desc": { "zh": "2023 至今 · 创始人。一个人带一支 AI Agents 团队做产品", "en": "2023– · Founder. One person and a team of AI agents" } },
-        { "name": { "zh": "BOSS 直聘", "en": "BOSS Zhipin" }, "url": "https://zhipin.com/", "kind": "grid", "desc": { "zh": "2019–2023 · 产品总监。中国最大的在线招聘平台", "en": "2019–2023 · Product director at China's largest recruiting platform" } },
-        { "name": { "zh": "轻芒", "en": "Qingmang" }, "url": "https://qingmang.me/", "kind": "library", "desc": { "zh": "2018–2019 · 合伙人。轻芒阅读和小程序搭建平台", "en": "2018–2019 · Partner. Reading app and mini-program builder" } },
-        { "name": { "zh": "出门问问", "en": "Mobvoi" }, "url": "https://www.chumenwenwen.com/", "kind": "radio", "desc": { "zh": "2017–2018 · 产品总监。从 0 到 1 做出智能音箱", "en": "2017–2018 · Product director. Took a smart speaker from zero to launch" } },
-        { "name": { "zh": "有可能学院", "en": "Yokeneng Academy" }, "url": "https://yokeneng.com/", "kind": "school", "desc": { "zh": "2016–2017 · 创始人。产品、运营、开发培训", "en": "2016–2017 · Founder. Training in product, growth and development" } },
-        { "name": { "zh": "轻单", "en": "Qdan" }, "url": "https://qdan.me/", "kind": "kiosk", "desc": { "zh": "2014–2015 · 创始人。结构化内容的创作者平台", "en": "2014–2015 · Founder. A platform for structured content" } },
-        { "name": { "zh": "极客公园", "en": "GeekPark" }, "url": "https://geekpark.net/", "kind": "dome", "desc": { "zh": "2009–2014 · 第一个员工，离开时是 CEO", "en": "2009–2014 · First employee, CEO when he left" } },
-        { "name": { "zh": "可能吧", "en": "Kenengba" }, "url": "https://kenengba.com/", "kind": "scriptorium", "desc": { "zh": "2006 至今 · 创始人。独立博客，拿过德国之声最佳中文博客", "en": "2006– · Founder. Independent blog, Deutsche Welle best Chinese blog" } }
+        {
+          "name": "One Man Company",
+          "url": "https://wujiaxian.com/",
+          "kind": "hobbit",
+          "desc": {
+            "zh": "2023 至今 · 创始人。一个人带一支 AI Agents 团队做产品",
+            "en": "2023– · Founder. One person and a team of AI agents"
+          }
+        },
+        {
+          "name": {
+            "zh": "BOSS 直聘",
+            "en": "BOSS Zhipin"
+          },
+          "url": "https://zhipin.com/",
+          "kind": "grid",
+          "desc": {
+            "zh": "2019–2023 · 产品总监。中国最大的在线招聘平台",
+            "en": "2019–2023 · Product director at China's largest recruiting platform"
+          }
+        },
+        {
+          "name": {
+            "zh": "轻芒",
+            "en": "Qingmang"
+          },
+          "url": "https://qingmang.me/",
+          "kind": "library",
+          "desc": {
+            "zh": "2018–2019 · 合伙人。轻芒阅读和小程序搭建平台",
+            "en": "2018–2019 · Partner. Reading app and mini-program builder"
+          }
+        },
+        {
+          "name": {
+            "zh": "出门问问",
+            "en": "Mobvoi"
+          },
+          "url": "https://www.chumenwenwen.com/",
+          "kind": "radio",
+          "desc": {
+            "zh": "2017–2018 · 产品总监。从 0 到 1 做出智能音箱",
+            "en": "2017–2018 · Product director. Took a smart speaker from zero to launch"
+          }
+        },
+        {
+          "name": {
+            "zh": "有可能学院",
+            "en": "Yokeneng Academy"
+          },
+          "url": "https://yokeneng.com/",
+          "kind": "school",
+          "desc": {
+            "zh": "2016–2017 · 创始人。产品、运营、开发培训",
+            "en": "2016–2017 · Founder. Training in product, growth and development"
+          }
+        },
+        {
+          "name": {
+            "zh": "轻单",
+            "en": "Qdan"
+          },
+          "url": "https://qdan.me/",
+          "kind": "kiosk",
+          "desc": {
+            "zh": "2014–2015 · 创始人。结构化内容的创作者平台",
+            "en": "2014–2015 · Founder. A platform for structured content"
+          }
+        },
+        {
+          "name": {
+            "zh": "极客公园",
+            "en": "GeekPark"
+          },
+          "url": "https://geekpark.net/",
+          "kind": "dome",
+          "desc": {
+            "zh": "2009–2014 · 第一个员工，离开时是 CEO",
+            "en": "2009–2014 · First employee, CEO when he left"
+          }
+        },
+        {
+          "name": {
+            "zh": "可能吧",
+            "en": "Kenengba"
+          },
+          "url": "https://kenengba.com/",
+          "kind": "scriptorium",
+          "desc": {
+            "zh": "2006 至今 · 创始人。独立博客，拿过德国之声最佳中文博客",
+            "en": "2006– · Founder. Independent blog, Deutsche Welle best Chinese blog"
+          }
+        }
       ]
     },
     {
-      "id": "products", "slot": "coast", "key": "s",
-      "name": { "en": "Shipyard Bay", "zh": "船坞湾" }, "role": { "zh": "创造", "en": "Products" },
-      "blurb": { "zh": "阿禅亲手做过的产品，从船坞一艘艘下水。几个老项目化成了城外的树和石头。", "en": "Products Jason built, launched one by one from the shipyard. A few older ones became trees and rocks outside town." },
-      "style": { "walls": ["paper", "wallSky", "stone", "road", "wallSage"], "roofs": ["slate", "terra", "roofSlate", "mustard", "olive"], "annex": ["crates", "barrels", "lantern", "hut"] },
-      "features": { "lamps": true, "centerpiece": "statue" },
+      "id": "products",
+      "slot": "coast",
+      "key": "s",
+      "name": {
+        "en": "Shipyard Bay",
+        "zh": "船坞湾"
+      },
+      "role": {
+        "zh": "创造",
+        "en": "Products"
+      },
+      "blurb": {
+        "zh": "阿禅亲手做过的产品，从船坞一艘艘下水。几个老项目化成了城外的树和石头。",
+        "en": "Products Jason built, launched one by one from the shipyard. A few older ones became trees and rocks outside town."
+      },
+      "style": {
+        "walls": [
+          "paper",
+          "wallSky",
+          "stone",
+          "road",
+          "wallSage"
+        ],
+        "roofs": [
+          "slate",
+          "terra",
+          "roofSlate",
+          "mustard",
+          "olive"
+        ],
+        "annex": [
+          "crates",
+          "barrels",
+          "lantern",
+          "hut"
+        ]
+      },
+      "features": {
+        "lamps": true,
+        "centerpiece": "statue"
+      },
       "items": [
-        { "name": "Beavern", "url": "https://beavern.com/", "kind": "vault", "desc": { "zh": "必稳：多资产理财人士的资产记录与投资分析工具", "en": "Asset tracking and investment analysis for multi-asset investors" } },
-        { "name": "WikiMatch", "url": "https://wikimatch.app/", "kind": "tent", "desc": { "zh": "基于 Wikipedia 的多人知识竞技游戏", "en": "A multiplayer race through Wikipedia links" } },
-        { "name": "IPCheck.ing", "url": "https://ipcheck.ing/", "kind": "twin", "desc": { "zh": "开源 IP 工具箱，GitHub 一万星", "en": "Open-source IP toolbox with 10k GitHub stars" } },
-        { "name": { "zh": "蜘蛛笔记", "en": "SpiderNote" }, "url": "https://www.spidernote.com/", "kind": "watermill", "desc": { "zh": "符合物理直觉的交互加 AI 辅助的知识整理工具", "en": "Note-taking with physical-feeling interactions and AI help" } },
-        { "name": { "zh": "「有了」社区", "en": "Youle Community" }, "url": "https://youle.zhipin.com/", "kind": "inn", "desc": { "zh": "在 BOSS 直聘里从 0 到 1 建起的社区", "en": "A community built from scratch inside BOSS Zhipin" } },
-        { "name": "Tichome", "url": "https://www.chumenwenwen.com/", "kind": "mansion", "desc": { "zh": "出门问问的智能音箱", "en": "Mobvoi's smart speaker" } },
-        { "name": { "zh": "《商业价值》", "en": "Business Value" }, "url": "https://www.businessvalue.com.cn/", "kind": "warehouse", "desc": { "zh": "商业科技杂志", "en": "Business and technology magazine" } },
-        { "name": { "zh": "有可能学院", "en": "Yokeneng Academy" }, "url": "https://yokeneng.com/", "kind": "birch", "desc": { "zh": "线下加线上的产品培训", "en": "Product training, offline and online" } },
-        { "name": { "zh": "轻单", "en": "Qdan" }, "url": "https://qdan.me/", "kind": "rock", "desc": { "zh": "第一次创业做的产品", "en": "The product of his first startup" } },
-        { "name": { "zh": "极客公园", "en": "GeekPark" }, "url": "https://geekpark.net/", "kind": "oak", "desc": { "zh": "科技媒体", "en": "Technology media" } },
-        { "name": { "zh": "可能吧", "en": "Kenengba" }, "url": "https://kenengba.com/", "kind": "boulders", "desc": { "zh": "2006 年开始的独立博客", "en": "Independent blog since 2006" } }
+        {
+          "name": "Beavern",
+          "url": "https://beavern.com/",
+          "kind": "vault",
+          "desc": {
+            "zh": "必稳：多资产理财人士的资产记录与投资分析工具",
+            "en": "Asset tracking and investment analysis for multi-asset investors"
+          }
+        },
+        {
+          "name": "WikiMatch",
+          "url": "https://wikimatch.app/",
+          "kind": "tent",
+          "desc": {
+            "zh": "基于 Wikipedia 的多人知识竞技游戏",
+            "en": "A multiplayer race through Wikipedia links"
+          }
+        },
+        {
+          "name": "IPCheck.ing",
+          "url": "https://ipcheck.ing/",
+          "kind": "twin",
+          "desc": {
+            "zh": "开源 IP 工具箱，GitHub 一万星",
+            "en": "Open-source IP toolbox with 10k GitHub stars"
+          }
+        },
+        {
+          "name": {
+            "zh": "蜘蛛笔记",
+            "en": "SpiderNote"
+          },
+          "url": "https://www.spidernote.com/",
+          "kind": "watermill",
+          "desc": {
+            "zh": "符合物理直觉的交互加 AI 辅助的知识整理工具",
+            "en": "Note-taking with physical-feeling interactions and AI help"
+          }
+        },
+        {
+          "name": {
+            "zh": "「有了」社区",
+            "en": "Youle Community"
+          },
+          "url": "https://youle.zhipin.com/",
+          "kind": "inn",
+          "desc": {
+            "zh": "在 BOSS 直聘里从 0 到 1 建起的社区",
+            "en": "A community built from scratch inside BOSS Zhipin"
+          }
+        },
+        {
+          "name": "Tichome",
+          "url": "https://www.chumenwenwen.com/",
+          "kind": "mansion",
+          "desc": {
+            "zh": "出门问问的智能音箱",
+            "en": "Mobvoi's smart speaker"
+          }
+        },
+        {
+          "name": {
+            "zh": "《商业价值》",
+            "en": "Business Value"
+          },
+          "url": "https://www.businessvalue.com.cn/",
+          "kind": "warehouse",
+          "desc": {
+            "zh": "商业科技杂志",
+            "en": "Business and technology magazine"
+          }
+        },
+        {
+          "name": {
+            "zh": "有可能学院",
+            "en": "Yokeneng Academy"
+          },
+          "url": "https://yokeneng.com/",
+          "kind": "birch",
+          "desc": {
+            "zh": "线下加线上的产品培训",
+            "en": "Product training, offline and online"
+          }
+        },
+        {
+          "name": {
+            "zh": "轻单",
+            "en": "Qdan"
+          },
+          "url": "https://qdan.me/",
+          "kind": "rock",
+          "desc": {
+            "zh": "第一次创业做的产品",
+            "en": "The product of his first startup"
+          }
+        },
+        {
+          "name": {
+            "zh": "极客公园",
+            "en": "GeekPark"
+          },
+          "url": "https://geekpark.net/",
+          "kind": "oak",
+          "desc": {
+            "zh": "科技媒体",
+            "en": "Technology media"
+          }
+        },
+        {
+          "name": {
+            "zh": "可能吧",
+            "en": "Kenengba"
+          },
+          "url": "https://kenengba.com/",
+          "kind": "boulders",
+          "desc": {
+            "zh": "2006 年开始的独立博客",
+            "en": "Independent blog since 2006"
+          }
+        }
       ]
     },
     {
-      "id": "works", "slot": "south", "key": "w",
-      "name": { "en": "Workbench Row", "zh": "工作台街" }, "role": { "zh": "小品", "en": "Side projects" },
-      "blurb": { "zh": "八个顺手做的小东西，排成一条冒着烟的手作街。", "en": "Eight small things made on the side, along a street of smoking workshops." },
-      "style": { "walls": ["stone", "kraft", "wallRose", "road", "wallSage"], "roofs": ["kraftDeep", "terra", "slate", "pine", "mustard"], "annex": ["barrels", "crates", "anvil", "hut", "cart"], "timber": true },
-      "features": { "lamps": false },
+      "id": "works",
+      "slot": "south",
+      "key": "w",
+      "name": {
+        "en": "Workbench Row",
+        "zh": "工作台街"
+      },
+      "role": {
+        "zh": "小品",
+        "en": "Side projects"
+      },
+      "blurb": {
+        "zh": "八个顺手做的小东西，排成一条冒着烟的手作街。",
+        "en": "Eight small things made on the side, along a street of smoking workshops."
+      },
+      "style": {
+        "walls": [
+          "stone",
+          "kraft",
+          "wallRose",
+          "road",
+          "wallSage"
+        ],
+        "roofs": [
+          "kraftDeep",
+          "terra",
+          "slate",
+          "pine",
+          "mustard"
+        ],
+        "annex": [
+          "barrels",
+          "crates",
+          "anvil",
+          "hut",
+          "cart"
+        ],
+        "timber": true
+      },
+      "features": {
+        "lamps": false
+      },
       "items": [
-        { "name": "LLM Chatbot", "url": "https://github.com/jason5ng32/Github-Models-Telegram-Bot", "kind": "dovecote", "desc": { "zh": "用 GitHub Models 的 Telegram 机器人", "en": "A Telegram bot on GitHub Models" } },
-        { "name": "EasyHomepage", "url": "https://github.com/jason5ng32/EasyHomepage", "kind": "kiosk", "desc": { "zh": "简单好用的个人主页模板", "en": "A simple personal homepage template" } },
-        { "name": { "zh": "美股财报日历", "en": "Earnings Calendar" }, "url": "https://github.com/jason5ng32/OhEarningsCal", "kind": "grid", "desc": { "zh": "可订阅的美股财报日历", "en": "A subscribable US earnings calendar" } },
-        { "name": { "zh": "躺平计算器", "en": "Retire Calculator" }, "url": "https://retire.money/", "kind": "pavilion", "desc": { "zh": "算算还要多久才能躺平", "en": "How long until you can stop working" } },
-        { "name": "Macify", "url": "https://chromewebstore.google.com/detail/macify-macos-screensaver/lgdipcalomggcjkohjhkhkbcpgladnoe", "kind": "camera", "desc": { "zh": "把 macOS 屏保搬进浏览器新标签页", "en": "macOS screensavers in your new tab" } },
-        { "name": "Pingall", "url": "https://github.com/jason5ng32/pingall-a-shell-tool", "kind": "radio", "desc": { "zh": "批量 ping 的命令行小工具", "en": "A shell tool that pings many hosts at once" } },
-        { "name": { "zh": "可能吧排版器", "en": "Kenengba Formatter" }, "url": "https://mp.knb.im/", "kind": "smithy", "desc": { "zh": "公众号文章排版工具", "en": "A formatter for WeChat articles" } },
-        { "name": "PM2048", "url": "https://github.com/jason5ng32/pm2048", "kind": "quad", "desc": { "zh": "产品经理版 2048", "en": "2048 for product managers" } }
+        {
+          "name": "LLM Chatbot",
+          "url": "https://github.com/jason5ng32/Github-Models-Telegram-Bot",
+          "kind": "dovecote",
+          "desc": {
+            "zh": "用 GitHub Models 的 Telegram 机器人",
+            "en": "A Telegram bot on GitHub Models"
+          }
+        },
+        {
+          "name": "EasyHomepage",
+          "url": "https://github.com/jason5ng32/EasyHomepage",
+          "kind": "kiosk",
+          "desc": {
+            "zh": "简单好用的个人主页模板",
+            "en": "A simple personal homepage template"
+          }
+        },
+        {
+          "name": {
+            "zh": "美股财报日历",
+            "en": "Earnings Calendar"
+          },
+          "url": "https://github.com/jason5ng32/OhEarningsCal",
+          "kind": "grid",
+          "desc": {
+            "zh": "可订阅的美股财报日历",
+            "en": "A subscribable US earnings calendar"
+          }
+        },
+        {
+          "name": {
+            "zh": "躺平计算器",
+            "en": "Retire Calculator"
+          },
+          "url": "https://retire.money/",
+          "kind": "pavilion",
+          "desc": {
+            "zh": "算算还要多久才能躺平",
+            "en": "How long until you can stop working"
+          }
+        },
+        {
+          "name": "Macify",
+          "url": "https://chromewebstore.google.com/detail/macify-macos-screensaver/lgdipcalomggcjkohjhkhkbcpgladnoe",
+          "kind": "camera",
+          "desc": {
+            "zh": "把 macOS 屏保搬进浏览器新标签页",
+            "en": "macOS screensavers in your new tab"
+          }
+        },
+        {
+          "name": "Pingall",
+          "url": "https://github.com/jason5ng32/pingall-a-shell-tool",
+          "kind": "radio",
+          "desc": {
+            "zh": "批量 ping 的命令行小工具",
+            "en": "A shell tool that pings many hosts at once"
+          }
+        },
+        {
+          "name": {
+            "zh": "可能吧排版器",
+            "en": "Kenengba Formatter"
+          },
+          "url": "https://mp.knb.im/",
+          "kind": "smithy",
+          "desc": {
+            "zh": "公众号文章排版工具",
+            "en": "A formatter for WeChat articles"
+          }
+        },
+        {
+          "name": "PM2048",
+          "url": "https://github.com/jason5ng32/pm2048",
+          "kind": "quad",
+          "desc": {
+            "zh": "产品经理版 2048",
+            "en": "2048 for product managers"
+          }
+        }
       ]
     },
     {
-      "id": "contact", "slot": "east", "key": "c",
-      "name": { "en": "Crossroads", "zh": "十字墟" }, "role": { "zh": "联系", "en": "Contact" },
-      "blurb": { "zh": "旅人在墟市碰头。阿禅的主页、社交账号和邮箱都在这里。", "en": "Where travellers meet at the market: Jason's profiles, socials and email." },
-      "style": { "walls": ["paper", "wallRose", "wallSage", "road", "wallSky"], "roofs": ["terra", "mustard", "olive", "roofSlate", "kraftDeep"], "annex": ["stall", "tree", "bench", "lantern"], "timber": true },
-      "features": { "hedge": true, "lamps": true, "centerpiece": "fountain" },
+      "id": "contact",
+      "slot": "east",
+      "key": "c",
+      "name": {
+        "en": "Crossroads",
+        "zh": "十字墟"
+      },
+      "role": {
+        "zh": "联系",
+        "en": "Contact"
+      },
+      "blurb": {
+        "zh": "旅人在墟市碰头。阿禅的主页、社交账号和邮箱都在这里。",
+        "en": "Where travellers meet at the market: Jason's profiles, socials and email."
+      },
+      "style": {
+        "walls": [
+          "paper",
+          "wallRose",
+          "wallSage",
+          "road",
+          "wallSky"
+        ],
+        "roofs": [
+          "terra",
+          "mustard",
+          "olive",
+          "roofSlate",
+          "kraftDeep"
+        ],
+        "annex": [
+          "stall",
+          "tree",
+          "bench",
+          "lantern"
+        ],
+        "timber": true
+      },
+      "features": {
+        "hedge": true,
+        "lamps": true,
+        "centerpiece": "fountain"
+      },
       "items": [
-        { "name": "GitHub", "url": "https://github.com/jason5ng32", "kind": "cattower", "desc": "github.com/jason5ng32" },
-        { "name": "Twitter", "url": "https://twitter.com/jason5ng32", "kind": "dovecote", "desc": "twitter.com/jason5ng32" },
-        { "name": "Instagram", "url": "https://www.instagram.com/jason5ng32", "kind": "camera", "desc": "instagram.com/jason5ng32" },
-        { "name": "LinkedIn", "url": "https://www.linkedin.com/in/jason5ng32", "kind": "mansion", "desc": "linkedin.com/in/jason5ng32" },
-        { "name": { "zh": "可能吧", "en": "Kenengba blog" }, "url": "https://kenengba.com/", "kind": "scriptorium", "desc": "kenengba.com" },
-        { "name": { "zh": "邮件", "en": "Email" }, "url": "mailto:fromhomepage@kenengba.com", "kind": "signpost", "desc": "fromhomepage@kenengba.com" },
-        { "name": { "zh": "维基百科", "en": "Wikipedia" }, "url": "https://zh.wikipedia.org/wiki/%E4%BC%8D%E5%98%89%E8%B4%A4", "kind": "statue", "desc": { "zh": "伍嘉贤的维基百科条目", "en": "Jason Ng on Wikipedia" } }
+        {
+          "name": "GitHub",
+          "url": "https://github.com/jason5ng32",
+          "kind": "cattower",
+          "desc": "github.com/jason5ng32"
+        },
+        {
+          "name": "Twitter",
+          "url": "https://twitter.com/jason5ng32",
+          "kind": "dovecote",
+          "desc": "twitter.com/jason5ng32"
+        },
+        {
+          "name": "Instagram",
+          "url": "https://www.instagram.com/jason5ng32",
+          "kind": "camera",
+          "desc": "instagram.com/jason5ng32"
+        },
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/in/jason5ng32",
+          "kind": "mansion",
+          "desc": "linkedin.com/in/jason5ng32"
+        },
+        {
+          "name": {
+            "zh": "可能吧",
+            "en": "Kenengba blog"
+          },
+          "url": "https://kenengba.com/",
+          "kind": "scriptorium",
+          "desc": "kenengba.com"
+        },
+        {
+          "name": {
+            "zh": "邮件",
+            "en": "Email"
+          },
+          "url": "mailto:fromhomepage@kenengba.com",
+          "kind": "signpost",
+          "desc": "fromhomepage@kenengba.com"
+        },
+        {
+          "name": {
+            "zh": "维基百科",
+            "en": "Wikipedia"
+          },
+          "url": "https://zh.wikipedia.org/wiki/%E4%BC%8D%E5%98%89%E8%B4%A4",
+          "kind": "statue",
+          "desc": {
+            "zh": "伍嘉贤的维基百科条目",
+            "en": "Jason Ng on Wikipedia"
+          }
+        }
       ]
     },
     {
-      "id": "services", "slot": "highland", "key": "y",
-      "name": { "en": "Yum Cha Ridge", "zh": "饮茶岭" }, "role": { "zh": "服务", "en": "Services" },
-      "blurb": { "zh": "高处的茶寮。骑车、饮茶吹水、正经产品咨询，三样都可以约。", "en": "A teahouse up the ridge. Ride, chat over coffee, or book proper product advice." },
-      "style": { "walls": ["paper", "wallRose", "road", "wallSage"], "roofs": ["mustard", "terra", "olive", "pine"], "annex": ["tree", "lantern", "well", "stairs"] },
-      "features": { "lamps": true, "centerpiece": "pond", "suburbs": 3 },
+      "id": "services",
+      "slot": "highland",
+      "key": "y",
+      "name": {
+        "en": "Yum Cha Ridge",
+        "zh": "饮茶岭"
+      },
+      "role": {
+        "zh": "服务",
+        "en": "Services"
+      },
+      "blurb": {
+        "zh": "高处的茶寮。骑车、饮茶吹水、正经产品咨询，三样都可以约。",
+        "en": "A teahouse up the ridge. Ride, chat over coffee, or book proper product advice."
+      },
+      "style": {
+        "walls": [
+          "paper",
+          "wallRose",
+          "road",
+          "wallSage"
+        ],
+        "roofs": [
+          "mustard",
+          "terra",
+          "olive",
+          "pine"
+        ],
+        "annex": [
+          "tree",
+          "lantern",
+          "well",
+          "stairs"
+        ]
+      },
+      "features": {
+        "lamps": true,
+        "centerpiece": "pond",
+        "suburbs": 3
+      },
       "items": [
-        { "name": { "zh": "一起骑摩托车", "en": "Ride together" }, "url": "https://wujiaxian.com/#Services", "kind": "smithy", "desc": { "zh": "摩托车骑行是阿禅最大的爱好之一", "en": "Motorcycle rides, one of his favourite things" } },
-        { "name": { "zh": "喝咖啡吹牛", "en": "Coffee and chat" }, "url": "https://wujiaxian.com/#Services", "kind": "teahouse", "desc": { "zh": "坐下来随便聊", "en": "Sit down and talk about anything" } },
-        { "name": { "zh": "正经产品咨询", "en": "Product consulting" }, "url": "https://wujiaxian.com/#Services", "kind": "elfhall", "desc": { "zh": "产品策略、增长、AI Agents 落地", "en": "Product strategy, growth, putting AI agents to work" } }
+        {
+          "name": {
+            "zh": "一起骑摩托车",
+            "en": "Ride together"
+          },
+          "url": "https://wujiaxian.com/#Services",
+          "kind": "smithy",
+          "desc": {
+            "zh": "摩托车骑行是阿禅最大的爱好之一",
+            "en": "Motorcycle rides, one of his favourite things"
+          }
+        },
+        {
+          "name": {
+            "zh": "喝咖啡吹牛",
+            "en": "Coffee and chat"
+          },
+          "url": "https://wujiaxian.com/#Services",
+          "kind": "teahouse",
+          "desc": {
+            "zh": "坐下来随便聊",
+            "en": "Sit down and talk about anything"
+          }
+        },
+        {
+          "name": {
+            "zh": "正经产品咨询",
+            "en": "Product consulting"
+          },
+          "url": "https://wujiaxian.com/#Services",
+          "kind": "elfhall",
+          "desc": {
+            "zh": "产品策略、增长、AI Agents 落地",
+            "en": "Product strategy, growth, putting AI agents to work"
+          }
+        }
       ]
     }
   ]

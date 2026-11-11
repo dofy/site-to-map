@@ -3,6 +3,10 @@
   "world": {
     "layout": "classic"
   },
+  "ui": {
+    "languageSwitch": true,
+    "shortcuts": true
+  },
   "site": {
     "brand": "yahaha.net",
     "domains": [
