@@ -36,16 +36,17 @@ console.log(`built ${join(outDir, 'index.html')}: ${site.cities.length} towns, $
 function validate(s) {
   const out = [];
   const KINDS = new Set(JSON.parse(readFileSync(join(here, '../references/kinds.json'), 'utf8')).map(k => k.kind));
-  const SLOTS = ['center', 'highland', 'coast', 'south', 'east'];
+  const SLOTS = ['center', 'highland', 'coast', 'south', 'east', 'town'];
   if (!Array.isArray(s.cities) || !s.cities.length) return ['cities must be a non-empty array'];
-  if (s.cities.length > 5) out.push(`${s.cities.length} towns; the map holds at most 5 (merge categories)`);
+  if (s.cities.length > 9) out.push(`${s.cities.length} towns; the map holds at most 9 (merge categories)`);
+  if (s.cities.length > 5 && s.world?.layout === 'classic') out.push('layout "classic" has five town spots; use a generated world for more towns');
   const slots = new Set(), keys = new Set();
   for (const c of s.cities) {
     const where = `town "${c.id}"`;
     if (!c.id || !/^[a-z0-9-]+$/.test(c.id)) out.push(`${where}: id must be lowercase letters, digits or hyphens`);
     if (!c.name) out.push(`${where}: name is required`);
     if (c.slot && !SLOTS.includes(c.slot)) out.push(`${where}: slot must be one of ${SLOTS.join(', ')}`);
-    if (c.slot && slots.has(c.slot)) out.push(`${where}: slot "${c.slot}" is used twice`); slots.add(c.slot);
+    if (c.slot && c.slot !== 'town' && slots.has(c.slot)) out.push(`${where}: slot "${c.slot}" is used twice`); slots.add(c.slot);
     if (c.key) { if (!/^[a-z]$/i.test(c.key) || 'hotvli'.includes(c.key.toLowerCase())) out.push(`${where}: key "${c.key}" must be one letter and not H O T V L I`); if (keys.has(c.key.toLowerCase())) out.push(`${where}: key "${c.key}" is used twice`); keys.add(c.key.toLowerCase()); }
     if (!Array.isArray(c.items) || !c.items.length) { out.push(`${where}: needs at least one item`); continue; }
     for (const it of c.items) {

@@ -15,8 +15,9 @@ converted with one `site.json`.
   (coast, two coasts, island, gulf, lakeland), one or two mountain ranges, rivers, lakes,
   roads with bridges, forests, fields, boats, travellers and ink-line edges. Each site gets
   its own land; `?seed=` and `?world=` preview others.
-- Up to five towns placed by role (walled centre, harbour, workshop quarter, market town,
-  highland), nine buildings each and any number of props around them.
+- Three to nine towns placed by role (walled centre, harbour, workshop quarter, market
+  town, highland, then any number of plain towns), nine buildings each and any number of
+  props around them. More than five towns grows the world to fit.
 - 37 building shapes and 12 props, picked per link by meaning (a bot is a dovecote, an IP
   tool is two towers with a sky bridge, a blog is a clock tower).
 - Light, sky and street lamps follow the visitor's local time across eight phases; the

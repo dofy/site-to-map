@@ -49,10 +49,11 @@ the browser language picks from what each field has, so plain strings are enough
     { "at": "north", "name": { "en": "Long Ridge", "zh": "长岭" } }
     // anchors: north, riverA, riverB, forest, fields, sea, bay, west, lake
   ],
-  "cities": [                          // 3–5 towns, list order = tour order
+  "cities": [                          // 3–9 towns, list order = tour order
     {
       "id": "tools",                   // lowercase id, also the URL hash (#tools)
-      "slot": "center",                // center | coast | south | east | highland (optional, auto-filled)
+      "slot": "center",                // center | coast | south | east | highland | town (optional, auto-filled;
+                                       // the first five once each, town repeats for towns 6–9)
       "key": "m",                      // one-letter shortcut, not H O T V L I
       "name": { "en": "Town name", "zh": "城名" },
       "role": { "zh": "工具", "en": "Tools" },   // the category, shown under the name
@@ -93,7 +94,9 @@ the browser language picks from what each field has, so plain strings are enough
 **Slots are roles, not fixed places.** The world generator places each town by its role:
 `center` near the middle, `coast` on the shore with piers, a lighthouse and boats (by a
 lake in `lakeland`, without piers), `highland` on a plateau under the main mountain range
-with a red gate and a waterfall, `south` and `east` anywhere else on open land.
+with a red gate and a waterfall, `south`, `east` and any number of `town` anywhere else on open land. With more than
+five towns the generated world is scaled up (×1.2 for six … ×1.8 for nine) so towns keep
+their size and spacing; `classic` cannot hold more than five.
 
 **World types.** `coast`: one straight-ish coastline, mountains on the far side.
 `twoCoasts`: land on a corner between two seas. `island`: sea all around, a ridge on one

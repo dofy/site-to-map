@@ -13,7 +13,7 @@ const CENTER = { x: 4, z: 8.5 };
 const COLS = 'ABC';
 const WL = -0.3; // water level
 // five town roles; the world generator decides where each one sits
-const SLOTS = { center: {}, highland: {}, coast: {}, south: {}, east: {} };
+const SLOTS = { center: {}, highland: {}, coast: {}, south: {}, east: {}, town: {} }; // town: any extra, repeatable
 const SLOT_ORDER = ['center', 'south', 'coast', 'east', 'highland'];
 const PROP_KINDS = new Set(['oak', 'pine', 'birch', 'rock', 'boulders', 'signpost', 'flowerbed', 'statue', 'well', 'lamp', 'bench', 'stall']);
 const loc = (v, lang) => v == null ? '' : typeof v === 'string' ? v : (v[lang] ?? v.en ?? v.zh ?? Object.values(v)[0] ?? '');
@@ -21,8 +21,8 @@ const CITIES = [];
 {
   const taken = new Set((SITE.cities || []).map(c => c.slot).filter(s => SLOTS[s]));
   const free = SLOT_ORDER.filter(s => !taken.has(s));
-  for (const src of (SITE.cities || []).slice(0, 5)) {
-    const slot = SLOTS[src.slot] ? src.slot : free.shift();
+  for (const src of (SITE.cities || []).slice(0, 9)) {
+    const slot = SLOTS[src.slot] ? src.slot : free.shift() || 'town';
     const all = (src.items || []).map(it => ({ ...it }));
     const builds = all.filter(it => !PROP_KINDS.has(it.kind)).slice(0, 9);
     const props = all.filter(it => !builds.includes(it));
@@ -107,7 +107,7 @@ const T = {
     steps: ['铺开地形', '折起山脉', '修路架桥', '开垦农田', '盖起城镇', '种一片森林', '放出行人和船'],
     phases: ['深夜', '日出', '早晨', '上午', '正午', '下午', '傍晚', '夜晚'], other: 'EN', otherLang: 'en',
     keysT: '快捷键', keysClose: '按 ? 或 Esc 关闭', keysHint: '按 ? 看快捷键',
-    keys: [['1–5', '按列表顺序飞到对应的城'], ['KEYS', '按城名首字母飞过去'], ['0 / H', '回到全图'], ['← →', '上一个 / 下一个城或建筑'], ['Enter', '打开选中的建筑'], ['Esc', '返回上一级'], ['+ −', '拉近 / 拉远'], ['Shift 空格', '按住再拖拽可平移'], ['T', '开始或停止导览'], ['O', '开关环绕'], ['V', '开关俯视'], ['L', '切换中文 / English'], ['I', '收起或展开信息卡']],
+    keys: [[`1–${Math.min(9, CITIES.length)}`, '按列表顺序飞到对应的城'], ['KEYS', '按城名首字母飞过去'], ['0 / H', '回到全图'], ['← →', '上一个 / 下一个城或建筑'], ['Enter', '打开选中的建筑'], ['Esc', '返回上一级'], ['+ −', '拉近 / 拉远'], ['Shift 空格', '按住再拖拽可平移'], ['T', '开始或停止导览'], ['O', '开关环绕'], ['V', '开关俯视'], ['L', '切换中文 / English'], ['I', '收起或展开信息卡']],
     nowebgl: '这个浏览器没法创建 WebGL，3D 地图无法显示。右下角列表仍然可以导航。' },
   en: { me: 'Map', five: n => `${n} towns`, map: 'Map', tour: 'Tour', spin: 'Orbit', top: 'Top', hide: 'Hide', show: 'Show', info: 'About this map', where: 'Location', view: 'View',
     hintW: 'Drag to orbit · Shift/Space + drag to pan · Scroll to zoom', hintC: 'Click a building for details · Esc to go back', title: 'Map', sub: n => `${n} towns, one continent`,
@@ -116,7 +116,7 @@ const T = {
     steps: ['Laying out the land', 'Folding the mountains', 'Building roads and bridges', 'Ploughing the fields', 'Raising the towns', 'Planting a forest', 'Sending out travellers and boats'],
     phases: ['Late night', 'Sunrise', 'Morning', 'Forenoon', 'Noon', 'Afternoon', 'Dusk', 'Evening'], other: '中文', otherLang: 'zh',
     keysT: 'Keyboard shortcuts', keysClose: 'Press ? or Esc to close', keysHint: 'Press ? for shortcuts',
-    keys: [['1–5', 'Fly to a town in list order'], ['KEYS', 'Fly to a town by its initial'], ['0 / H', 'Back to the whole map'], ['← →', 'Previous / next city or building'], ['Enter', 'Open the selected building'], ['Esc', 'Go back one level'], ['+ −', 'Zoom in / out'], ['Shift Space', 'Hold and drag to pan'], ['T', 'Start or stop the tour'], ['O', 'Toggle orbit'], ['V', 'Toggle top view'], ['L', 'Switch 中文 / English'], ['I', 'Hide or show the info card']],
+    keys: [[`1–${Math.min(9, CITIES.length)}`, 'Fly to a town in list order'], ['KEYS', 'Fly to a town by its initial'], ['0 / H', 'Back to the whole map'], ['← →', 'Previous / next city or building'], ['Enter', 'Open the selected building'], ['Esc', 'Go back one level'], ['+ −', 'Zoom in / out'], ['Shift Space', 'Hold and drag to pan'], ['T', 'Start or stop the tour'], ['O', 'Toggle orbit'], ['V', 'Toggle top view'], ['L', 'Switch 中文 / English'], ['I', 'Hide or show the info card']],
     nowebgl: 'This browser could not create WebGL, so the 3D map cannot be shown. The list in the corner still works.' },
 };
 // site text overrides (SITE.text.zh / SITE.text.en)
@@ -1449,7 +1449,7 @@ document.addEventListener('keydown', e => {
   const initial = CITIES.find(c => c.key && c.key === k.toLowerCase?.())?.id;
   if (initial) { e.preventDefault(); stopTour(); go(initial); return; }
   const n = parseInt(k, 10);
-  if (n >= 1 && n <= 5) { e.preventDefault(); stopTour(); go(LIST_ORDER()[n - 1]); return; }
+  if (n >= 1 && n <= Math.min(9, CITIES.length)) { e.preventDefault(); stopTour(); go(LIST_ORDER()[n - 1]); return; }
   const f = act[k] || act[k.toLowerCase?.()];
   if (f) { e.preventDefault(); f(); }
 });
@@ -1571,6 +1571,8 @@ function frame() {
   }
   controls.update();
   post.uniforms.focus.value = camera.position.distanceTo(controls.target);
+  // haze scales with the view so a bigger world (more towns, wider overview) is not washed out
+  { const d = post.uniforms.focus.value; fog.near = Math.max(70, d * 1.15); fog.far = Math.max(FOG_FAR, d * 3.2); post.uniforms.fogFar.value = fog.far; }
   { const far = camera.position.distanceTo(controls.target) > 36; for (const c of clouds) c.visible = far; }
   needle.setAttribute('transform', `rotate(${(controls.getAzimuthalAngle() * 180 / Math.PI).toFixed(1)})`);
   camera.layers.enableAll();

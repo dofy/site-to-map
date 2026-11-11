@@ -7,7 +7,7 @@ description: Turn a personal homepage, link-in-bio page, navigation or bookmark 
 
 Converts a link-heavy site into the map used on yahaha.net: a generated paper-craft world
 (coasts, islands, gulfs or lakes, mountain ranges, rivers and roads from a seed) with up to
-five towns, ink-line rendering, local-time daylight, bilingual text, tour mode and
+nine towns, ink-line rendering, local-time daylight, bilingual text, tour mode and
 keyboard shortcuts. You write one `site.json`; the engine in `engine/` does the rest.
 
 Read `references/site-schema.md` before writing `site.json`, and pick building shapes from
@@ -22,19 +22,22 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
    renders the page with Playwright so client-side sites work). Read the result: every
    section has `heading`, `parent` (the h2 it sits under), a little `text` and its `links`.
    Open the page yourself if the extract looks thin.
-2. **Plan the towns.** Group links into **three to five towns**, usually one per top-level
-   category. Merge tiny categories, split none: the map has exactly five slots.
+2. **Plan the towns.** Group links into **three to nine towns**, usually one per top-level
+   category. Merge tiny categories; five is the sweet spot, and above six the world grows
+   (up to ×1.8 at nine) and the overview gets busier.
    - Drop in-page anchors, share buttons and duplicate links. A link that appears in two
      categories goes in the one where it means most; a short mention elsewhere can stay
      as a prop.
    - Up to **nine buildings** per town. Everything beyond that, and anything minor, becomes
      a **prop** (tree, rock, signpost, flower bed, statue, lamp…). Props are clickable and
      named like buildings, and sit in a ring just outside town. Do not drop links to fit.
-   - Choose a slot for each town by character:
+   - Choose a role (`slot`) for each town by character; the first five are unique, `town`
+     can repeat for the sixth to ninth:
      `center` walled main town (the core category) · `coast` harbour with piers and a
      lighthouse (things that ship: apps, products) · `south` workshop quarter (code,
      side projects) · `east` market town with a fountain (social, contact) ·
-     `highland` quiet plateau with a gate and waterfall (small or special sets, best ≤ 4).
+     `highland` quiet plateau with a gate and waterfall (small or special sets, best ≤ 4) ·
+     `town` any further town on open land.
 3. **Name things.** Default to **original names** that fit the owner and the site:
    town names, the world name, and the nine place-name anchors (mountains, two rivers,
    forest, fields, sea, bay, western range, lake). Use a borrowed setting (Tolkien, a
@@ -42,7 +45,7 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
    user-facing strings in the site's own language and set `site.lang`. Only when the user
    asks for a language switch, set `ui.languageSwitch: true` and give every string as
    `{ "zh": …, "en": … }`. Keep proper nouns as the owner writes them.
-   - Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
+   - Number keys 1–9 reach towns in list order. Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
      English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
      language, info card).
 4. **Pick shapes.** For each link choose a `kind` from `references/kinds.json` by what the
@@ -116,8 +119,9 @@ is the reference integration.
 
 ## Limits
 
-- Five towns, nine buildings each; any number of props, but more than about twelve per
-  town gets crowded.
+- Up to nine towns (more than five makes the world larger), nine buildings each; any
+  number of props, but more than about twelve per town gets crowded. `layout: "classic"`
+  has only five spots.
 - The world is generated, not painted: you choose a seed and a type, not exact coastlines.
   Up to five towns; fewer towns simply leave more countryside.
 - Building shapes come from the catalogue. A link that deserves a one-off landmark needs a
