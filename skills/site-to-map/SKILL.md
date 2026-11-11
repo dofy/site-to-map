@@ -1,26 +1,38 @@
 ---
 name: site-to-map
-description: Turn a personal homepage, link-in-bio page, navigation or bookmark site into a folded-paper 3D map where each category is a town and each link is a landmark building, tree, rock or signpost. Use when the user wants to "make my site a map", "turn this homepage / nav site / bookmarks into a 3D world", "convert <url> into the yahaha-style map", or asks for a site-to-map / 城市地图 / 3D 导航 page. Produces a site.json and a standalone page built with three.js.
+description: Create or edit a folded-paper 3D navigation map from a personal homepage, link-in-bio page, navigation site or bookmarks. Use when turning such content into a site-to-map page or changing an existing site-to-map world, towns, links or appearance.
 ---
 
 # site-to-map
 
 Converts a link-heavy site into the map used on yahaha.net: a generated paper-craft world
 (coasts, islands, gulfs or lakes, mountain ranges, rivers and roads from a seed) with up to
-nine towns, ink-line rendering, local-time daylight, bilingual text, tour mode and
+nine towns, ink-line rendering, local-time daylight, multilingual text, tour mode and
 keyboard shortcuts. You write one `site.json`; the engine in `engine/` does the rest.
 
 Read `references/site-schema.md` before writing `site.json`, and pick building shapes from
 `references/kinds.json`. The schema file contains a complete annotated example, and
 yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full one to copy from.
 
-## Workflow
+## Edit an existing map
+
+Locate the existing map configuration and integration before editing. Change only what the
+user requested; preserve other links, languages, names and world settings. A framework
+integration may use a different filename (yahaha uses `src/data/map.json`) and may vendor
+the engine rather than use the standalone builder. Respect the project's own workflow.
+
+Changing the seed, town count or slots can change the generated land; with `townSize: "fit"`,
+building count changes can also shift it. Explain material layout changes to the user. For a
+standalone page, rebuild from its configuration; for an integrated page, validate the actual
+integration. Check the affected views and screenshots when the change is visual.
+
+## Create a map
 
 1. **Get the source.** Ask for a URL, an exported bookmarks file, or a pasted list if the
    user has not given one. For a URL run
    `node scripts/extract.mjs <url> extract.json` from this skill's folder. If `node_modules`
-   is missing there, run `npm install` in that folder first (it installs Playwright, which
-   renders the page so client-side sites work, and is needed by `check.mjs` too). Read the result: every
+   is missing there, run `npm install` in that folder first. Playwright renders client-side
+   sites and is needed by `check.mjs`; the static HTML fallback cannot render them. Read the result: every
    section has `heading`, `parent` (the h2 it sits under), a little `text` and its `links`.
    Open the page yourself if the extract looks thin.
 2. **Plan the towns.** Group links into **three to nine towns**, usually one per top-level
@@ -53,8 +65,9 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
    to its code. **Do not translate** and do not add other languages, even if the source
    site is multilingual: convert the main language only, and tell the user that other
    languages can be added by hand (see `references/site-schema.md`, *Languages*). The
-   interface has built-in Chinese and English; for any other language, also write its
-   interface strings in `text.<lang>` (keys listed in the schema). Keep proper nouns as the
+   interface has built-in Simplified Chinese, Traditional Chinese, Japanese and English;
+   for any other language, also write its interface strings in `text.<lang>` (keys listed
+   in the schema). Keep proper nouns as the
    owner writes them.
    - Number keys 1–9 reach towns in list order. Town `key` (only used with `ui.shortcuts`): one letter, ideally the initial of the
      English name, unique, and not `H O T V L I` (overview, orbit, tour, top view,
@@ -66,13 +79,14 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
 5. **Shape the world.** The land is generated from `world.seed` (default: brand + town
    ids), so every site gets different coasts, mountains, rivers, lakes and roads. Pick a
    `world.type` that suits the site (`coast`, `twoCoasts`, `island`, `gulf`, `lakeland`) or
-   leave it to the seed. Try two or three seeds with
+   leave it to the seed. Build an initial page with `node scripts/build.mjs site.json out/`,
+   then try two or three seeds with
    `node scripts/check.mjs out/ --query "seed=foo&world=island"` and keep the one where the
    towns read best; **write that seed into `site.json`** so renaming the site never
    reshuffles the land. For a site on several domains, `"seed": "{domain}"` gives each domain its own
    land. Keep `townSize` at its default `fixed` unless the user wants towns
-   packed tighter and accepts that adding buildings may move things (`fit`). `layout: "classic"` reproduces the fixed
-   yahaha.net continent and is only for that site.
+   packed tighter and accepts that adding buildings may move things (`fit`). `layout: "classic"`
+   reproduces the legacy fixed five-slot continent.
 6. **Style each town.** `style.walls` and `style.roofs` are palette tokens (see schema);
    give each town its own roof family so towns read apart, and set `features`
    (`walls`, `hedge`, `lamps`, `centerpiece`).
@@ -86,27 +100,27 @@ yahaha.net's production config (`src/data/map.json` in dofy/yahaha) is a full on
 
 ## Options
 
-Everything below is optional and set in `site.json` → `ui` (defaults in brackets). Ask the
-user only about the first two; keep the rest at their defaults unless they mention them.
+Everything below is optional and set in `site.json` → `ui` (defaults in brackets). Use the
+defaults unless the user's request or the existing map calls for another setting.
 
 | option | default | what it does |
 |---|---|---|
-| `languageSwitch` | off | language button and `L` key, cycling through languages the user added by hand. The skill never writes translations, so leave it off |
-| `shortcuts` | off | 1–5 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
+| `languageSwitch` | off | language button and `L` key, cycling through available languages; enable when multiple languages are present and wanted |
+| `shortcuts` | off | 1–9 and town letters, ←/→, Enter, +/−, T/O/V/I, the `?` help panel and its hint. `Esc` (back) and Shift/Space + drag (pan) always work |
 | `tour` | on | Tour button that flies through every town |
 | `views` | on | Orbit and Top view buttons |
+| `clock` | on | time-of-day chip in the footer |
+| `compass` | on | compass in the corner |
+| `daylight` | `"auto"` | local-time sky, lighting and shadows update every 20 seconds; a number (e.g. `10.5`) freezes the hour |
+| `intro` | on | pop-up-book entrance animation |
+| `motion` | on | boats, walkers, smoke, flags and clouds moving |
+| `blur` | on | depth-of-field and tilt-shift blur |
+| `infoOpen` | on | info card open at start on wide screens |
 
 The opening camera angle is chosen by the world generator: from the sea looking inland
 when there is an open coast, otherwise from opposite the main mountain range, nudged so no
 peak stands between the camera and a town. The Map button (and `0`/`H`) returns to that
 angle, the overview zoom and tilt, and switches orbit, top view and tour off.
-| `clock` | on | time-of-day chip in the footer |
-| `compass` | on | compass in the corner |
-| `daylight` | `"auto"` | local-time sky and lamps; a number (e.g. `10.5`) freezes the hour |
-| `intro` | on | pop-up-book entrance animation |
-| `motion` | on | boats, walkers, smoke, flags and clouds moving |
-| `blur` | on | depth-of-field and tilt-shift blur |
-| `infoOpen` | on | info card open at start on wide screens |
 
 Other things that are optional simply by leaving them out: `site.links` (a few site-level links beside the brand, such as GitHub or contact, each
 with a name, URL and icon; add them only when the source site shows such links prominently),

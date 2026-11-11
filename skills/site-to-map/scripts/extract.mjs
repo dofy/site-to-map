@@ -7,21 +7,24 @@ const [, , url, out] = process.argv;
 if (!url) { console.error('usage: node extract.mjs <url> [out.json]'); process.exit(1); }
 
 let data;
+let browser;
 try {
   const { chromium } = await import('playwright');
-  const browser = await chromium.launch({ channel: process.env.PW_CHANNEL || 'chrome' }).catch(() => chromium.launch());
+  browser = await chromium.launch({ channel: process.env.PW_CHANNEL || 'chrome' }).catch(() => chromium.launch());
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
   await page.waitForTimeout(2500);
   data = await page.evaluate(collect);
-  await browser.close();
 } catch (e) {
   console.error(`playwright unavailable or failed (${e.message.split('\n')[0]}); falling back to fetch, client-rendered sites will be empty`);
-  const html = await (await fetch(url, { headers: { 'user-agent': 'site-to-map extractor' } })).text();
-  const { JSDOM } = await import('jsdom').catch(() => ({}));
-  if (!JSDOM) { console.error('install playwright (preferred) or jsdom to extract'); process.exit(1); }
+  const response = await fetch(url, { headers: { 'user-agent': 'site-to-map extractor' } });
+  if (!response.ok) throw new Error(`fetch failed: HTTP ${response.status}`);
+  const html = await response.text();
+  const { JSDOM } = await import('jsdom');
   const dom = new JSDOM(html, { url });
-  data = collect.call(null, dom.window.document);
+  data = collect(dom.window.document);
+} finally {
+  if (browser) await browser.close();
 }
 data.source = url;
 const json = JSON.stringify(data, null, 2);
@@ -45,7 +48,7 @@ function collect(doc = document) {
     const cur = sections[sections.length - 1];
     if (tag === 'P' && cur.text.length < 400) cur.text += (cur.text ? ' ' : '') + el.textContent.trim().replace(/\s+/g, ' ').slice(0, 300);
     if (tag === 'A' && el.href && !el.href.startsWith('javascript:')) {
-      const href = el.href, own = href.split('#')[0] === location.href.split('#')[0];
+      const href = el.href, own = href.split('#')[0] === doc.location.href.split('#')[0];
       if (own && href.includes('#')) continue; // in-page navigation
       const label = (el.textContent || el.getAttribute('aria-label') || el.title || el.querySelector('img')?.alt || '').trim().replace(/\s+/g, ' ');
       const key = href + '|' + cur.heading;

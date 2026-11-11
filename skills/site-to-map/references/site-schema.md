@@ -9,7 +9,7 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "layout": "auto",                  // auto (generated) | classic (the fixed yahaha.net continent)
     "seed": "any string or number",    // default: brand + town ids, so each site gets its own land;
                                        // "{domain}" = the domain being visited (one land per domain)
-    "type": "coast"                    // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick,
+    "type": "coast",                   // coast | twoCoasts | island | gulf | lakeland; omit to let the seed pick
     "townSize": "fixed"                // fixed (default): towns laid out at full size, so adding or removing
                                        // buildings never moves the land | fit: real sizes, tighter, but the
                                        // layout shifts when a town crosses 2/4/6/9 buildings
@@ -21,7 +21,7 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "views": true,                      // Orbit and Top view buttons
     "clock": true,                      // time-of-day chip in the footer
     "compass": true,                    // compass in the corner
-    "daylight": "auto",                 // auto = visitor's local time; or a fixed hour 0–24, e.g. 10.5
+    "daylight": "auto",                 // auto = visitor's local time, refreshed every 20s; or fixed hour, e.g. 10.5
     "intro": true,                      // pop-up-book entrance (land unfolds, buildings rise)
     "motion": true,                     // ambient life: boats, walkers, smoke, flags, clouds
     "blur": true,                       // depth-of-field and tilt-shift blur

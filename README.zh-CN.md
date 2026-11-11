@@ -35,7 +35,7 @@ Install the site-to-map skill from https://github.com/dofy/site-to-map
 npx skills add dofy/site-to-map                               # Codex、Cursor 等其他 agent
 ```
 
-skill 第一次运行时会自动安装脚本依赖（Playwright，用来读取网页和截图）。
+skill 第一次运行时会安装脚本依赖。Playwright 用来读取网页和截图；浏览器提取失败时会回退到静态 HTML，但无法读取客户端渲染的内容。
 
 ## 使用
 

@@ -51,8 +51,8 @@ Or install it yourself:
 npx skills add dofy/site-to-map                               # Codex, Cursor and other agents
 ```
 
-The skill installs its own script dependency (Playwright, for reading pages and taking
-screenshots) the first time it runs.
+The skill installs its script dependencies the first time it runs. Playwright reads pages
+and takes screenshots; a static HTML fallback is available when browser extraction fails.
 
 ## Use
 
