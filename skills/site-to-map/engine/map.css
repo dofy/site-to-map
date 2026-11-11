@@ -142,6 +142,8 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
   .bubble-open:hover, .bubble-close:hover { filter: brightness(1.05); }
 }
 
+@media (min-width: 561px) and (max-width: 760px) { .info { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); } }
+
 .loader { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; justify-items: center; gap: 10px;
   background: var(--ui-card); transition: opacity .6s .2s, visibility 0s .8s, background-color .8s; }
 .loader.done { opacity: 0; visibility: hidden; }
@@ -266,13 +268,19 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
 .foot .ver:empty { display: none; }
 
 .tools { position: absolute; }
-.tools:has(.lang-menu:not([hidden])) { z-index: 6; }
-.lang-menu { position: absolute; top: calc(100% + 6px); right: 0; display: grid; min-width: 140px; padding: 4px; gap: 2px;
+.tools:has(.lang-menu:not([hidden])), .tools:has(.city-menu:not([hidden])) { z-index: 6; }
+.lang-menu, .city-menu { position: absolute; top: calc(100% + 6px); right: 0; display: grid; min-width: 140px; padding: 4px; gap: 2px;
   background: var(--ui-card); border: 1px solid var(--ui-ink); border-radius: 10px; box-shadow: 0 12px 30px var(--ui-shadow); z-index: 5; }
 .lang-menu.up { top: auto; bottom: calc(100% + 6px); }
 @media (max-width: 560px) { .lang-menu, .lang-menu.up { top: auto; bottom: 0; right: calc(100% + 6px); } }
-.lang-menu button { text-align: left; border-radius: 6px; padding: 6px 10px; font-family: var(--font-sans); font-size: 13px; }
+.lang-menu button, .city-menu button { text-align: left; border-radius: 6px; padding: 6px 10px; font-family: var(--font-sans); font-size: 13px; }
 .lang-menu button[aria-checked="true"] { background: var(--ui-hot); font-weight: 600; }
+.city-menu { left: var(--city-menu-x, 0px); right: auto; width: 160px; max-height: min(60vh, 400px); overflow-y: auto; }
+.city-menu button { display: block; width: 100%; }
+.city-menu button[aria-current="location"] { background: var(--ui-hot); font-weight: 600; }
+#b-cities { display: none; }
+@media (max-width: 1024px), (max-width: 1366px) and (pointer: coarse) { #b-cities { display: inline-flex; } }
+@media (max-width: 560px) { .city-menu { top: 0; bottom: auto; left: auto; right: calc(100% + 6px); } }
 
 .tools button { display: inline-flex; align-items: center; gap: 5px; }
 #b-keys { min-width: 32px; justify-content: center; }

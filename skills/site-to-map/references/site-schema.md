@@ -25,7 +25,7 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "intro": true,                      // pop-up-book entrance (land unfolds, buildings rise)
     "motion": true,                     // ambient life: boats, walkers, smoke, flags, clouds
     "blur": true,                       // depth-of-field and tilt-shift blur
-    "infoOpen": true                    // info card starts open on wide screens (always folded on phones)
+    "infoOpen": true                    // info card starts open on wide screens; phones and tablets use a selection bubble
   },
   "site": {
     "brand": "example.com",            // shown top left when the hostname is not in domains
@@ -140,7 +140,7 @@ add by hand (or with another tool):
 - Interface strings are built in for `zh`, `zh-Hant`, `ja` and `en`. Any other language starts
   from English;
   override them in `text.<lang>`. Keys: `worldName` (root of the location bar), `townCount`
-  (count beside it), `title`, `sub`, `intro`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
+  (count beside it), `title`, `sub`, `intro`, `cities`, `map`, `tour`, `spin`, `top`, `hide`, `show`, `info`, `where`, `view`, `hintW`,
   `hintC`, `plots`, `plot`, `open`, `fold`, `prep`, `titleSuffix`,
   `steps` (7 loading steps), `phases` (8 times of day: late night, sunrise, morning,
   forenoon, noon, afternoon, dusk, evening), `langName`, `keysT`, `keysClose`, `keysHint`,

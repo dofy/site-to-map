@@ -115,7 +115,10 @@ defaults unless the user's request or the existing map calls for another setting
 | `intro` | on | pop-up-book entrance animation |
 | `motion` | on | boats, walkers, smoke, flags and clouds moving |
 | `blur` | on | depth-of-field and tilt-shift blur |
-| `infoOpen` | on | info card open at start on wide screens |
+| `infoOpen` | on | info card open at start on wide screens; phones and tablets show a selection bubble |
+
+On phones and tablets, the city navigation button opens a list of towns. Selecting a town or
+building displays a compact information bubble; buildings include an open-link button.
 
 The opening camera angle is chosen by the world generator: from the sea looking inland
 when there is an open coast, otherwise from opposite the main mountain range, nudged so no
