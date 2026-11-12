@@ -53,7 +53,9 @@ function collect(doc = document) {
       const label = (el.textContent || el.getAttribute('aria-label') || el.title || el.querySelector('img')?.alt || '').trim().replace(/\s+/g, ' ');
       const key = href + '|' + cur.heading;
       if (seen.has(key)) continue; seen.add(key);
-      cur.links.push({ text: label.slice(0, 80), href });
+      // same-site links stay relative so the map works on every domain the site is served from
+      const u = new URL(href), local = u.origin === doc.location.origin;
+      cur.links.push({ text: label.slice(0, 80), href: local ? u.pathname + u.search + u.hash : href });
     }
   }
   return { title: doc.title, lang: doc.documentElement.lang || '', description: meta('description') || meta('og:description'),

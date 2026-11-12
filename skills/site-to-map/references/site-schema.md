@@ -75,6 +75,7 @@ skill converts one language only; see *Languages* at the end for adding more by 
       },
       "items": [
         { "name": "Link name", "url": "https://…", "kind": "radio", "desc": "One short line" },
+        { "name": "Own page", "url": "/tools/ip", "kind": "radio", "desc": "Same-site links stay root-relative" },
         { "name": "Old project", "url": "https://…", "kind": "rock", "desc": "…" }   // prop kinds become props
       ]
     }

@@ -157,6 +157,11 @@ is the reference integration.
   or from the user.
 - Keep the owner's copyright line and brand; `site.copyright.owner` is required for a
   personal site.
+- Links to the site's own pages use root-relative paths (`/tools`, not
+  `https://example.com/tools`), so the map works on every domain, preview deploy and
+  localhost the site is served from. `extract.mjs` already writes same-origin links this way;
+  keep them relative and strip the scheme and host from any the user pastes. Subdomains
+  and other domains are separate sites and stay absolute.
 - Email links stay as `mailto:`; private or login-only links are left out unless asked.
 - The page needs WebGL. The build always writes a `<noscript>` link list, so content stays
   reachable without JavaScript.
