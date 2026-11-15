@@ -20,6 +20,8 @@
 - 站名旁可以放几个站点级链接（GitHub、博客、邮箱等），带图标，手机上只显示图标。
 - 按网站自己的语言生成。界面文字内置简体中文、繁体中文、日语和英语，其他语言的界面文字写在 `site.json` 里。引擎也能在你手动添加的多种语言之间切换，但 skill 本身不做翻译。
 - 可选（默认关闭）：快捷键，包括用数字键前往城镇、按 `?` 查看帮助。城镇按链接数量从多到少编号；上下键切换城镇，左右键在城内切换建筑。导览、视角按钮、时钟、罗盘、固定时刻、开场动画、动态效果和景深模糊都可以在 `site.json` → `ui` 里开关。
+- 同一片世界有四种渲染风格：纸面墨线（默认）、蓝图、网点印刷和像素。用 `ui.finish` 选择，`?finish=` 临时预览。
+- `?still` 把画面定在某一刻，截图可复现。`check.mjs` 会截下每座城的白天和夜晚、手机视图和一张总览拼图，并检查减弱动效和无 WebGL 回退。
 
 ## 安装
 
@@ -56,7 +58,11 @@ agent 会读取网站、规划城镇、起名、为每个链接挑选建筑、�
 把 GitHub 和博客合成一座城。换一个种子。打开快捷键。
 ```
 
-生成的文件夹要通过 HTTP 服务打开（ES 模块不能从 `file://` 加载）。值得知道的可选项：城的数量或分组，`world.type` 和 `world.seed`（包括按域名生成地形的 `"{domain}"`），`site.links`，`ui.shortcuts`（默认关闭）以及 `ui` 的其他选项。手动添加多语言的方法见 [`references/site-schema.md`](skills/site-to-map/references/site-schema.md) 的 *Languages* 一节。
+```text
+把地图换成蓝图风格。把四种风格并排给我看看。
+```
+
+生成的文件夹要通过 HTTP 服务打开（ES 模块不能从 `file://` 加载）。值得知道的可选项：城的数量或分组，`world.type` 和 `world.seed`（包括按域名生成地形的 `"{domain}"`），`site.links`，`ui.shortcuts`（默认关闭），`ui.finish`（`paper`、`blueprint`、`halftone` 或 `pixel`）以及 `ui` 的其他选项。不改 `site.json` 也能用 URL 参数预览：`?finish=pixel`（风格）、`?t=21`（时刻）、`?seed=` / `?world=`（另一片地形）、`?still`（定格画面，方便截图）。手动添加多语言的方法见 [`references/site-schema.md`](skills/site-to-map/references/site-schema.md) 的 *Languages* 一节。
 
 <details>
 <summary>手动运行脚本</summary>
@@ -66,7 +72,8 @@ cd <skill 目录> && npm install                               # 只需一次
 node scripts/extract.mjs https://example.com extract.json   # 提取小节和链接
 # 编写 site.json（见 references/site-schema.md）
 node scripts/build.mjs site.json out                        # 生成独立页面 out/index.html
-node scripts/check.mjs out                                  # 截图并报告问题，结果在 out/_check
+node scripts/check.mjs out                                  # 截图、sheet.png 和 report.json，在 out/_check
+node scripts/check.mjs out --finishes                       # 同时截下每种渲染风格
 ```
 
 </details>

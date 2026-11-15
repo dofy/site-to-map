@@ -101,9 +101,16 @@ integration. Check the affected views and screenshots when the change is visual.
    (`walls`, `hedge`, `lamps`, `centerpiece`).
 7. **Build and look.** `node scripts/build.mjs site.json out/` writes a standalone
    `out/index.html` (three.js and fonts from CDNs). Then `node scripts/check.mjs out/`
-   screenshots the overview and every town into `out/_check/` and lists page errors and
-   labels hidden by overlap. Look at the screenshots. Shorten names or move items to
-   props when a town is crowded, rebuild, and check once more.
+   writes to `out/_check/`: the overview and every town at 10:00 and 21:00, a phone view,
+   `sheet.png` with all of them on one page and `report.json`. It also checks that the
+   held frame is deterministic, that reduced motion holds still, that the page does not
+   scroll sideways on a phone and that the no-WebGL fallback shows. Add `--finishes` to
+   shoot every finish, `--finish <name>` to check in one, `--hours 9,19` for other hours
+   and `--quick` (overview and phone only) when comparing seeds. Exit code 1 means a
+   problem; notes (hidden labels, frame cost) are questions. **Open `sheet.png` and look**:
+   passing checks do not make a readable map. Shorten names or move items to props when a
+   town is crowded, rebuild, and check once more. Never say the look is done without
+   opening the screenshots; without a browser, say the look is unverified.
 8. **Deliver.** Hand over `site.json`, the built folder and the screenshots. Tell the user
    what you merged, dropped or turned into props, and which names you invented.
 
@@ -123,7 +130,8 @@ defaults unless the user's request or the existing map calls for another setting
 | `daylight` | `"auto"` | local-time sky, lighting and shadows update every 20 seconds; a number (e.g. `10.5`) freezes the hour |
 | `intro` | on | pop-up-book entrance animation |
 | `motion` | on | boats, walkers, smoke, flags and clouds moving |
-| `blur` | on | depth-of-field and tilt-shift blur |
+| `blur` | on | depth-of-field and tilt-shift blur (off in the `pixel` finish) |
+| `finish` | `"paper"` | rendering style over the same world: `paper` (ink lines on paper), `blueprint` (blue planes, pale edges, drafting grid), `halftone` (warm and cool ink dots on ivory), `pixel` (3 px grid, 2 px on phones, ordered dither). Set only when asked; preview with `?finish=` |
 | `infoOpen` | on | info card open at start on wide screens; phones and tablets show a selection bubble |
 
 On phones and tablets, the city navigation button opens a list of towns. Selecting a town or
@@ -138,8 +146,10 @@ Other things that are optional simply by leaving them out: `site.links` (a few s
 with a name, URL and icon; add them only when the source site shows such links prominently),
 `site.copyright` (footer line), `site.version` / `site.releaseUrl` (version link), `places`
 (map lettering), town `features` (walls, hedge, lamps, centrepiece, suburbs) and `world`
-(land generation, see step 5). `?t=18` previews an hour and `?seed=` / `?world=` another
-world without editing the file.
+(land generation, see step 5). `?t=18` previews an hour, `?seed=` / `?world=` another
+world and `?finish=` another finish without editing the file. `?still` (or `?still=8`)
+holds boats, walkers and smoke at that second and skips the entrance and camera flights,
+so screenshots and posters are reproducible; `check.mjs` always uses it.
 
 ## Integrating into an existing site
 

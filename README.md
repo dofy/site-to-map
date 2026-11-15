@@ -39,6 +39,11 @@ converted with one `site.json`.
   help. Towns are numbered by link count, largest first; ↑/↓ switch towns and ←/→ switch
   buildings within a town. Tour, view buttons, clock, compass, fixed
   daylight, entrance animation, motion and blur can be switched in `site.json` → `ui`.
+- Four finishes over the same world: paper with ink lines (default), blueprint, halftone
+  and pixel. `ui.finish` picks one; `?finish=` previews another.
+- `?still` holds the scene at one moment for reproducible screenshots. `check.mjs` shoots
+  every town by day and night, a phone view and a contact sheet, and checks reduced motion
+  and the no-WebGL fallback.
 
 ## Install
 
@@ -78,10 +83,16 @@ what it merged or turned into props, and you can ask for changes the same way:
 Put GitHub and the blog in one town. Try another seed. Turn on keyboard shortcuts.
 ```
 
+```text
+Render the map as a blueprint. Show me all four finishes side by side.
+```
+
 Serve the output folder over HTTP to open it (ES modules don't load from `file://`).
 Options worth knowing, all optional: number or grouping of towns, `world.type` and
 `world.seed` (including `"{domain}"` for one land per domain), `site.links`, `ui.shortcuts`
-(off by default) and the rest of `ui`. Adding languages by hand is described under *Languages* in
+(off by default), `ui.finish` (`paper`, `blueprint`, `halftone` or `pixel`) and the rest of `ui`.
+URL parameters preview without editing `site.json`: `?finish=pixel`, `?t=21` (an hour),
+`?seed=` / `?world=` (another land) and `?still` (hold the scene for a screenshot). Adding languages by hand is described under *Languages* in
 [`references/site-schema.md`](skills/site-to-map/references/site-schema.md).
 
 <details>
@@ -92,7 +103,8 @@ cd <skill folder> && npm install                            # once
 node scripts/extract.mjs https://example.com extract.json   # sections and links
 # write site.json (see references/site-schema.md)
 node scripts/build.mjs site.json out                        # standalone out/index.html
-node scripts/check.mjs out                                  # screenshots + problems in out/_check
+node scripts/check.mjs out                                  # screenshots, sheet.png + report.json in out/_check
+node scripts/check.mjs out --finishes                       # also every finish
 ```
 
 </details>
