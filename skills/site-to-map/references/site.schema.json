@@ -276,6 +276,9 @@
     "blur": {
      "type": "boolean"
     },
+    "finish": {
+     "enum": ["paper", "blueprint", "halftone", "pixel"]
+    },
     "infoOpen": {
      "type": "boolean"
     }

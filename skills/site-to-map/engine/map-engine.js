@@ -98,7 +98,16 @@ const DOMAIN = DOMAINS.find(d => d.toLowerCase() === host) || SITEINFO.brand || 
 const STORE_KEY = (SITEINFO.storageKey || 'site-map') + '-lang';
 // optional interface features (site.json "ui"); see references/site-schema.md
 const UI = { languageSwitch: false, shortcuts: false, tour: true, views: true, clock: true, compass: true,
-  daylight: 'auto', intro: true, motion: true, blur: true, infoOpen: true, ...(SITE.ui || {}) };
+  daylight: 'auto', intro: true, motion: true, blur: true, infoOpen: true, finish: 'paper', ...(SITE.ui || {}) };
+const QS = new URLSearchParams(location.search);
+// rendering finish: one post-process over the same scene; ?finish= previews another
+const FINISHES = ['paper', 'blueprint', 'halftone', 'pixel'];
+let FINISH = FINISHES.find(f => f === QS.get('finish')) || (FINISHES.includes(UI.finish) ? UI.finish : 'paper');
+// ?still or ?still=8: pose ambient life at that second and hold it, skip the entrance and
+// camera flights, so screenshots and posters are reproducible
+const STILL = QS.has('still') ? (Number.isFinite(parseFloat(QS.get('still'))) ? parseFloat(QS.get('still')) : 4) : null;
+document.documentElement.dataset.finish = FINISH;
+if (STILL !== null) document.documentElement.classList.add('map-still');
 const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage may be disabled */ } } };
 // languages: site.languages, or every language code used in the content
 const LANGS = (() => {
@@ -237,7 +246,7 @@ const mapEl = document.getElementById('map');
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' }); }
 catch { document.getElementById('loader').classList.add('done'); mapEl.insertAdjacentHTML('beforeend', `<div class="fallback">${L().nowebgl}</div>`); }
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = STILL !== null || matchMedia('(prefers-reduced-motion: reduce)').matches;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(30, 1, 0.5, 420);
 const LINES = 1;
@@ -276,21 +285,36 @@ const recolorers = [];
 
 const post = new THREE.ShaderMaterial({
   uniforms: { tColor: { value: null }, tNormal: { value: null }, tDepth: { value: null }, res: { value: new THREE.Vector2() },
-    ink: { value: new THREE.Color() }, near: { value: camera.near }, far: { value: camera.far }, thick: { value: 1 }, fogFar: { value: FOG_FAR }, focus: { value: 60 }, blurMax: { value: 6 }, edgeK: { value: .82 } },
+    ink: { value: new THREE.Color() }, near: { value: camera.near }, far: { value: camera.far }, thick: { value: 1 }, fogFar: { value: FOG_FAR }, focus: { value: 60 }, blurMax: { value: 6 }, edgeK: { value: .82 },
+    finish: { value: FINISHES.indexOf(FINISH) }, cell: { value: 3 }, pr: { value: 1 } },
   vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }`,
   fragmentShader: `
     varying vec2 vUv;
-    uniform sampler2D tColor, tNormal, tDepth; uniform vec2 res; uniform vec3 ink; uniform float near, far, thick, fogFar, focus, blurMax, edgeK;
+    uniform sampler2D tColor, tNormal, tDepth; uniform vec2 res; uniform vec3 ink; uniform float near, far, thick, fogFar, focus, blurMax, edgeK, finish, cell, pr;
     float lin(float d){ float z = d * 2. - 1.; return (2. * near * far) / (far + near - z * (far - near)); }
+    float luma(vec3 c){ return dot(c, vec3(.299, .587, .114)); }
+    // ordered dither threshold in [0, 1)
+    float bayer2(vec2 a){ a = floor(a); return fract(dot(a, vec2(.5, a.y * .75))); }
+    float bayer4(vec2 a){ return bayer2(.5 * a) * .25 + bayer2(a); }
+    // anti-aliased screen-space line every s px
+    float gridLine(float v, float s){ float d = abs(fract(v / s - .5) - .5) * s; return 1. - smoothstep(.0, pr, d); }
+    // a dot screen at angle a with cells of s px; coverage k in [0, 1]
+    float dots(vec2 p, float a, float s, float k){
+      vec2 q = mat2(cos(a), -sin(a), sin(a), cos(a)) * p / s; float d = length(fract(q) - .5), r = sqrt(clamp(k, 0., 1.)) * .64;
+      return 1. - smoothstep(r - 1. / s, r + 1. / s, d);
+    }
     void main(){
-      vec2 px = thick / res;
-      float z0 = lin(texture2D(tDepth, vUv).x), w0 = 1. / z0;
-      vec3 n0 = texture2D(tNormal, vUv).xyz * 2. - 1.;
+      bool pix = finish > 2.5;
+      vec2 uv = vUv;
+      if (pix) { vec2 g = res / cell; uv = (floor(vUv * g) + .5) / g; } // pixel: one sample per logical pixel
+      vec2 px = pix ? vec2(cell) / res : thick / res;
+      float z0 = lin(texture2D(tDepth, uv).x), w0 = 1. / z0;
+      vec3 n0 = texture2D(tNormal, uv).xyz * 2. - 1.;
       float lap = -4. * w0, ne = 0.;
       vec2 o[4]; o[0] = vec2(px.x, 0.); o[1] = vec2(-px.x, 0.); o[2] = vec2(0., px.y); o[3] = vec2(0., -px.y);
       for (int i = 0; i < 4; i++) {
-        lap += 1. / lin(texture2D(tDepth, vUv + o[i]).x);
-        vec3 n = texture2D(tNormal, vUv + o[i]).xyz * 2. - 1.;
+        lap += 1. / lin(texture2D(tDepth, uv + o[i]).x);
+        vec3 n = texture2D(tNormal, uv + o[i]).xyz * 2. - 1.;
         ne += 1. - clamp(dot(n0, n), 0., 1.);
       }
       float depthEdge = smoothstep(.012, .03, abs(lap) / w0);
@@ -298,15 +322,43 @@ const post = new THREE.ShaderMaterial({
       float e = max(depthEdge, foldEdge * .7);
       e *= 1. - smoothstep(fogFar * .3, fogFar * .8, z0);
       float coc = max(smoothstep(focus * 1.0, focus * 1.5, z0), smoothstep(.3, .5, abs(vUv.y - .5)) * .8);
-      vec3 c = texture2D(tColor, vUv).rgb;
+      vec3 c = texture2D(tColor, uv).rgb;
       if (coc > .01 && blurMax > 0.) {
         vec3 acc = c;
         for (int i = 0; i < 16; i++) { float a = float(i) * 2.39996, r = sqrt((float(i) + .5) / 16.);
-          acc += texture2D(tColor, vUv + vec2(cos(a), sin(a)) * r * coc * blurMax / res).rgb; }
+          acc += texture2D(tColor, uv + vec2(cos(a), sin(a)) * r * coc * blurMax / res).rgb; }
         c = acc / 17.;
       }
       e *= 1. - coc * .9 * step(.001, blurMax);
-      gl_FragColor = linearToOutputTexel(vec4(mix(c, ink, e * edgeK), 1.));
+      if (finish < .5) { gl_FragColor = linearToOutputTexel(vec4(mix(c, ink, e * edgeK), 1.)); return; }
+      // the other finishes work on display (gamma) values
+      vec3 s = pow(max(c, vec3(0.)), vec3(1. / 2.2)), inkS = pow(ink, vec3(1. / 2.2)), outS;
+      float L = luma(s);
+      if (finish < 1.5) {
+        // blueprint: graded blue planes, pale edge lines, a faint drafting grid
+        vec3 deep = vec3(.06, .17, .32), mid = vec3(.22, .45, .70), pale = vec3(.88, .94, 1.);
+        vec3 base = mix(deep, mid, smoothstep(.12, .95, L));
+        vec2 f = gl_FragCoord.xy;
+        float grid = max(gridLine(f.x, 20. * pr), gridLine(f.y, 20. * pr)) * .10 + max(gridLine(f.x, 100. * pr), gridLine(f.y, 100. * pr)) * .14;
+        outS = mix(mix(base, pale, grid), pale, clamp(e * 1.1, 0., .95));
+      } else if (finish < 2.5) {
+        // halftone: ivory paper, a cool ink screen for shade and a warm one for warm colours
+        vec3 paper = vec3(.96, .925, .85), cool = vec3(.20, .30, .40), warmInk = vec3(.66, .30, .16);
+        float warm = clamp((s.r - s.b) * 1.8 + (s.r - s.g) * .5, 0., 1.);
+        vec2 f = gl_FragCoord.xy; float sz = 5. * pr;
+        float dw = dots(f, .26, sz, warm * warm * (.2 + .5 * L));
+        float dc = dots(f, .785, sz, smoothstep(.3, 1., 1. - L) * 1.1);
+        outS = mix(paper, s, .3);
+        outS = mix(outS, warmInk, dw * .7);
+        outS = mix(outS, cool, dc * .85);
+        outS = mix(outS, cool * .75, clamp(e * edgeK, 0., 1.) * .85);
+      } else {
+        // pixel: chunky edges, then each channel quantised to eight levels through a 4x4 Bayer matrix
+        vec3 q = mix(s, inkS, e * edgeK * .9);
+        float b = bayer4(floor(vUv * res / cell)) - .47;
+        outS = floor(q * 7. + .5 + b * .7) / 7.;
+      }
+      gl_FragColor = linearToOutputTexel(vec4(pow(clamp(outS, 0., 1.), vec3(2.2)), 1.));
     }`,
   depthTest: false, depthWrite: false,
 });
@@ -1736,7 +1788,7 @@ function updateClock() {
 }
 applyTheme();
 applyDaylight(nowHour());
-setInterval(() => applyDaylight(nowHour()), 20000);
+if (STILL === null) setInterval(() => applyDaylight(nowHour()), 20000);
 
 // ---------------- size + loop ----------------
 // the map shifts left while the info card is open on wide screens; the shift eases in frame()
@@ -1746,6 +1798,15 @@ function applySide() {
   const w = mapEl.clientWidth, h = mapEl.clientHeight;
   if (Math.abs(sideNow) > .5) camera.setViewOffset(w, h, sideNow, 0, w, h); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
+}
+// finish-dependent uniforms; the pixel grid is 3 CSS px wide, 2 on narrow screens
+function applyFinish() {
+  if (!renderer) return;
+  const pr = renderer.getPixelRatio();
+  post.uniforms.finish.value = FINISHES.indexOf(FINISH);
+  post.uniforms.cell.value = Math.round((mapEl.clientWidth < 600 ? 2 : 3) * pr);
+  post.uniforms.blurMax.value = UI.blur && FINISH !== 'pixel' ? 7 * pr : 0;
+  document.documentElement.dataset.finish = FINISH;
 }
 function resize() {
   if (!renderer) return;
@@ -1758,7 +1819,8 @@ function resize() {
   colorRT = new THREE.WebGLRenderTarget(W, H2, { samples: 4, type: THREE.HalfFloatType });
   normalRT = new THREE.WebGLRenderTarget(W, H2, { depthTexture: new THREE.DepthTexture(W, H2) });
   post.uniforms.tColor.value = colorRT.texture; post.uniforms.tNormal.value = normalRT.texture; post.uniforms.tDepth.value = normalRT.depthTexture;
-  post.uniforms.res.value.set(W, H2); post.uniforms.thick.value = Math.max(1, pr * .65); post.uniforms.blurMax.value = UI.blur ? 7 * pr : 0;
+  post.uniforms.res.value.set(W, H2); post.uniforms.thick.value = Math.max(1, pr * .65); post.uniforms.pr.value = pr;
+  applyFinish();
 }
 if (bubbleLayout.matches || !UI.infoOpen) { info.classList.add('folded'); fold.setAttribute('aria-expanded', 'false'); fold.textContent = L().show; }
 new ResizeObserver(resize).observe(mapEl);
@@ -1777,11 +1839,17 @@ function declutter() {
   }
 }
 const needle = document.getElementById('needle');
-const clock = new THREE.Clock(); let t = 0;
+const clock = new THREE.Clock(); let t = 0, posed = false;
 const normalBg = new THREE.Color(.5, .5, 1);
+// ?inspect exposes render stats and a finish switch for scripts/check.mjs
+const stats = { frames: 0, ms: 0, get frameMs() { return this.frames ? this.ms / this.frames : 0; }, finish: () => FINISH, still: STILL,
+  setFinish(f) { if (!FINISHES.includes(f)) return false; FINISH = f; applyFinish(); return true; }, reset() { this.frames = 0; this.ms = 0; } };
+if (QS.has('inspect')) window.__siteMap = stats;
 function frame() {
+  const f0 = performance.now();
   const dt = Math.min(clock.getDelta(), .05);
   if (!reduce && UI.motion) { t += dt; for (const a of anims) a(t, dt); }
+  else if (!posed) { posed = true; t = STILL ?? 0; for (const a of anims) a(t, 0); } // held pose: boats and walkers still sit where they belong
   if (tween) {
     const p = Math.min(1, (performance.now() - tween.start) / tween.dur), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     const { a, b } = tween, et = 1 - Math.pow(1 - p, 3); // target leads slightly so the view settles on it
@@ -1809,6 +1877,7 @@ function frame() {
   renderer.setRenderTarget(null); renderer.render(postScene, postCam);
   labelRenderer.render(scene, camera);
   declutter();
+  stats.frames++; stats.ms += performance.now() - f0;
   requestAnimationFrame(frame);
 }
 

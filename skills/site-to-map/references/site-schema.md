@@ -24,7 +24,8 @@ skill converts one language only; see *Languages* at the end for adding more by 
     "daylight": "auto",                 // auto = visitor's local time, refreshed every 20s; or fixed hour, e.g. 10.5
     "intro": true,                      // pop-up-book entrance (land unfolds, buildings rise)
     "motion": true,                     // ambient life: boats, walkers, smoke, flags, clouds
-    "blur": true,                       // depth-of-field and tilt-shift blur
+    "blur": true,                       // depth-of-field and tilt-shift blur (never in the pixel finish)
+    "finish": "paper",                  // paper (ink lines) | blueprint | halftone | pixel; ?finish= previews another
     "infoOpen": true                    // info card starts open on wide screens; phones and tablets use a selection bubble
   },
   "site": {

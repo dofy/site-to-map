@@ -286,3 +286,6 @@ body { transition: background-color .8s; background: var(--sky); color: var(--ui
 .tools .ic { width: 15px; height: 15px; flex: none; }
 @media (max-width: 760px) { .tools button .t { display: none; } .tools button:not(#b-keys) { padding: 5px 8px; } #b-lang .t { display: inline; } }
 @media (max-width: 560px) { #b-lang .t, #b-keys, .tools:has(#b-lang[hidden]) .sep { display: none; } }
+
+/* ?still: no transitions or CSS animation, so a screenshot shows the settled page */
+.map-still *, .map-still *::before, .map-still *::after { transition: none !important; animation: none !important; }
