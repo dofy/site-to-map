@@ -123,6 +123,16 @@ lake, and a landlocked lake country. Same towns, same buildings, different land.
 Its full config is [`src/data/map.json`](https://github.com/dofy/yahaha/blob/main/src/data/map.json)
 in dofy/yahaha.
 
+## One world, four finishes
+
+A finish is a rendering style laid over the same land, towns and light. Set it with
+`"ui": { "finish": "blueprint" }` in `site.json`, or preview one with `?finish=` in the URL.
+
+| | |
+|---|---|
+| `paper` (default): ink lines on folded paper ![](docs/finish-paper.png) | `blueprint`: blue planes, pale edges, a drafting grid ![](docs/finish-blueprint.png) |
+| `halftone`: warm and cool ink dots on ivory ![](docs/finish-halftone.png) | `pixel`: a 3 px grid (2 px on phones), ordered dither, no blur ![](docs/finish-pixel.png) |
+
 ## Layout
 
 ```

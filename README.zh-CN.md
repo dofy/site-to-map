@@ -89,6 +89,15 @@ node scripts/check.mjs out --finishes                       # 同时截下每种
 
 完整配置见 dofy/yahaha 仓库里的 [`src/data/map.json`](https://github.com/dofy/yahaha/blob/main/src/data/map.json)。
 
+## 一片世界，四种风格
+
+风格是叠在同一片地形、城镇和光照上的渲染方式。在 `site.json` 里写 `"ui": { "finish": "blueprint" }` 设定，或者在 URL 里加 `?finish=` 临时预览。
+
+| | |
+|---|---|
+| `paper`（默认）：折纸加墨线 ![](docs/finish-paper.png) | `blueprint`：分层的蓝、浅色边线、制图网格 ![](docs/finish-blueprint.png) |
+| `halftone`：象牙色纸上的冷暖两色网点 ![](docs/finish-halftone.png) | `pixel`：3px 像素格（手机 2px）、有序抖动、无模糊 ![](docs/finish-pixel.png) |
+
 ## 目录结构
 
 ```
